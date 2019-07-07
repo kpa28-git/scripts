@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Switches the gpu used for graphics and automatically logs out i3 session
+
+GPU_MODE=$(optimus-manager --print-mode | awk '{print $NF}' | xargs);
+SWITCH_TO=$([ "$GPU_MODE" = 'nvidia' ] && echo 'intel' || echo 'nvidia');
+
+notify-send '🎮 switch gpu' "$GPU_MODE -> $SWITCH_TO";
+optimus-manager --no-confirm --switch "$SWITCH_TO" >> /dev/null;

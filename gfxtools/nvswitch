@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Switches the nvidia gpu on or off if it is not being used for graphics.
+# Useful if using intel for graphics to be able to use the nvidia card for cuda.
+
+BB_STATE='/proc/acpi/bbswitch';
+GPU_MODE=$(optimus-manager --print-mode | awk '{print $NF}' | xargs);
+NV_STATE=$(awk '{print $NF}' < "$BB_STATE" | xargs);
+
+if [ ! "$GPU_MODE" = 'nvidia' ] ; then
+	if [ "$NV_STATE" = 'OFF' ] ; then
+		printf '%s' 'ON' | sudo tee "$BB_STATE";
+		notify-send '🎮 nvswitch' 'nvidia gpu enabled for cuda';
+	elif [ "$NV_STATE" = 'ON' ] ; then
+		sudo rmmod nvidia_uvm;
+		sudo rmmod nvidia;
+		printf '%s' 'OFF' | sudo tee "$BB_STATE";
+		notify-send '🎮 nvswitch' 'nvidia gpu disabled for cuda';
+	fi;
+else
+	notify-send '🎮 nvswitch' 'nvidia gpu already on-line for cuda & video';
+fi;
+

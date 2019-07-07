@@ -1,0 +1,11 @@
+#!/bin/sh
+# mounts the first android device found by simple-mtpfs
+
+MOUNT_LOC="$HOME"'/mnt/android/phone_a/';
+anddrives=$(simple-mtpfs -l 2>/dev/null);
+
+[ -z "$anddrives" ] && echo "No Android device detected" && exit;
+notify-send "🤖 Android device(s)" "$anddrives";
+
+simple-mtpfs --device 1 "$MOUNT_LOC";
+notify-send "🤖 Android Mounting" "Android device mounted to $MOUNT_LOC";

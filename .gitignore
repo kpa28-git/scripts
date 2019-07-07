@@ -1,0 +1,13 @@
+# Ignore All:
+*
+
+# Traverse Directories
+!*/
+
+# Whitelist:
+!/androidtools/**
+!/datatools/**
+!/gfxtools/**
+!/programs/**
+!README.md
+!.gitignore

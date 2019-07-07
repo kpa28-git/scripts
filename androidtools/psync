@@ -1,0 +1,32 @@
+#!/bin/sh
+#      ____  _______  ______  _____
+#     / __ \/ ___/ / / / __ \/ ___/
+#    / /_/ (__  ) /_/ / / / / /__
+#   / .___/____/\__, /_/ /_/\___/
+#  /_/         /____/
+# android phone backup script.
+
+BK_SRC="$HOME";
+BK_DEST="$HOME"'/mnt/android/phone_a';
+
+echo 'starting backup from' "$BK_SRC" 'to' "$BK_DEST"'...';
+echo 'make sure backup drive is mounted at' "$BK_DEST";
+
+if [ "$(mount | grep -c $BK_DEST)" = 0 ] ; then
+	echo 'no drive found mounted at' "$BK_DEST";
+	echo 'exiting without backing up data';
+	exit 1;
+fi;
+
+alias addsync='rsync -avxP';
+alias mirsync='rsync -avxP --delete';
+
+echo 'music...';
+mirsync "$BK_SRC"'/Music/' "$BK_DEST"'/Music/';
+mirsync "$BK_SRC"'/.config/mpd/playlists/' "$BK_DEST"'/Music/playlists/';
+
+echo 'stack...'
+
+
+echo 'update record...'
+date +'%Y-%m-%d_%r' | sed s/\ //g >> "$BK_DEST"'/backups.txt';
