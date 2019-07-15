@@ -14,9 +14,9 @@ GPU_MODE=$(optimus-manager --print-mode | awk '{print $NF}' | xargs);
 
 if [ "$GPU_MODE" = 'nvidia' ] && [ -n "$DP_ACTIVE" ] || [ -n "$HDMI_ACTIVE" ] ; then
 	#dual_monitor; # Disabled because no solution to multi-monitor screen-tear prevention
-	single_monitor "extern";
+	single_monitor 'extern';
 else
-	single_monitor "intern";
+	single_monitor 'intern';
 fi;
 
 setbg;
