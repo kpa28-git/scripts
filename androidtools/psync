@@ -18,8 +18,8 @@ if [ "$(mount | grep -c $BK_DEST)" = 0 ] ; then
 	exit 1;
 fi;
 
-alias addsync='rsync -avxP';
-alias mirsync='rsync -avxP --delete';
+alias addsync='rsync -avxP --inpace';
+alias mirsync='rsync -avxP --inplace --delete';
 
 echo 'music...';
 mirsync "$BK_SRC"'/Music/' "$BK_DEST"'/Music/';

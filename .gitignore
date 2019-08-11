@@ -8,6 +8,7 @@
 !/androidtools/**
 !/datatools/**
 !/gfxtools/**
+!/polybar/**
 !/programs/**
 !README.md
 !.gitignore

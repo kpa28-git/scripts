@@ -1,5 +1,10 @@
 #!/bin/sh
-# mounts the first android device found by simple-mtpfs
+#                   |                             |
+#    _` | __ \   _` | __ `__ \   _ \  |   | __ \  __|
+#   (   | |   | (   | |   |   | (   | |   | |   | |
+#  \__,_|_|  _|\__,_|_|  _|  _|\___/ \__,_|_|  _|\__|
+# Android device mounting script.
+# Mounts the first android device found by simple-mtpfs
 
 MOUNT_LOC="$HOME"'/mnt/android/phone_a/';
 anddrives=$(simple-mtpfs -l 2>/dev/null);
