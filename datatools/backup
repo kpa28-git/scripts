@@ -29,6 +29,7 @@ addsync "$BK_SRC"'/.ssh/' "$BK_DEST"'/.ssh/';
 
 echo 'config...';
 mirsync "$BK_SRC"'/.config/' "$BK_DEST"'/.config/';
+mirsync "$BK_SRC"'/.gitconfig' "$BK_DEST"'/.gitconfig';
 mirsync "$BK_SRC"'/.tmux.conf' "$BK_DEST"'/.tmux.conf';
 
 echo 'dotfiles...'
