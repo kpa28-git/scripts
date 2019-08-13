@@ -6,8 +6,8 @@
 #  \___/\__/_/ /_/ .___/_/  /_/\___/\___/
 #               /_/
 # Ethereum price query script.
-# Just a wrapper around coinquote.sh for polybar.
 # The first commandline argument is the number of sigfigs to output, uses 2 by default.
+# Just a wrapper around coinquote.sh for polybar (queries Coinmarketcap API).
 # Outputs Format: $<price> <1 hr pct>% <24hr pct>% <7d pct>%
 
 SIGFIG=$([ -n "$1" ] && echo "$1" || echo 2);

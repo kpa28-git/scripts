@@ -5,11 +5,11 @@
 #  / /__/ /_/ / / / / / /_/ / /_/ / /_/ / /_/  __/
 #  \___/\____/_/_/ /_/\__, /\__,_/\____/\__/\___/
 #                       /_/
-# Coinmarket cryptocurrency price query script.
+# Coinmarketcap cryptocurrency price query script.
 #
 # This script sends a GET request to the coinmarket API and outputs the latest quote for <coin>/USD to stdout as a json string.
 # You can pass any valid coinmarket symbol as the first commandline argument (uses ETH by default).
-# A valid api key is required to be in a text file at ~/Documents/coinmarketcap/
+# A valid api key is required to be in a text file at ~/Documents/coinmarketcap/key.txt
 # Dependencies: sed, curl, jq
 # Note: only a small subset of endpoints are accessible via the free tier, these include:
 #	* /v1/cryptocurrency/quotes/latest
