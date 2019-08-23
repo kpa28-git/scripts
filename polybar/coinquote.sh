@@ -1,4 +1,4 @@
-#!/bin/env sh
+#!/bin/sh
 #                _                         __
 #    _________  (_)___  ____ ___  ______  / /____
 #   / ___/ __ \/ / __ \/ __ `/ / / / __ \/ __/ _ \
@@ -9,7 +9,7 @@
 #
 # This script sends a GET request to the coinmarket API and outputs the latest quote for <coin>/USD to stdout as a json string.
 # You can pass any valid coinmarket symbol as the first commandline argument (uses ETH by default).
-# A valid api key is required to be in a text file at ~/Documents/coinmarketcap/key.txt
+# A valid api key is required to be in a text file at $KEY_FILE (set to ~/Documents/api-keys/coinmarketcap-0.txt by default).
 # Dependencies: sed, curl, jq
 # Note: only a small subset of endpoints are accessible via the free tier, these include:
 #	* /v1/cryptocurrency/quotes/latest
@@ -17,7 +17,7 @@
 # Unfortunately OHLCV data is not included in the free tier.
 
 SYMBOL=$([ -n "$1" ] && echo "$1" || echo "ETH");
-KEY_FILE="$HOME/Documents/coinmarketcap/key.txt";
+KEY_FILE="$HOME/Documents/api-keys/coinmarketcap-0.txt";
 BASE_URL="https://pro-api.coinmarketcap.com";
 ENDPOINT="/v1/cryptocurrency/quotes/latest";
 
