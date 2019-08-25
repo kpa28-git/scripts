@@ -6,6 +6,7 @@
 #  \___/\____/_/_/ /_/\__, /\__,_/\____/\__/\___/
 #                       /_/
 # Coinmarketcap cryptocurrency price query script.
+# API Docs: https://coinmarketcap.com/api/documentation/v1/
 #
 # This script sends a GET request to the coinmarket API and outputs the latest quote for <coin>/USD to stdout as a json string.
 # You can pass any valid coinmarket symbol as the first commandline argument (uses ETH by default).
