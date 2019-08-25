@@ -8,7 +8,12 @@
 !/androidtools/**
 !/datatools/**
 !/gfxtools/**
+!/luke-i3cmds/**
+!/luke-tools/**
+!/musictools/**
 !/polybar/**
+!/proctools/**
 !/programs/**
 !README.md
+!TODO.md
 !.gitignore
