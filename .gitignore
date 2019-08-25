@@ -14,7 +14,7 @@
 !/polybar/**
 !/proctools/**
 !/programs/**
+!LICENSE
 !README.md
 !TODO.md
-!LICENSE
 !.gitignore
