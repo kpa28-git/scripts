@@ -1,0 +1,15 @@
+#!/bin/sh
+#        _/_/  _/            _/    _/
+#     _/          _/_/_/        _/_/_/_/    _/_/
+#  _/_/_/_/  _/  _/    _/  _/    _/      _/    _/
+#   _/      _/  _/    _/  _/    _/      _/    _/
+#  _/      _/  _/    _/  _/      _/_/    _/_/
+
+DONEAT=$(date +"%I:%M %p");
+TITLE="finito $DONEAT";
+CNT=10;
+
+while [ $CNT -ge 0 ]; do
+	notify-say "$TITLE" "$1";
+	CNT=$(( CNT - 1 )); sleep 0.2;
+done;

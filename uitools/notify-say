@@ -1,0 +1,4 @@
+#!/bin/sh
+
+notify-send "$1" "$2";
+espeak -v 'en-wm' "$1, $2"  >/dev/null 2>&1;
