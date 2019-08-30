@@ -6,6 +6,7 @@
 #  /_.___/\__,_/\___/_/|_|\__,_/ .___/
 #                             /_/
 # local drive backup script.
+# Used for 'AB' tagged drives
 
 BK_SRC="$HOME";
 BK_MOUNT='/mnt/usb/archive_a';
@@ -20,12 +21,12 @@ if [ "$(mount | grep -c $BK_MOUNT)" = 0 ] ; then
 	exit 1;
 fi;
 
-alias addsync='rsync -avxP';
+alias appsync='rsync -avxP';
 alias mirsync='rsync -avxP --delete';
 
 echo 'scripts/keys...';
-addsync "$BK_SRC"'/.local/' "$BK_DEST"'/.local/';
-addsync "$BK_SRC"'/.ssh/' "$BK_DEST"'/.ssh/';
+appsync "$BK_SRC"'/.local/' "$BK_DEST"'/.local/';
+appsync "$BK_SRC"'/.ssh/' "$BK_DEST"'/.ssh/';
 
 echo 'config...';
 mirsync "$BK_SRC"'/.config/' "$BK_DEST"'/.config/';
@@ -51,12 +52,15 @@ mirsync "$BK_SRC"'/crunch/' "$BK_DEST"'/crunch/';
 mirsync "$BK_SRC"'/crunch-thesis/' "$BK_DEST"'/crunch-thesis/';
 
 echo 'data...';
-addsync "$BK_SRC"'/Documents/' "$BK_DEST"'/Documents/';
-addsync "$BK_SRC"'/Pictures/' "$BK_DEST"'/Pictures/';
-addsync "$BK_SRC"'/Projects/' "$BK_DEST"'/Projects/';
+appsync "$BK_SRC"'/Documents/' "$BK_DEST"'/Documents/';
+appsync "$BK_SRC"'/Pictures/' "$BK_DEST"'/Pictures/';
+appsync "$BK_SRC"'/Projects/' "$BK_DEST"'/Projects/';
 mirsync "$BK_SRC"'/Music/' "$BK_DEST"'/Music/';
 mirsync "$BK_SRC"'/vimwiki/' "$BK_DEST"'/vimwiki/';
 mirsync "$BK_SRC"'/Templates/' "$BK_DEST"'/Templates/';
 
+echo 'generic backup...';
+appsync "$BK_SRC"'/backup/*' "$BK_DEST"'/';
+
 echo 'update record...'
-date +'%Y-%m-%d_%r' | sed s/\ //g >> "$BK_DEST"'/backups.txt';
+date +'%Y-%m-%d_%r' | sed s/\ //g >> "$BK_DEST"'/archives.txt';
