@@ -1,16 +1,15 @@
 #!/bin/sh
-#      __               __
-#     / /_  ____ ______/ /____  ______
-#    / __ \/ __ `/ ___/ //_/ / / / __ \
-#   / /_/ / /_/ / /__/ ,< / /_/ / /_/ /
-#  /_.___/\__,_/\___/_/|_|\__,_/ .___/
-#                             /_/
-# local drive backup script.
-# use with 'AB' tagged drives
-
+#           __               __
+#    ____ _/ /_  ____ ______/ /____  ______
+#   / __ `/ __ \/ __ `/ ___/ //_/ / / / __ \
+#  / /_/ / /_/ / /_/ / /__/ ,< / /_/ / /_/ /
+#  \__,_/_.___/\__,_/\___/_/|_|\__,_/ .___/
+#                                  /_/
+# archive-backup (AB) drive backup script.
 BK_SRC="$HOME";
 BK_MOUNT='/mnt/usb/archive_a';
 BK_DEST="$BK_MOUNT"'/archive';
+BK_TYPE=$(basename "$0");
 
 echo 'starting backup from' "$BK_SRC" 'to' "$BK_DEST"'...';
 echo 'make sure backup drive is mounted at' "$BK_MOUNT";
@@ -62,5 +61,9 @@ mirsync "$BK_SRC"'/Templates/' "$BK_DEST"'/Templates/';
 echo 'generic backup...';
 appsync "$BK_SRC"'/backup/' "$BK_DEST"'/';
 
-echo 'update record...'
-date +'%Y-%m-%d_%r' | sed s/\ //g >> "$BK_DEST"'/archives.txt';
+echo 'update record...';
+date +'%Y-%m-%d_%r' | sed s/\ //g >> "$BK_DEST/$BK_TYPE.txt";
+
+echo 'script complete';
+notify-say "$BK_TYPE" 'backup done';
+
