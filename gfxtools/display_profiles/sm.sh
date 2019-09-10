@@ -18,7 +18,7 @@ single_monitor() {
 			xrandr --output 'DP-0' --off --output 'DP-1' --off --output 'DP-1-1' --off --output 'DP-1-2' --off --output 'eDP-1-1' --off \
 				--output 'HDMI-0' --mode "$OUT_RES" --rotate 'normal';
 		else
-			echo 'Warning - Trying to set external display but either DisplayPort or HDMI appear to be connected';
+			echo 'Warning - Trying to set external display but neither DisplayPort or HDMI appear to be connected';
 		fi;
 	else
 		xrandr --output 'DP-0' --off --output 'DP-1' --off --output 'DP-1-1' --off --output 'DP-1-2' --off --output 'HDMI-0' --off \

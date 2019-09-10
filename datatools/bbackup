@@ -20,8 +20,8 @@ if [ "$(mount | grep -c $BK_MOUNT)" = 0 ] ; then
 	exit 1;
 fi;
 
-alias appsync='rsync -avxP';
-alias mirsync='rsync -avxP --delete';
+alias appsync='sudo rsync -avxP';
+alias mirsync='sudo rsync -avxP --delete';
 
 echo 'generic backup...';
 appsync "$BK_SRC"'/backup/' "$BK_DEST"'/';
