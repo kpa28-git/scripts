@@ -8,10 +8,10 @@
 # Ethereum price query script.
 # The first commandline argument is the number of sigfigs to output, uses 2 by default.
 # Just a wrapper around coinquote.sh for polybar (queries Coinmarketcap API).
-# Dependencies: bc, sed, curl, jq
+# Dependencies: coinquote, bc, sed, curl, jq
 # Outputs Format: $<price> <1 hr pct>% <24hr pct>% <7d pct>%
 
 SIGFIG=$([ -n "$1" ] && echo "$1" || echo 2);
 SCALAR=$(echo "10 ^ $SIGFIG" | bc);
 
-$HOME/.local/bin/polybar/coinquote.sh "ETH" | jq ".price, .percent_change_1h, .percent_change_24h, .percent_change_7d | . * $SCALAR | round | . / $SCALAR" | sed '1s/^/$/; 2,4s/$/%/' | tr '\n' ' ';
+coinquote "ETH" | jq ".price, .percent_change_1h, .percent_change_24h, .percent_change_7d | . * $SCALAR | round | . / $SCALAR" | sed '1s/^/$/; 2,4s/$/%/' | tr '\n' ' ';

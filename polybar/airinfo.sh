@@ -8,28 +8,15 @@
 # API Docs: https://aqicn.org/json-api/doc/
 #
 # This script sends a request to the Air Quality Open Data Platform to get the air index quality at the specified locale.
-# A valid api key is required to be in a text file at $KEY_FILE (set to ~/Documents/api-keys/airqualityindex-0.txt by default).
+# A valid api key is required to be in a text file at $KEY_FILE (set to ~/.config/api-keys/airqualityindex-0.txt by default).
 # Uncomment the cases of the switch statement to get colored output interpretable by polybar (similar to the info-airqualityindex script).
 #
-# The location can be set via the commandline argument, otherwise the default will be used. Visit aqicn.org to find valid locations.
-# Valid formats for the location argument are:
-#	* Auto:       auto (Mozilla ip geolocation)
-#	* City:       <string1>/<string2>.../...
-#	* Lat Long:   geo:<lat>;<long>
-#	* Center ID:  <id>
-# Dependencies: sed, curl, jq
+# The location can be set via the commandline argument (see getloc), otherwise the default option will be used.
+# Dependencies: getloc, curl, jq, tr, sed
 
-LOC=$([ -n "$1" ] && echo "$1" || echo "california/san-francisco/san-francisco-arkansas-street");
-KEY_FILE="$HOME/Documents/api-keys/airqualityindex-0.txt";
+LOC=$(getloc "$1" | tr ',' ';' | sed 's/^/geo:/;');
+KEY_FILE="$HOME/.config/api-keys/airqualityindex-0.txt";
 BASE_URL="https://api.waqi.info/feed";
-
-if [ "$LOC" = "auto" ]; then
-	IPLOC=$(curl -sf https://location.services.mozilla.com/v1/geolocate?key=geoclue);
-
-	if [ -n "$IPLOC" ]; then
-		LOC=$(echo "$IPLOC" | jq '.location.lat,.location.lng' | tr '\n' ';' | sed 's/^/geo:/; s/;$//');
-	fi;
-fi;
 
 if [ -f "$KEY_FILE" ]; then
 	API_KEY=$(sed 1q "$KEY_FILE");
