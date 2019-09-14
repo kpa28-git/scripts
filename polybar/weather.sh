@@ -1,9 +1,13 @@
 #!/bin/sh
-location="$1"; [ -z "$location" ] || { location="$location+" && rm -f "$HOME/.local/share/weatherreport" ;}
+
+# This script gets the weather, echoes it, and places the report at "$HOME/.local/share/weatherreport".
+# It is heavily based on Luke Smith's weather script.
+# The only non-cosmetic difference is I use my geoloc script to handle getting the location.
+# Dependencies: geoloc, ping, curl, printf, tr, sed, awk
 
 getforecast() {
 	ping -q -c 1 1.1.1.1 >/dev/null || exit 1
-	curl -s "wttr.in/$location" > "$HOME/.local/share/weatherreport" || exit 1 ;
+	curl -s "wttr.in/$1" > "$HOME/.local/share/weatherreport" || exit 1 ;
 }
 
 showweather() {
@@ -11,7 +15,6 @@ showweather() {
 	sed '13q;d' "$HOME/.local/share/weatherreport" | grep -o "m\\(-\\)*[0-9]\\+" | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print " ﰕ",$1 "°","",$2 "°"}' ;
 }
 
-if [ "$(stat -c %y "$HOME/.local/share/weatherreport" >/dev/null 2>&1 | awk '{print $1}')" != "$(date '+%Y-%m-%d')" ]
-	then getforecast && showweather
-	else showweather
-fi
+getforecast "$(geoloc "$1")";
+showweather;
+
