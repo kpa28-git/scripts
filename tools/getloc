@@ -1,0 +1,33 @@
+#!/bin/sh
+#                 __  __
+#     ____ ____  / /_/ /___  _____
+#    / __ `/ _ \/ __/ / __ \/ ___/
+#   / /_/ /  __/ /_/ / /_/ / /__
+#   \__, /\___/\__/_/\____/\___/
+#  /____/
+# Get location script.
+# Echo the location as a lat long starting from NE.
+# Optional commandline argument can be:
+#	* name of text file in $LOC_DIR containing latitude and longitude separated by newline
+#	* 'auto': get lat long from mozilla geolocation service
+# If no commandline argument is passed, "$LOC_DIR/default.txt" is used.
+# Dependencies: curl, jq, tr, sed
+LOC_DIR="$HOME/.config/loc/";
+SOURCE=$([ -n "$1" ] && echo "$1" || echo 'default.txt');
+DELIM=',';
+
+if [ -f "$LOC_DIR$SOURCE" ]; then
+	LATLONG=$(sed 2q "$LOC_DIR$SOURCE");
+elif [ "$SOURCE" = 'auto' ]; then
+	IPLOC=$(curl -sf https://location.services.mozilla.com/v1/geolocate?key=geoclue);
+
+	if [ -n "$IPLOC" ]; then
+		LATLONG=$(echo "$IPLOC" | jq '.location.lat,.location.lng');
+	fi;
+else
+	echo "Commandline argument must be a valid latlong file in '$LOC_DIR' or 'auto'";
+	exit 1;
+fi;
+
+echo "$LATLONG" | tr '\n' "$DELIM" | sed "s/$DELIM$//";
+exit 0;
