@@ -1,12 +1,13 @@
 #!/bin/sh
-#                 __  __
-#     ____ ____  / /_/ /___  _____
-#    / __ `/ _ \/ __/ / __ \/ ___/
-#   / /_/ /  __/ /_/ / /_/ / /__
-#   \__, /\___/\__/_/\____/\___/
+#                       __
+#     ____ ____  ____  / /___  _____
+#    / __ `/ _ \/ __ \/ / __ \/ ___/
+#   / /_/ /  __/ /_/ / / /_/ / /__
+#   \__, /\___/\____/_/\____/\___/
 #  /____/
-# Get location script.
-# Echo the location as a lat long starting from NE.
+# Simple geolocation script.
+# Parses a file or uses mozilla geolocation service.
+# Echoes the result as comma separated lat long floating point coordinates, where N/E are positive values.
 # Optional commandline argument can be:
 #	* name of text file in $LOC_DIR containing latitude and longitude separated by newline
 #	* 'auto': get lat long from mozilla geolocation service

@@ -11,10 +11,10 @@
 # A valid api key is required to be in a text file at $KEY_FILE (set to ~/.config/api-keys/airqualityindex-0.txt by default).
 # Uncomment the cases of the switch statement to get colored output interpretable by polybar (similar to the info-airqualityindex script).
 #
-# The location can be set via the commandline argument (see getloc), otherwise the default option will be used.
-# Dependencies: getloc, curl, jq, tr, sed
+# The location can be set via the commandline argument (see geoloc), otherwise the default option will be used.
+# Dependencies: geoloc, curl, jq, tr, sed
 
-LOC=$(getloc "$1" | tr ',' ';' | sed 's/^/geo:/;');
+LOC=$(geoloc "$1" | tr ',' ';' | sed 's/^/geo:/;');
 KEY_FILE="$HOME/.config/api-keys/airqualityindex-0.txt";
 BASE_URL="https://api.waqi.info/feed";
 
