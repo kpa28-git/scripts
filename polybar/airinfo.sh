@@ -38,6 +38,7 @@ if [ -f "$KEY_FILE" ]; then
 	#	[3-9][0-9][0-9]) echo "%{F#7e0023}#%{F-} $AQI" ;;
 		*) echo "$AQI" ;;
 	esac;
+	exit 0;
 else
 	echo "Airqualityindex API key file must be here: $KEY_FILE";
 	exit 1;
