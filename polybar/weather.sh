@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # This script gets the weather, echoes it, and places the report at "$HOME/.local/share/weatherreport".
-# It is heavily based on Luke Smith's weather script.
+# It is a minimalized version of Luke Smith's weather script. It does the same basic thing.
 # The only non-cosmetic difference is I use my geoloc script to handle getting the location.
 # Dependencies: geoloc, ping, curl, printf, tr, sed, awk
 
