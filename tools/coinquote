@@ -29,8 +29,9 @@ if [ -f "$KEY_FILE" ]; then
 	-H "Accept: application/json" \
 	-d "symbol=$SYMBOL" \
 	-G $BASE_URL$ENDPOINT | jq ".data.$SYMBOL.quote.USD";
+	exit 0;
 else
 	echo "Coinmarket API key file must be here: $KEY_FILE";
-	return 1;
+	exit 1;
 fi
 
