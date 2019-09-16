@@ -1,7 +1,25 @@
 #!/bin/sh
-# TODO
+# Set Xresources theme from passed base16 scheme yaml file.
+# Can be used in conjuction with lsbase16 and rofi.
 
-# open file at $1
-# set Xresources with new theme from this file
+XR_FILE="$HOME/.Xresources";
+cp "$XR_FILE" "$XR_FILE.bak";
 
+# loop over key, values from $1, search and replace values in Xresources using sed:
+scheme=$(head -n 1 "$1");
+temp=$(sed "s/scheme: .*/$scheme/g" "$XR_FILE"); printf "%s" "$temp" > "$XR_FILE";
+#author=$(head -n 2 "$1" | tail -n 1);
+#temp=$(sed "s/author: .*/$author/g" "$XR_FILE"); printf "%s" "$temp" > "$XR_FILE";
 
+base16=$(awk -F ': ' '{print $2}' "$1" | tail -n 16);
+i=0;
+echo "$base16" | tr ' ' '\n' | while read -r color; do
+	hex=$(printf "0%X\n" $i);
+	color=${color%\"}; color=${color#\"}; # Remove trailing and leading double quotes
+	temp=$(sed "s/base$hex: \(.*\)/base$hex: $color/g" "$XR_FILE"); printf "%s" "$temp" > "$XR_FILE";
+	temp=$(sed "s/color$i: \(.*\)/color$i: #$color/g" "$XR_FILE"); printf "%s" "$temp" > "$XR_FILE";
+	i=$(( i + 1 ));
+done;
+
+xrdb "$XR_FILE";
+notify-send ".Xresources base16 theme changed" "$scheme";
