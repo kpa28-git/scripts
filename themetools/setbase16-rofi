@@ -1,0 +1,8 @@
+#!/bin/sh
+# TODO
+
+ROFI_CONFIG="$HOME/.config/rofi/config";
+BASE16_TEMPLATE="$HOME/.config/rofi/template";
+# open file at $1
+# use template to update Base16 scheme
+

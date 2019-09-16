@@ -1,0 +1,6 @@
+#!/bin/sh
+# TODO
+
+QB_CONFIG="$HOME/.config/qutebrowser/config.yml";
+# replace value of custom.base16 in QB_CONFIG file with $1
+

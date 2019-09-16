@@ -1,0 +1,7 @@
+#!/bin/sh
+# TODO
+
+# open file at $1
+# set Xresources with new theme from this file
+
+
