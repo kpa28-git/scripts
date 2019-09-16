@@ -4,7 +4,6 @@ BASE16_DIR="$HOME/.local/share/themes/base16";
 
 for scheme in "$BASE16_DIR"/*
 do
-	echo;
 	for subscheme in "$scheme"/*.yaml
 	do
 		echo "$subscheme";
