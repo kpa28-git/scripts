@@ -54,6 +54,7 @@ while getopts "a:sr" arg; do
 		a) rbkadd "$OPTARG";;
 		s) rbkselect;;
 		r) rbkremove;;
+		*) notify-send "rbuku: invalid flag";;
 	esac;
 done;
 
