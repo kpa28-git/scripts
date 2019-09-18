@@ -1,6 +1,7 @@
 #!/bin/sh
 # Set Xresources theme from passed base16 scheme yaml file.
 # Can be used in conjuction with lsbase16 and rofi.
+# TODO - broken with some themes (sed errors?)
 
 XR_FILE="$HOME/.Xresources";
 cp "$XR_FILE" "$XR_FILE.bak";

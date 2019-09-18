@@ -1,0 +1,62 @@
+#!/bin/sh
+#           __          __
+#     _____/ /_  __  __/ /____  __
+#    / ___/ __ \/ / / / //_/ / / /
+#   / /  / /_/ / /_/ / ,< / /_/ /
+#  /_/  /_.___/\__,_/_/|_|\__,_/
+# Rofi+Buku integration wrapper.
+# The existing options I found for rofi+buku integration were too bloated for my taste so I made my own.
+# This script is intended to be minimal and easy to extend or used by browsers like qutebrowser.
+# Modes:
+# -a <URL>: opens add prompt for url
+# -s: opens bookmark select prompt (default)
+# -r: opens bookmark remove prompt
+
+# ADD: Add tag and comment to create a bookmark to a passed url.
+# Presently rofi multi-select can't be combined with custom entries (https://github.com/davatorium/rofi/issues/807), so there are two tag prompts - one for existing and another for custom/new tags.
+rbkadd() {
+	URL=$1;
+	MESG="🔖 add: $URL";
+	ETAGS=$(buku --np -t | rofi -dmenu -lines 5 -i -mesg "$MESG" -p '🔖 tags (shift+enter to multi-select)' -multi-select | sed "s/[0-9]*\.//; s/([0-9]*)//; s/^[[:space:]]*//; s/[[:space:]]*$//;" | tr '\n' ',');
+	notify-send "🔖selected tags: $ETAGS";
+	CTAGS=$(rofi -dmenu -lines 5 -i -mesg "$MESG" -p '🔖 custom tags (comma separated)');
+	notify-send "🔖custom tags: $CTAGS";
+	TAGS=$ETAGS$CTAGS;
+	COMMENT=$(rofi -dmenu -i -lines 0 -mesg "$MESG" -p '🔖 comment');
+	#TITLE=$(rofi -dmenu -i -lines 0 -mesg "$MESG" -p 'title');
+	buku --np --tacit -a "$URL" "$TAGS" -c "$COMMENT";
+	notify-send "🔖 added $URL" "$TAGS $COMMENT";
+}
+
+# SELECT: Select a bookmark entry and send url to stdout.
+rbkselect() {
+	FMT=40;  # 10: URL, 20: URL TAGS, 30: TITLE, 40: URL TITLE TAGS, 50: TITLE TAGS
+	SEL=$(buku --np -p --format="$FMT" | rofi -dmenu -lines 5 -i -p '🔖search');
+	echo "$SEL" | awk -F '\t' "{print \$1}";
+	notify-send "🔖 selected" "$SEL";
+}
+
+# REMOVE: Choose one or more bookmark entries to delete from buku.
+rbkremove() {
+	FMT=40;  # 10: URL, 20: URL TAGS, 30: TITLE, 40: URL TITLE TAGS, 50: TITLE TAGS
+	RFMT='d'; # Integer row of selected items
+	SEL_IDX_LIST=$(buku --np -p --format="$FMT" | rofi -dmenu -format "$RFMT" -lines 5 -i -mesg '🔖 remove (esc to cancel)' -p 'remove (shift+enter to multi-select)' -no-custom -multi-select | tac);
+	for i in $SEL_IDX_LIST
+	do
+		SEL=$(buku --np -p --format=10 | head -n "$i" | tail -n 1);
+		buku --np --tacit -d "$i";
+		notify-send "🔖 removed" "$SEL";
+	done;
+}
+
+while getopts "a:sr" arg; do
+	case $arg in
+		a) rbkadd "$OPTARG";;
+		s) rbkselect;;
+		r) rbkremove;;
+	esac;
+done;
+
+# Default: run select mode
+if [ $OPTIND -eq 1 ]; then rbkselect; fi;
+

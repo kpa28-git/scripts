@@ -1,4 +1,5 @@
 #!/bin/sh
+# Say it and display it
 
 VOICE='en-wm'; # Welsh Mainland voice
 
