@@ -11,9 +11,8 @@
 # -a <URL>: opens add prompt for url
 # -s: opens bookmark select prompt (default)
 # -r: opens bookmark remove prompt
-
-# ADD: Add tag and comment to create a bookmark to a passed url.
 # Presently rofi multi-select can't be combined with custom entries (https://github.com/davatorium/rofi/issues/807), so there are two tag prompts - one for existing and another for custom/new tags.
+
 rbkadd() {
 	URL=$1;
 	MESG="🔖 add: $URL";

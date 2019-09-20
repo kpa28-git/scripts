@@ -1,5 +1,6 @@
 #!/bin/sh
 # If transmission-daemon is running, will ask to kill, else will ask to start.
+
 if pgrep -x transmission-da >/dev/null ;
 then
 	[ "$(printf "No\\nYes" | rofi -show -dmenu -i -p "Kill transmission-daemon?")" = "Yes" ] && killall transmission-da && notify-send "transmission-daemon killed."

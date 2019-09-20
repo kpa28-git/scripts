@@ -1,3 +1,4 @@
 #!/bin/sh
+
 CHOSEN=$(man -k . | awk '{print $1}' | uniq | rofi -show -dmenu -l 10);
 man -Tpdf "$CHOSEN" | zathura -;

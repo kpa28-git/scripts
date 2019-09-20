@@ -13,6 +13,7 @@
 #	* 'auto': get lat long from mozilla geolocation service
 # If no commandline argument is passed, "$LOC_DIR/default.txt" is used.
 # Dependencies: curl, jq, tr, sed
+
 LOC_DIR="$HOME/.config/loc/";
 SOURCE=$([ -n "$1" ] && echo "$1" || echo 'default.txt');
 DELIM=',';

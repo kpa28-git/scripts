@@ -1,5 +1,4 @@
 #!/bin/sh
-
 # Display contents of selection via dunst if running.
 # Separate script for i3.
 
