@@ -1,0 +1,5 @@
+#!/bin/sh
+# Choose and echo a searcher name and url format string.
+
+QB_CONFIG="$HOME/.config/qutebrowser/config.yml";
+sed -n '/^url.searchengines: {$/, /^}$/p' "$QB_CONFIG" | tail -n +2 | head -n -1 | grep -Ev '^[[:space:]]*#|^[[:space:]]*$' | sed 's/,//g' | rofi -show -dmenu -p 'searcher' -mesg 'choose searcher' | xargs;
