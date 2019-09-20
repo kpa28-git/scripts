@@ -1,0 +1,2 @@
+#!/bin/sh
+man -Tpdf $(man -k . | awk '{print $1}' | uniq | rofi -show -dmenu -l 10) | zathura -
