@@ -8,7 +8,7 @@ while getopts "bs" arg; do
 		s) SEARCHER=$("$HOME"/.local/bin/uitools/qb-get-searcher);
 			SID=$(echo "$SEARCHER" | awk -F ': ' '{print $1}');
 			SURL=$(echo "$SEARCHER" | awk -F ': ' '{print $2}');
-			STRING=$(rofi -show -dmenu -p "$SID" -mesg "Search $SURL");
+			STRING=$(rofi -show -dmenu -p "$SID" -mesg "🔎 $SURL");
 			DEST="$SID $STRING";;
 		*) notify-send "qb-open: invalid flag";;
 	esac;
