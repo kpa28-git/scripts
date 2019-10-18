@@ -1,0 +1,34 @@
+#!/bin/sh
+#   _     _
+#  | |__ | |__
+#  | '_ \| '_ \
+#  | | | | | | |
+#  |_| |_|_| |_|
+# Main help-house access script.
+# Opens the selected help-house file (HOW.md, WHAT.md, WHERE.md) in pager.
+# usage: hh <mode>
+# modes:
+#        (no arg): how
+#        -i: what
+#        -f: where
+#        -h: print usage
+
+_usage() {
+	printf "usage: hh <mode>\nmodes:\n\t(no arg): how\n\t-i: what\n\t-f: where\n\t-h: print usage\n";
+	exit 1;
+}
+
+while getopts "ifh?" arg; do
+	case "$arg" in
+		i) TYPE="WHAT.md";; # what  / -i(nfo)
+		f) TYPE="WHERE.md";;# where / -f(ind)
+		h|?|*) _usage;;
+	esac;
+done;
+# Default (no arguments): run how mode
+if [ $OPTIND -eq 1 ]; then TYPE="HOW.md"; fi;
+
+HH_DIR="$HOME/Documents/help-house/";
+TOPIC=$(find "$HH_DIR" -mindepth 1 -maxdepth 1 -type d -name "[!.]*" | xargs -n1 basename | sort -r | fzf);
+notify-send "help-house" "$TOPIC $TYPE";
+$PAGER "$HH_DIR$TOPIC/$TYPE";
