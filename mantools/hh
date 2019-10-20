@@ -5,30 +5,33 @@
 #  | | | | | | |
 #  |_| |_|_| |_|
 # Main help-house access script.
-# Opens the selected help-house file (HOW.md, WHAT.md, WHERE.md) in pager.
-# usage: hh <mode>
-# modes:
-#        (no arg): how
-#        -i: what
-#        -f: where
-#        -h: print usage
+# Opens the selected help-house file (how.md, what.md, where.md) in pager.
+# Usage: hh -f <helpfile> -q <query>
+# Options:
+#	-f: (optional) specify helpfile
+#		* how.md (default)
+#		* what.md
+#		* where.md
+#	-q: (optional) fzf query string to prefilter options
+#	-h: print usage
+
+HH_DIR="$HOME/Documents/help-house/";
+file="how.md";
+query="";
 
 _usage() {
-	printf "usage: hh <mode>\nmodes:\n\t(no arg): how\n\t-i: what\n\t-f: where\n\t-h: print usage\n";
+	printf "Usage: hh -f <helpfile> -q <query>\nOptions:\n\t-f: (optional) specify helpfile\n\t\t* how.md (default)\n\t\t* what.md\n\t\t* where.md\n\t-q: (optional) fzf query string to prefilter options\n\t-h: print usage\n"
 	exit 1;
 }
 
-while getopts "ifh?" arg; do
+while getopts "f:q:h?" arg; do
 	case "$arg" in
-		i) TYPE="WHAT.md";; # what  / -i(nfo)
-		f) TYPE="WHERE.md";;# where / -f(ind)
+		f) file=$OPTARG;;
+		q) query=$OPTARG;;
 		h|?|*) _usage;;
 	esac;
 done;
-# Default (no arguments): run how mode
-if [ $OPTIND -eq 1 ]; then TYPE="HOW.md"; fi;
 
-HH_DIR="$HOME/Documents/help-house/";
-TOPIC=$(find "$HH_DIR" -mindepth 1 -maxdepth 1 -type d -name "[!.]*" | xargs -n1 basename | sort -r | fzf);
-notify-send "help-house" "$TOPIC $TYPE";
-$PAGER "$HH_DIR$TOPIC/$TYPE";
+topic=$(find "$HH_DIR" -mindepth 1 -maxdepth 1 -type d -name "[!.]*" | xargs -n1 basename | sort -r | fzf --query="$query");
+notify-send "help-house" "$topic $file";
+$PAGER "$HH_DIR$topic/$file";
