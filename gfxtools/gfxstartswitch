@@ -3,7 +3,7 @@
 # Switches the gpu used for graphics on startup
 
 START_GPU_MODE=$(optimus-manager --print-startup | awk '{print $NF}' | xargs);
-SWITCH_TO=$([ "$START_GPU_MODE" = 'nvidia' ] && echo 'intel' || echo 'nvidia');
+SWITCH_TO=$([ "$START_GPU_MODE" = 'nvidia' ] && echo 'hybrid' || echo 'nvidia');
 
 notify-send '🎮 switch startup gpu' "$START_GPU_MODE -> $SWITCH_TO";
 optimus-manager --no-confirm --set-startup "$SWITCH_TO" >> /dev/null;
