@@ -24,9 +24,8 @@ fi;
 alias appsync='rsync -avxP';
 alias mirsync='rsync -avxP --delete';
 
-echo 'scripts/keys...';
+echo 'scripts...';
 appsync "$BK_SRC"'/.local/' "$BK_DEST"'/.local/';
-appsync "$BK_SRC"'/.ssh/' "$BK_DEST"'/.ssh/';
 
 echo 'config...';
 mirsync "$BK_SRC"'/.config/' "$BK_DEST"'/.config/';

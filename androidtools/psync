@@ -25,7 +25,7 @@ echo 'music...';
 mirsync "$BK_SRC"'/Music/' "$BK_DEST"'/Music/';
 mirsync "$BK_SRC"'/.config/mpd/playlists/' "$BK_DEST"'/Music/playlists/';
 
-echo 'stack...'
+echo 'stack...';
 
 
 echo 'update record...'
