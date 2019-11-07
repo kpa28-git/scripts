@@ -1,0 +1,7 @@
+#!/bin/sh
+# Run all local source package update scripts
+
+# Go packages
+printf 'go package updates\n';
+$HOME/.local/src/go/update.sh;
+

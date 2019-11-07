@@ -12,9 +12,9 @@
 !/luke-tools/**
 !/mantools/**
 !/musictools/**
+!/pkgtools/**
 !/polybar/**
 !/proctools/**
-!/programs/**
 !/themetools/**
 !/tools/**
 !/uitools/**
