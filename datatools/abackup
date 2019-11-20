@@ -54,6 +54,7 @@ echo 'data...';
 appsync "$BK_SRC"'/Documents/' "$BK_DEST"'/Documents/';
 appsync "$BK_SRC"'/Pictures/' "$BK_DEST"'/Pictures/';
 appsync "$BK_SRC"'/Projects/' "$BK_DEST"'/Projects/';
+appsync "$BK_SRC"'/audiobooks/' "$BK_DEST"'/audiobooks/';
 mirsync "$BK_SRC"'/Music/' "$BK_DEST"'/Music/';
 mirsync "$BK_SRC"'/vimwiki/' "$BK_DEST"'/vimwiki/';
 mirsync "$BK_SRC"'/Templates/' "$BK_DEST"'/Templates/';
