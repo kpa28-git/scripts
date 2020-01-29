@@ -13,6 +13,7 @@
 # -r: opens bookmark remove prompt
 # Presently rofi multi-select can't be combined with custom entries (https://github.com/davatorium/rofi/issues/807), so there are two tag prompts - one for existing and another for custom/new tags.
 
+# ADD: Add a new entry to buku bookmarks db.
 rbkadd() {
 	URL=$1;
 	MESG="🔖 add: $URL";
