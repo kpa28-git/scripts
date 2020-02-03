@@ -1,0 +1,4 @@
+#!/bin/sh
+
+BLACKLIST=$(< "$HOME"/.config/uitools/ignore_files tr '\n' ',' | sed 's/,/ -prune -o -name /g; s/^/-name /g; s/ -name $//g');
+find . $BLACKLIST -print;
