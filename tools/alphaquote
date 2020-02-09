@@ -15,7 +15,7 @@
 # Dependencies: sed, curl
 
 FREQ=$1;
-SYMBOL=$([ -n "$1" ] && echo "$1" || echo "SPX");
+SYMBOL=$([ -n "$2" ] && echo "$2" || echo "SPX");
 FUNCTION="TIME_SERIES_INTRADAY";
 KEY_FILE="$HOME/.config/api-keys/alphavantage-0.txt";
 BASE_URL="https://www.alphavantage.co/query";
