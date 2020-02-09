@@ -7,13 +7,13 @@
 #      /_/
 # Security price query script.
 #
-# Just a wrapper around alphaquote.sh for polybar (queries Alpha Vantage API).
 # Commandline Args:
 # 	* -f (frequency), valid values in {1, 5, 15, 30, 60}.
 # 	* -s (symbol), valid Alpha Vantage symbol (ie 'SPX')
 # 	* -a (always run): if supplied doesn't not check if it is market time
 # Dependencies: alphaquote, bc, sed, awk, curl
 # Outputs Format: $<price> <1 hr pct>% <24hr pct>% <7d pct>%
+# Just a wrapper around alphaquote.sh for polybar (queries Alpha Vantage API).
 
 ceil_div() {
 	echo "($1 + $2 - 1)/$2" | bc;
@@ -55,19 +55,18 @@ security_price() {
 	echo "\$$CLOSE_LATEST $PCT_01HR% $PCT_24HR% $PCT_07DAY%" | tr '\n' ' ';
 }
 
-
 # Defaults:
 FREQ=5;
 SYMBOL='SPX';
 ALWAYS_RUN=1;
 CUR_UTC=$(date -u +"%H%M");
 
-while getopts "f:s:a" arg; do
+while getopts 'f:s:a' arg; do
 	case $arg in
 		f) FREQ="$OPTARG";;
 		s) SYMBOL="$OPTARG";;
 		a) ALWAYS_RUN=0;;
-		*) notify-send "sprice: invalid flag";;
+		*) notify-send "sprice" "invalid flag";;
 	esac;
 done;
 

@@ -15,10 +15,10 @@
 # Dependencies: sed, curl
 
 FREQ=$1;
-SYMBOL=$2;
+SYMBOL=$([ -n "$1" ] && echo "$1" || echo "SPX");
+FUNCTION="TIME_SERIES_INTRADAY";
 KEY_FILE="$HOME/.config/api-keys/alphavantage-0.txt";
 BASE_URL="https://www.alphavantage.co/query";
-FUNCTION="TIME_SERIES_INTRADAY";
 
 if [ -f "$KEY_FILE" ]; then
 	API_KEY=$(sed 1q "$KEY_FILE");
