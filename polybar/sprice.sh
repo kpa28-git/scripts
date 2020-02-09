@@ -23,7 +23,7 @@ pct_change() {
 	echo "scale=4; ($1 / $2 - 1) * 100" | bc;
 }
 
-security_quote() {
+security_price() {
 	FREQ="$1";
 	SYMBOL="$2";
 	PER_HR=$(echo "60/$FREQ" | bc);
@@ -72,6 +72,6 @@ while getopts "f:s:a" arg; do
 done;
 
 if [ "$ALWAYS_RUN" -eq 0 ] || [ "$CUR_UTC" -gt 1400 ] && [ "$CUR_UTC" -lt 2200 ] ; then
-	security_quote "$FREQ" "$SYMBOL";
+	security_price "$FREQ" "$SYMBOL";
 fi;
 
