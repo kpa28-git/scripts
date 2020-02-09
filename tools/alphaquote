@@ -8,12 +8,14 @@
 # Alpha Vantage intraday price query script.
 # API Docs: https://www.alphavantage.co/documentation/
 #
-# First commandline argument (frequency) is required, valid values are in {1, 5, 15, 30, 60}.
+# Commandline Args:
+# 	* $1 (frequency),  valid values are in {1, 5, 15, 30, 60}.
+# 	* $2 (symbol), valid Alpha Vantage symbol (ie 'SPX')
 # A valid api key is required to be in a text file at $KEY_FILE (set to ~/.config/api-keys/alphavantage-0.txt by default).
 # Dependencies: sed, curl
 
 FREQ=$1;
-SYMBOL=$([ -n "$2" ] && echo "$2" || echo "SPX");
+SYMBOL=$2;
 KEY_FILE="$HOME/.config/api-keys/alphavantage-0.txt";
 BASE_URL="https://www.alphavantage.co/query";
 FUNCTION="TIME_SERIES_INTRADAY";
