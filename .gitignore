@@ -5,6 +5,7 @@
 !*/
 
 # Whitelist:
+!/apitools/**
 !/androidtools/**
 !/datatools/**
 !/gfxtools/**
@@ -16,7 +17,6 @@
 !/polybar/**
 !/proctools/**
 !/themetools/**
-!/tools/**
 !/uitools/**
 !LICENSE
 !README.md
