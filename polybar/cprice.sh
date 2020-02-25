@@ -14,13 +14,32 @@
 # Outputs Format: $<price> <1 hr pct>% <24hr pct>% <7d pct>%
 # Just a wrapper around coinquote.sh for polybar (queries Coinmarketcap API).
 
+sign() {
+	echo "var=$1;if(var<0) print -1 else if(var>0) print 1 else print 0" | bc;
+}
+
+pb_sign_color() {
+	case "$(sign "$1")" in
+		'-1') echo '%{F#CD0000}';;
+		'1') echo '%{F#00CD00}';;
+		*) echo '';;
+	esac;
+}
+
 coin_price() {
 	SIGFIG="$1";
 	SYMBOL="$2";
 	SCALAR=$(echo "10 ^ $SIGFIG" | bc);
 
-	coinquote "$SYMBOL" | jq ".price, .percent_change_1h, .percent_change_24h, .percent_change_7d | . * $SCALAR | round | . / $SCALAR" | sed '1s/^/$/; 2,4s/$/%/' | tr '\n' ' ';
+	QUOTE=$(coinquote "$SYMBOL" | jq ".price, .percent_change_1h, .percent_change_24h, .percent_change_7d | . * $SCALAR | round | . / $SCALAR");
+	CLOSE_LATEST=$(echo $QUOTE | awk '{print $1}');
+	PCT_01HR=$(echo $QUOTE | awk '{print $2}');
+	PCT_24HR=$(echo $QUOTE | awk '{print $3}');
+	PCT_07DAY=$(echo $QUOTE | awk '{print $4}');
+
+	echo "\$$CLOSE_LATEST $(pb_sign_color "$PCT_01HR")$PCT_01HR% $(pb_sign_color "$PCT_24HR")$PCT_24HR% $(pb_sign_color "$PCT_07DAY")$PCT_07DAY%" | tr '\n' ' ';
 }
+
 
 # Defaults:
 SIGFIG=2;

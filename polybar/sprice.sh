@@ -23,6 +23,18 @@ pct_change() {
 	echo "scale=4; ($1 / $2 - 1) * 100" | bc;
 }
 
+sign() {
+	echo "var=$1;if(var<0) print -1 else if(var>0) print 1 else print 0" | bc;
+}
+
+pb_sign_color() {
+	case "$(sign "$1")" in
+		'-1') echo '%{F#CD0000}';;
+		'1') echo '%{F#00CD00}';;
+		*) echo '';;
+	esac;
+}
+
 security_price() {
 	FREQ="$1";
 	SYMBOL="$2";
@@ -52,7 +64,7 @@ security_price() {
 	PCT_24HR=$(pct_change "$CLOSE_LATEST" "$CLOSE_24HR" | sed 's/.\{2\}$//');
 	PCT_07DAY=$(pct_change "$CLOSE_LATEST" "$CLOSE_07DAY" | sed 's/.\{2\}$//');
 
-	echo "\$$CLOSE_LATEST $PCT_01HR% $PCT_24HR% $PCT_07DAY%" | tr '\n' ' ';
+	echo "\$$CLOSE_LATEST $(pb_sign_color "$PCT_01HR")$PCT_01HR% $(pb_sign_color "$PCT_24HR")$PCT_24HR% $(pb_sign_color "$PCT_07DAY")$PCT_07DAY%" | tr '\n' ' ';
 }
 
 # Defaults:
