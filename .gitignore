@@ -9,6 +9,7 @@
 !/androidtools/**
 !/datatools/**
 !/gfxtools/**
+!/i3tools/**
 !/luke-i3cmds/**
 !/luke-tools/**
 !/mantools/**
@@ -16,6 +17,7 @@
 !/pkgtools/**
 !/polybar/**
 !/proctools/**
+!/termtools/**
 !/themetools/**
 !/uitools/**
 !LICENSE
