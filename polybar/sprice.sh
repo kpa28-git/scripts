@@ -70,9 +70,7 @@ security_price() {
 # Defaults:
 FREQ=5;
 SYMBOL='^SPX';
-FPATH="/var/tmp/$SYMBOL.txt";
 ALWAYS_RUN=1;
-CUR_UTC=$(date -u +'%H%M');
 
 while getopts 'f:s:a' arg; do
 	case $arg in
@@ -82,6 +80,9 @@ while getopts 'f:s:a' arg; do
 		*) notify-send 'sprice' 'invalid flag';;
 	esac;
 done;
+
+FPATH="/var/tmp/$SYMBOL.txt";
+CUR_UTC=$(date -u +'%H%M');
 
 if [ "$ALWAYS_RUN" -eq 0 ] || [ ! -f "$FPATH" ] || [ "$CUR_UTC" -gt 1400 ] && [ "$CUR_UTC" -lt 2200 ] ; then
 	security_price "$FREQ" "$SYMBOL" > "$FPATH";
