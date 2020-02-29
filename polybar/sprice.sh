@@ -70,6 +70,7 @@ security_price() {
 # Defaults:
 FREQ=5;
 SYMBOL='^SPX';
+FPATH="/var/tmp/$SYMBOL.txt";
 ALWAYS_RUN=1;
 CUR_UTC=$(date -u +'%H%M');
 
@@ -82,7 +83,8 @@ while getopts 'f:s:a' arg; do
 	esac;
 done;
 
-if [ "$ALWAYS_RUN" -eq 0 ] || [ "$CUR_UTC" -gt 1400 ] && [ "$CUR_UTC" -lt 2200 ] ; then
-	security_price "$FREQ" "$SYMBOL";
+if [ "$ALWAYS_RUN" -eq 0 ] || [ ! -f "$FPATH" ] || [ "$CUR_UTC" -gt 1400 ] && [ "$CUR_UTC" -lt 2200 ] ; then
+	security_price "$FREQ" "$SYMBOL" > "$FPATH";
 fi;
 
+cat "$FPATH";
