@@ -1,0 +1,3 @@
+#!/bin/sh
+# Either connects to a previous session or starts a new one.
+tmux a || tmux
