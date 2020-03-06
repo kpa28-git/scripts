@@ -19,10 +19,10 @@ new_width=$(xdotool getwindowgeometry "$win_id" | grep Geometry | grep -o " [0-9
 case "$X_LOC" in
 	left) new_x=$PADDING;;
 	right) new_x=$(($(xdotool getdisplaygeometry | awk '{print $1}') - new_width - $PADDING));;
-esac
+esac;
 case "$Y_LOC" in
 	top) new_y=$PADDING;;
 	bottom) new_y=$(($(xdotool getdisplaygeometry | awk '{print $2}') - new_size - $PADDING));;
-esac
+esac;
 xdotool windowmove "$win_id" "$new_x" "$new_y";
-#xdotool set_window --name "hover_$win_name" "$win_id"
+#xdotool set_window --name "hover_$win_name" "$win_id";
