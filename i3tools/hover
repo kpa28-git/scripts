@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# Hover settings
+X_LOC=$([ -n "$1" ] && echo "$1" || echo 'right' );  # [left|right]
+Y_LOC=$([ -n "$2" ] && echo "$2" || echo 'bottom' ); # [top|bottom]
+WIN_DIV=3; # Divide total display length/width by this to get new length/width
+PADDING=7; # X/Y padding
+
+# Set size
+win_id=$(xdotool getwindowfocus);
+#win_name=$(xdotool getwindowname "$win_id");
+new_width=$(($(xdotool getdisplaygeometry | awk '{print $2}') / $WIN_DIV));
+new_height=$(($(xdotool getdisplaygeometry | awk '{print $1}') / $WIN_DIV));
+xdotool windowsize "$win_id" $new_height $new_width;
+new_size=$(xdotool getwindowgeometry "$win_id" | grep Geometry | sed -e 's/x/ /g' | awk '{print $3}');
+new_width=$(xdotool getwindowgeometry "$win_id" | grep Geometry | grep -o " [0-9]*");
+
+# Set position
+case "$X_LOC" in
+	left) new_x=$PADDING;;
+	right) new_x=$(($(xdotool getdisplaygeometry | awk '{print $1}') - new_width - $PADDING));;
+esac
+case "$Y_LOC" in
+	top) new_y=$PADDING;;
+	bottom) new_y=$(($(xdotool getdisplaygeometry | awk '{print $2}') - new_size - $PADDING));;
+esac
+xdotool windowmove "$win_id" "$new_x" "$new_y";
+#xdotool set_window --name "hover_$win_name" "$win_id"
