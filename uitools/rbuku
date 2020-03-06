@@ -30,10 +30,14 @@ rbkadd() {
 
 # SELECT: Select a bookmark entry and send url to stdout.
 rbkselect() {
-	FMT=40;  # 10: URL, 20: URL TAGS, 30: TITLE, 40: URL TITLE TAGS, 50: TITLE TAGS
-	SEL=$(buku --np -p --format="$FMT" | rofi -dmenu -lines 5 -i -p '🔖search');
-	echo "$SEL" | awk -F '\t' "{print \$1}";
-	notify-send "🔖 selected" "$SEL";
+	FMT=40;  # Buku format codes - 10: URL, 20: URL TAGS, 30: TITLE, 40: URL TITLE TAGS, 50: TITLE TAGS
+	SEL=$(buku --np -p --format="$FMT" | rofi -dmenu -lines 5 -i -p '🔖search' -multi-select);
+	if [ -n "$SEL" ] ; then
+		echo "$SEL" | awk -F '\t' "{print \$1}";
+		notify-send '🔖 selecting' "$SEL";
+	else
+		notify-send '🔖 cancelled';
+	fi;
 }
 
 # REMOVE: Choose one or more bookmark entries to delete from buku.

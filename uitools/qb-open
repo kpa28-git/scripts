@@ -9,9 +9,18 @@ while getopts "bs" arg; do
 			SID=$(echo "$SEARCHER" | awk -F ': ' '{print $1}');
 			SURL=$(echo "$SEARCHER" | awk -F ': ' '{print $2}');
 			STRING=$(rofi -show -dmenu -p "$SID" -mesg "🔎 $SURL");
-			DEST="$SID $STRING";;
+			if [ -n "$STRING" ] ; then
+				DEST="$SID $STRING";
+				notify-send '🔎 searching' "$DEST";
+			else
+				DEST='';
+				notify-send '🔎 cancelled';
+			fi;;
 		*) notify-send "qb-open: invalid flag";;
 	esac;
 done;
 
-qutebrowser ":open -t $DEST";
+
+if [ -n "$DEST" ] ; then
+	qutebrowser ":open -t $DEST";
+fi;
