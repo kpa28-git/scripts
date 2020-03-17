@@ -6,7 +6,7 @@
 # Dependencies: geoloc, ping, curl, printf, tr, sed, awk
 
 getforecast() {
-	ping -q -c 1 1.1.1.1 >/dev/null || exit 1
+	ping -q -c 1 9.9.9.9 >/dev/null || exit 1
 	curl -s "wttr.in/$1" > "$HOME/.local/share/weatherreport" || exit 1 ;
 }
 
@@ -15,6 +15,7 @@ showweather() {
 	sed '13q;d' "$HOME/.local/share/weatherreport" | grep -o "m\\(-\\)*[0-9]\\+" | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print " ﰕ",$1 "°","",$2 "°"}' ;
 }
 
+ping -q -c 1 9.9.9.9 > /dev/null || (echo '' && exit 1);
 getforecast "$(geoloc "$1")";
 showweather;
 

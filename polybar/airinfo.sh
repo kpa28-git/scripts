@@ -28,6 +28,7 @@ pb_aqi_color() {
 	exit 0;
 }
 
+ping -q -c 1 9.9.9.9 > /dev/null || (echo '' && exit 1);
 AQI=$(airinfo "$1");
 EXIT_STATUS=$?
 if [ $EXIT_STATUS -ne 0 ]; then

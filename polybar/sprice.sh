@@ -85,7 +85,9 @@ FPATH="/var/tmp/$SYMBOL.txt";
 CUR_UTC=$(date -u +'%H%M');
 
 if [ "$ALWAYS_RUN" -eq 0 ] || [ ! -f "$FPATH" ] || [ "$CUR_UTC" -gt 1400 ] && [ "$CUR_UTC" -lt 2200 ] ; then
+	ping -q -c 1 9.9.9.9 > /dev/null || (echo '' && exit 1);
 	security_price "$FREQ" "$SYMBOL" > "$FPATH";
 fi;
 
 cat "$FPATH";
+exit 0;
