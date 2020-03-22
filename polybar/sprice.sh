@@ -89,5 +89,4 @@ if [ "$ALWAYS_RUN" -eq 0 ] || [ ! -f "$FPATH" ] || [ "$CUR_UTC" -gt 1400 ] && [ 
 	security_price "$FREQ" "$SYMBOL" > "$FPATH";
 fi;
 
-cat "$FPATH";
-exit 0;
+cat "$FPATH" && exit 0;

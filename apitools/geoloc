@@ -27,8 +27,7 @@ elif [ "$SOURCE" = 'auto' ]; then
 		LATLONG=$(echo "$IPLOC" | jq '.location.lat,.location.lng');
 	fi;
 else
-	echo "Commandline argument must be a valid latlong file in '$LOC_DIR' or 'auto'";
-	exit 1;
+	echo "Commandline argument must be a valid latlong file in '$LOC_DIR' or 'auto'" && exit 1;
 fi;
 
 echo "$LATLONG" | tr '\n' "$DELIM" | sed "s/$DELIM$//";

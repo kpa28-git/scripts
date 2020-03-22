@@ -30,11 +30,9 @@ pb_aqi_color() {
 
 ping -q -c 1 9.9.9.9 > /dev/null || (echo '' && exit 1);
 AQI=$(airinfo "$1");
-EXIT_STATUS=$?
+EXIT_STATUS=$?;
 if [ $EXIT_STATUS -ne 0 ]; then
-	echo "AQI ERROR";
-	exit "$EXIT_STATUS";
+	echo "AQI ERROR" && exit "$EXIT_STATUS";
 else
-	echo "$(pb_aqi_color "$AQI")$AQI";
-	exit 0;
+	echo "$(pb_aqi_color "$AQI")$AQI" && exit 0;
 fi;

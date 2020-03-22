@@ -32,7 +32,5 @@ if [ -f "$KEY_FILE" ]; then
 	-G $BASE_URL$ENDPOINT | jq ".data.$SYMBOL.quote.USD";
 	exit 0;
 else
-	echo "Coinmarket API key file must be here: $KEY_FILE";
-	exit 1;
-fi
-
+	echo "Coinmarket API key file must be here: $KEY_FILE" && exit 1;
+fi;

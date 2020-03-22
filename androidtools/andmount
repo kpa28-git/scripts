@@ -9,7 +9,7 @@
 MOUNT_LOC="$HOME"'/mnt/android/phone_a/';
 anddrives=$(simple-mtpfs -l 2>/dev/null);
 
-[ -z "$anddrives" ] && echo "No Android device detected" && exit;
+[ -z "$anddrives" ] && echo "No Android device detected" && exit 1;
 notify-send "🤖 Android device(s)" "$anddrives";
 
 simple-mtpfs --device 1 "$MOUNT_LOC";

@@ -6,7 +6,6 @@
 # Dependencies: geoloc, ping, curl, printf, tr, sed, awk
 
 getforecast() {
-	ping -q -c 1 9.9.9.9 >/dev/null || exit 1
 	curl -s "wttr.in/$1" > "$HOME/.local/share/weatherreport" || exit 1 ;
 }
 

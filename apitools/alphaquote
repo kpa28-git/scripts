@@ -23,9 +23,7 @@ BASE_URL='https://www.alphavantage.co/query';
 if [ -f "$KEY_FILE" ]; then
 	API_KEY=$(sed 1q "$KEY_FILE");
 	INTERVAL="$FREQ"'min';
-	curl -s -N "$BASE_URL?apikey=$API_KEY&function=$FUNCTION&symbol=$SYMBOL&interval=$INTERVAL&outputsize=full&datatype=csv";
-	exit 0;
+	curl -s -N "$BASE_URL?apikey=$API_KEY&function=$FUNCTION&symbol=$SYMBOL&interval=$INTERVAL&outputsize=full&datatype=csv" && exit 0;
 else
-	echo "Alpha Vantage API key file must be here: $KEY_FILE";
-	exit 1;
-fi
+	echo "Alpha Vantage API key file must be here: $KEY_FILE" && exit 1;
+fi;
