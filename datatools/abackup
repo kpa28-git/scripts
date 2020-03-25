@@ -36,7 +36,6 @@ echo 'dotfiles...'
 mirsync "$BK_SRC"'/.bash_logout' "$BK_DEST"'/.bash_logout';
 mirsync "$BK_SRC"'/.bash_profile' "$BK_DEST"'/.bash_profile';
 mirsync "$BK_SRC"'/.bashrc' "$BK_DEST"'/.bashrc';
-mirsync "$BK_SRC"'/.inputrc' "$BK_DEST"'/.inputrc';
 mirsync "$BK_SRC"'/.profile' "$BK_DEST"'/.profile';
 mirsync "$BK_SRC"'/.Xdefaults' "$BK_DEST"'/.Xdefaults';
 mirsync "$BK_SRC"'/.xinitrc' "$BK_DEST"'/.xinitrc';
