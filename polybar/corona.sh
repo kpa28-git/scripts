@@ -3,7 +3,7 @@
 # Dependencies: ping, curl, grep, sed, awk
 
 getreport() {
-	curl -s 'https://corona-stats.online/us' > "$HOME/.local/share/coronareport" || exit 1;
+	curl -s 'https://corona-stats.online/states/us' > "$HOME/.local/share/coronareport" || exit 1;
 }
 
 showreport() {
