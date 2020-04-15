@@ -5,7 +5,7 @@
 #  | | | | | | |
 #  |_| |_|_| |_|
 # Main help-house access script.
-# Opens the selected help-house file (how.md, what.md, where.md) in pager.
+# Opens the selected help-house file (how.md, what.md, where.md) in markdown viewer with paging.
 # Usage: hh -f <helpfile> -q <query>
 # Options:
 #	-f: (optional) specify helpfile
@@ -14,8 +14,10 @@
 #		* where.md
 #	-q: (optional) fzf query string to prefilter options
 #	-h: print usage
+# Dependencies: glow
 
 HH_DIR="$HOME/Documents/help-house/";
+VIEWER="/usr/bin/glow --pager";
 file="how.md";
 query="";
 
@@ -34,4 +36,4 @@ done;
 
 topic=$(find "$HH_DIR" -mindepth 1 -maxdepth 1 -type d -name "[!.]*" | xargs -n1 basename | sort -r | fzf --query="$query");
 notify-send "help-house" "$topic $file";
-$PAGER "$HH_DIR$topic/$file";
+$VIEWER "$HH_DIR$topic/$file";
