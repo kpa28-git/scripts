@@ -1,0 +1,9 @@
+#!/bin/sh
+
+alias myip="curl -s ifconfig.co";
+SLEEP_INT=$([ -n "$1" ] && echo "$1" || echo '1');
+
+until [ "$(myip)" ];
+	do sleep "$SLEEP_INT";
+done;
+notify-say ' internet online' "ip address $(myip)";
