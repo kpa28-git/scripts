@@ -1,4 +1,6 @@
 #!/bin/sh
+# Checks internet every second until it comes back,
+# plays an auditory message when it returns.
 
 alias myip="curl -s ifconfig.co";
 SLEEP_INT=$([ -n "$1" ] && echo "$1" || echo '1');
