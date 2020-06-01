@@ -1,0 +1,15 @@
+#!/bin/sh
+
+COU="United_States";
+CITY="";
+alias sstart="sudo systemctl start" sstop="sudo systemctl stop";
+
+if [ "$(nordvpn status | awk '/Status/ { print $2 }')" = "Connected" ]; then
+	nordvpn set killswitch off;
+	nordvpn d;
+	sstop nordvpnd;
+else
+	sstart nordvpnd;
+	nordvpn set killswitch on;
+	nordvpn c "$COU" "$CITY";
+fi;
