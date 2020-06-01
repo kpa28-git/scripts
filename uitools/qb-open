@@ -1,30 +1,27 @@
 #!/bin/sh
 # Opens new tab in qutebrowser based on bookmark or search.
 
-DEST=$1;
 while getopts "bs" arg; do
 	case $arg in
-		b) DEST=$("$HOME"/.local/bin/uitools/rbuku -s);;
+		b) SID=$("$HOME"/.local/bin/uitools/rbuku -s);;
 		s) SEARCHER=$("$HOME"/.local/bin/uitools/qb-get-searcher);
 			if [ -n "$SEARCHER" ] ; then
 				SID=$(echo "$SEARCHER" | awk -F ': ' '{print $1}');
 				SURL=$(echo "$SEARCHER" | awk -F ': ' '{print $2}');
 				STRING=$(rofi -show -dmenu -p "$SID" -mesg "🔎 $SURL");
 				if [ -n "$STRING" ] ; then
-					DEST="$SID $STRING";
-					notify-send "🔎 $SID searching" "$DEST";
+					notify-send "🔎 $SID searching" "$STRING";
 				else
-					DEST='';
 					notify-send "🔎 $SID cancelled" && exit;
 				fi;
 			else
 				notify-send "🔎 cancelled" && exit;
 			fi;;
-		*) notify-send "qb-open: invalid flag";;
+		*) notify-send "qb-open: invalid flag" && exit;;
 	esac;
 done;
 
 
-if [ -n "$DEST" ] ; then
-	qutebrowser ":open -t $DEST";
+if [ -n "$SID" ] || [ -n "$STRING" ] ; then
+	qutebrowser ":open -t $SID $STRING";
 fi;
