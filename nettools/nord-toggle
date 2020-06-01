@@ -4,7 +4,7 @@ COU="United_States";
 CITY="";
 alias sstart="sudo systemctl start" sstop="sudo systemctl stop";
 
-if [ "$(nordvpn status | awk '/Status/ { print $2 }')" = "Connected" ]; then
+if nordvpn status | grep -q 'Status: Connected'; then
 	nordvpn set killswitch off;
 	nordvpn d;
 	sstop nordvpnd;
