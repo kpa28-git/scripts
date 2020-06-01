@@ -7,9 +7,9 @@ alias sstart="sudo systemctl start" sstop="sudo systemctl stop";
 if nordvpn status | grep -q 'Status: Connected'; then
 	nordvpn set killswitch off;
 	nordvpn d;
-	sstop nordvpnd && notify-say '嬨nordvpnd' 'stopped';
+	sstop nordvpnd && notify-send '嬨nordvpnd' 'stopped';
 else
-	sstart nordvpnd && notify-say '嬨nordvpnd' 'started';
+	sstart nordvpnd && notify-send '嬨nordvpnd' 'started';
 	nordvpn set killswitch on;
 	nordvpn c "$COU" "$CITY";
 fi;
