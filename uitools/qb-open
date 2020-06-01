@@ -6,15 +6,19 @@ while getopts "bs" arg; do
 	case $arg in
 		b) DEST=$("$HOME"/.local/bin/uitools/rbuku -s);;
 		s) SEARCHER=$("$HOME"/.local/bin/uitools/qb-get-searcher);
-			SID=$(echo "$SEARCHER" | awk -F ': ' '{print $1}');
-			SURL=$(echo "$SEARCHER" | awk -F ': ' '{print $2}');
-			STRING=$(rofi -show -dmenu -p "$SID" -mesg "🔎 $SURL");
-			if [ -n "$STRING" ] ; then
-				DEST="$SID $STRING";
-				notify-send '🔎 searching' "$DEST";
+			if [ -n "$SEARCHER" ] ; then
+				SID=$(echo "$SEARCHER" | awk -F ': ' '{print $1}');
+				SURL=$(echo "$SEARCHER" | awk -F ': ' '{print $2}');
+				STRING=$(rofi -show -dmenu -p "$SID" -mesg "🔎 $SURL");
+				if [ -n "$STRING" ] ; then
+					DEST="$SID $STRING";
+					notify-send "🔎 $SID searching" "$DEST";
+				else
+					DEST='';
+					notify-send "🔎 $SID cancelled" && exit;
+				fi;
 			else
-				DEST='';
-				notify-send '🔎 cancelled';
+				notify-send "🔎 cancelled" && exit;
 			fi;;
 		*) notify-send "qb-open: invalid flag";;
 	esac;
