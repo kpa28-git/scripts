@@ -9,9 +9,14 @@ openluks() { \
 	chosen="$(echo "$hotluks" | rofi -dmenu -i -p "Open which LUKS drive?" | awk '{print $1}')";
 	if [ -n "$chosen" ]; then
 		mapped=$(echo "$chosen" | awk -F '/' '{print $NF 1}');
-		sudo -A cryptsetup luksOpen "$chosen" "$mapped" && notify-send " LUKS opening" "$chosen opened." && exit 0;
-	else
-		exit 2;
+		sudo -A cryptsetup luksOpen "$chosen" "$mapped";
+		exit_code=$?;
+		if [ "$exit_code" -eq 0 ]; then
+			notify-send " LUKS opening" "$chosen opened.";
+		else
+			notify-send " LUKS error ($exit_code)" "couldn't open $chosen."
+			exit "$exit_code";
+		fi;
 	fi;
 }
 

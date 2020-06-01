@@ -6,7 +6,14 @@ mappedluks="$(lsblk -rpo "name,type,size,fstype,mountpoint" | awk '$2=="crypt"&&
 closeluks() { \
 	chosen="$(echo "$mappedluks" | rofi -dmenu -i -p "Close which LUKS mapping?" | awk '{print $1}')";
 	if [ -n "$chosen" ]; then
-		sudo -A cryptsetup luksClose "$chosen" && notify-send " LUKS closing" "$chosen closed." && exit 0;
+		sudo -A cryptsetup luksClose "$chosen";
+		exit_code=$?;
+		if [ "$exit_code" -eq 0 ]; then
+			notify-send " LUKS closing" "$chosen closed.";
+		else
+			notify-send " LUKS error ($exit_code)" "couldn't close $chosen."
+			exit "$exit_code";
+		fi;
 	fi;
 }
 

@@ -1,17 +1,13 @@
 #!/bin/sh
 # A rofi prompt to unmount drives.
 # Provides you with mounted partitions, select one to unmount.
-# Starts rluksclose prompt if the drive has lsblk type 'crypt'.
 # Drives mounted at /, /boot and /home will not be options to unmount.
 
 unmountusb() {
 	[ -z "$drives" ] && exit;
 	chosen=$(echo "$drives" | rofi -dmenu -i -p "Unmount which drive?" | awk '{print $1}');
-	isluks=$(lsblk -rpo "name,type,size,fstype,mountpoint" | awk '$2=="crypt"&&$4!="LVM2_member"{printf "%s %s\n", $1, $5}' | grep "$chosen");
 	[ -z "$chosen" ] && exit;
 	sudo -A umount "$chosen" && notify-send "💻 USB unmounting" "$chosen unmounted.";
-	[ -z "$isluks" ] && exit;
-	rluksclose;
 }
 
 unmountandroid() { \
