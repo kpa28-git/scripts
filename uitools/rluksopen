@@ -23,5 +23,5 @@ openluks() { \
 if [ -n "$hotluks" ]; then
 	openluks;
 else
-	notify-send ' LUKS' 'no luks device found';
+	notify-send ' LUKS open failed' 'no openable luks device found';
 fi;
