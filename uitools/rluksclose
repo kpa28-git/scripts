@@ -12,4 +12,6 @@ closeluks() { \
 
 if [ -n "$mappedluks" ]; then
 	closeluks;
+else
+	notify-send ' LUKS' 'no open luks device found';
 fi;
