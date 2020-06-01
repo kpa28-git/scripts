@@ -26,16 +26,15 @@ asktype() { \
 drives=$(lsblk -nrpo "name,type,size,mountpoint" | awk '($2=="part"||$2=="crypt")&&$4!~/\/boot|\/home$|SWAP/&&length($4)>1{printf "%s (%s)\n",$4,$3}');
 
 if ! grep simple-mtpfs /etc/mtab; then
-	[ -z "$drives" ] && echo "No drives to unmount." && exit;
-	echo "Unmountable USB drive detected.";
+	[ -z "$drives" ] && notify-send "Umount failed" "No Umountable drive found" && exit;
+	notify-send "💻 USB unmounting" "Umountable USB drive found."
 	unmountusb;
 else
-	if [ -z "$drives" ]
-	then
-		echo "Unmountable Android device detected.";
+	if [ -z "$drives" ]; then
+		notify-send "🤖 Android unmounting" "Umountable Android device found."
 		unmountandroid;
 	else
-		echo "Unmountable USB drive(s) and Android device(s) detected.";
+		notify-send "💻 🤖 unmounting" "Umountable USB drive and Android device found."
 		asktype;
 	fi;
 fi;

@@ -46,15 +46,15 @@ usbdrives="$(lsblk -rpo "name,type,size,mountpoint" | awk '$2=="part"||$2=="cryp
 #usbdrives=$(lsblk -nrpo "name,type,size,mountpoint" | awk '($2=="part"||$2=="crypt")&&$4!~/\/boot|\/home$|SWAP/&&length($4)>1{printf "%s (%s)\n",$4,$3}');
 
 if [ -z "$usbdrives" ]; then
-	[ -z "$anddrives" ] && echo "No USB drive or Android device detected" && exit;
-	echo "Android device(s) detected.";
+	[ -z "$anddrives" ] && notify-send "Mount failed" "No mountable drive found" && exit;
+	notify-send "🤖 Android mounting" "Mountable Android device found."
 	mountandroid;
 else
 	if [ -z "$anddrives" ]; then
-		echo "USB drive(s) detected.";
+		notify-send "💻 USB mounting" "Mountable USB drive found."
 		mountusb;
 	else
-		echo "Mountable USB drive(s) and Android device(s) detected.";
+		notify-send "💻 🤖 mounting" "Mountable USB drive and Android device found."
 		asktype;
 	fi;
 fi;
