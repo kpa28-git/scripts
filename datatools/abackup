@@ -24,8 +24,11 @@ fi;
 alias appsync='rsync -avxP';
 alias mirsync='rsync -avxP --delete';
 
-echo 'scripts...';
-appsync "$BK_SRC"'/.local/' "$BK_DEST"'/.local/';
+echo 'local...';
+mirsync "$BK_SRC"'/.local/bin/' "$BK_DEST"'/.local/bin/';
+mirsync "$BK_SRC"'/.local/opt/' "$BK_DEST"'/.local/opt/';
+mirsync "$BK_SRC"'/.local/src/' "$BK_DEST"'/.local/src/';
+appsync --exclude='Trash' "$BK_SRC"'/.local/share/' "$BK_DEST"'/.local/share/';
 
 echo 'config...';
 mirsync "$BK_SRC"'/.config/' "$BK_DEST"'/.config/';
