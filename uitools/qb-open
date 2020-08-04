@@ -3,7 +3,7 @@
 
 while getopts "bs" arg; do
 	case $arg in
-		b) SID=$("$HOME"/.local/bin/uitools/rbuku -s);;
+		b) SID=$("$HOME"/.local/bin/uitools/rbuku -s);; # XXX Waiting for Input problem - https://github.com/jarun/buku/issues/447
 		s) SEARCHER=$("$HOME"/.local/bin/uitools/qb-get-searcher);
 			if [ -n "$SEARCHER" ] ; then
 				SID=$(echo "$SEARCHER" | awk -F ': ' '{print $1}');

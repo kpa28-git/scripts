@@ -24,14 +24,14 @@ rbkadd() {
 	TAGS=$ETAGS$CTAGS;
 	COMMENT=$(rofi -dmenu -i -lines 0 -mesg "$MESG" -p '🔖 comment');
 	#TITLE=$(rofi -dmenu -i -lines 0 -mesg "$MESG" -p 'title');
-	buku --np --tacit -a "$URL" "$TAGS" -c "$COMMENT";
+	buku --np --tacit --add "$URL" --tag "$TAGS" --comment "$COMMENT";
 	notify-send "🔖 added $URL" "$TAGS $COMMENT";
 }
 
 # SELECT: Select a bookmark entry and send url to stdout.
 rbkselect() {
 	FMT=40;  # Buku format codes - 10: URL, 20: URL TAGS, 30: TITLE, 40: URL TITLE TAGS, 50: TITLE TAGS
-	SEL=$(buku --np -p --format="$FMT" | rofi -dmenu -lines 5 -i -p '🔖search' -multi-select);
+	SEL=$(buku --np -p --format="$FMT" | rofi -dmenu -lines 5 -i -p '🔖 select (shift+enter to multi-select)' -multi-select);
 	if [ -n "$SEL" ] ; then
 		echo "$SEL" | awk -F '\t' "{print \$1}";
 		notify-send '🔖 selecting' "$SEL";
