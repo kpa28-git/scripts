@@ -15,24 +15,24 @@
 
 pb_aqi_color() {
 	case "$1" in
-		''|*[!0-9]*) echo "INVALID NUM" && exit 1;;
-		[0-2][0-9]) echo '%{F#00CD00}';;
-		[3-4][0-9]) echo '%{F#009966}';;
-		[5-9][0-9]) echo '%{F#FFDE33}';;
-		[1][0-4][0-9]) echo '%{F#FF9933}';;
-		[1][5-9][0-9]) echo echo '%{F#CC0033}';;
-		[2][0-9][0-9]) echo '%{F#660099}';;
-		[3-9][0-9][0-9]) echo '%{F#7E0023}';;
-		*) echo '' ;;
+		''|*[!0-9]*) printf 'INVALID NUM' && exit 1;;
+		[0-2][0-9]) printf '%%{F#00CD00}';;
+		[3-4][0-9]) printf '%%{F#009966}';;
+		[5-9][0-9]) printf '%%{F#FFDE33}';;
+		[1][0-4][0-9]) printf '%%{F#FF9933}';;
+		[1][5-9][0-9]) printf '%%{F#CC0033}';;
+		[2][0-9][0-9]) printf '%%{F#660099}';;
+		[3-9][0-9][0-9]) printf '%%{F#7E0023}';;
+		*) printf '' ;;
 	esac;
 	exit 0;
 }
 
-ping -q -c 1 9.9.9.9 > /dev/null || (echo '' && exit 1);
+ping -q -c 1 9.9.9.9 > /dev/null || (printf '' && exit 1);
 AQI=$(airinfo "$1");
 EXIT_STATUS=$?;
 if [ $EXIT_STATUS -ne 0 ]; then
-	echo "AQI ERROR" && exit "$EXIT_STATUS";
+	printf "AQI ERROR" && exit "$EXIT_STATUS";
 else
-	echo "$(pb_aqi_color "$AQI")$AQI" && exit 0;
+	printf "%s" "$(pb_aqi_color "$AQI")" "$AQI" && exit 0;
 fi;
