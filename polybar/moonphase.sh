@@ -9,7 +9,7 @@ getmoonphase() {
 	curl -s "wttr.in/$1?format=%m" > "$MOONFILE" || exit 1 ;
 }
 
-ping -q -c 1 9.9.9.9 > /dev/null || (echo '' && exit 1);
+ping -q -c 1 9.9.9.9 > /dev/null || (printf '' && exit 1);
 getmoonphase "$(geoloc "$1")";
 icon="$(cat "$MOONFILE")";
 
@@ -25,4 +25,4 @@ case "$icon" in
 	*) exit 1 ;;
 esac;
 
-echo "$nficon";
+printf "$nficon";

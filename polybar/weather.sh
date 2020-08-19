@@ -14,7 +14,7 @@ showweather() {
 	sed '13q;d' "$HOME/.local/share/weatherreport" | grep -o "m\\(-\\)*[0-9]\\+" | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print " ﰕ",$1 "°","",$2 "°"}' ;
 }
 
-ping -q -c 1 9.9.9.9 > /dev/null || (echo '' && exit 1);
+ping -q -c 1 9.9.9.9 > /dev/null || (printf '' && exit 1);
 getforecast "$(geoloc "$1")";
 showweather;
 

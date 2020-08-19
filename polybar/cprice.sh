@@ -53,5 +53,5 @@ while getopts 'f:s:' arg; do
 	esac;
 done;
 
-ping -q -c 1 9.9.9.9 > /dev/null || (echo '' && exit 1);
+ping -q -c 1 9.9.9.9 > /dev/null || (printf '' && exit 1);
 coin_price "$SIGFIG" "$SYMBOL" && exit 0;

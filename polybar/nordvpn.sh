@@ -1,11 +1,10 @@
 #!/bin/sh
 
-if [ "$(nordvpn status | awk '/Status:/ {print $4}')" = "Connected" ]
-then
+if [ "$(nordvpn status | awk '/Status:/ {print $4}')" = "Connected" ]; then
 	#echo "$(nordvpn status | awk '/IP:/ {print $4}' )"
-	echo "";
+	printf '';
 else
-	echo "";
+	printf '';
 fi
 
 
