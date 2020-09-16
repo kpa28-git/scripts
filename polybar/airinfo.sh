@@ -28,11 +28,12 @@ pb_aqi_color() {
 	exit 0;
 }
 
-ping -q -c 1 9.9.9.9 > /dev/null || (printf '' && exit 1);
-AQI=$(airinfo "$1");
-EXIT_STATUS=$?;
-if [ $EXIT_STATUS -ne 0 ]; then
-	printf "AQI ERROR" && exit "$EXIT_STATUS";
+#ping -q -c 1 9.9.9.9 > /dev/null || (printf '' && exit 1);
+aqi=$(airinfo "$1");
+exit_code=$?;
+
+if [ "$exit_code" -ne 0 ]; then
+	printf "AQI ERROR" && exit "$exit_code";
 else
-	printf "%s" "$(pb_aqi_color "$AQI")" "$AQI" && exit 0;
+	printf "%s" "$(pb_aqi_color "$aqi")$aqi" && exit 0;
 fi;

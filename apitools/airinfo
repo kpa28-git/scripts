@@ -23,8 +23,7 @@ if [ -f "$KEY_FILE" ]; then
 
 	if [ -n "$RETVAL" ]; then
 		if [ "$(echo "$RETVAL" | jq -r '.status')" = "ok" ]; then
-			echo "$RETVAL" | jq '.data.aqi';
-			exit 0;
+			echo "$RETVAL" | jq '.data.aqi' && exit 0;
 		fi;
 	fi;
 else

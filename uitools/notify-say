@@ -4,4 +4,4 @@
 VOICE='en-wm'; # Welsh Mainland voice
 
 notify-send "$1" "$2";
-espeak -v "$VOICE" "$1, $2"  >/dev/null 2>&1;
+espeak -v "$VOICE" "$1. $2"  >/dev/null 2>&1;
