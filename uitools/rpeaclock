@@ -2,7 +2,7 @@
 # Run a custom chosen peaclock function from the peaclock config directory
 
 NHEADER="⏲ rpeaclock";
-chosen=$(fd '[^\.gitignore]' --regex -t 'f' -d 1 "$XDG_CONFIG_HOME/peaclock"| sed 's!.*/!!' | rofi -show -dmenu -i -l 7 -p "$NHEADER" -mesg 'choose peaclock function');
+chosen=$(fd '[^\.gitignore]' --regex -t 'f' -d 1 "$XDG_CONFIG_HOME/peaclock" | sed 's!.*/!!' | rofi -show -dmenu -i -l 7 -p "$NHEADER" -mesg 'choose peaclock function');
 exit_code=$?;
 
 if [ "$exit_code" -eq 0 ]; then
