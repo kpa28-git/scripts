@@ -3,21 +3,23 @@
 # Provides you with mounted partitions, select one to unmount.
 # Drives mounted at /, /boot and /home will not be options to unmount.
 
+NHEADER="💾 rumount"
+
 unmountusb() {
-	[ -z "$drives" ] && exit;
-	chosen=$(echo "$drives" | rofi -dmenu -i -p "Unmount which drive?" | awk '{print $1}');
-	[ -z "$chosen" ] && exit;
-	sudo -A umount "$chosen" && notify-send "💻 USB unmounting" "$chosen unmounted.";
+	[ -z "$drives" ] && exit 0;
+	chosen="$(echo "$drives" | rofi -dmenu -i -p "$NHEADER" -mesg 'Unmount which usb drive?' | awk '{print $1}')";
+	[ -z "$chosen" ] && exit 1;
+	sudo -A umount "$chosen" && notify-send "$NHEADER" "$chosen usb drive unmounted" && exit 0;
 }
 
 unmountandroid() { \
-	chosen=$(awk '/simple-mtpfs/ {print $2}' /etc/mtab | rofi -dmenu -i -p "Unmount which device?");
-	[ -z "$chosen" ] && exit;
-	sudo -A umount -l "$chosen" && notify-send "🤖 Android unmounting" "$chosen unmounted.";
+	chosen=$(awk '/simple-mtpfs/ {print $2}' /etc/mtab | rofi -dmenu -i -p "$NHEADER" -mesg 'Unmount which Android device?');
+	[ -z "$chosen" ] && exit 1;
+	sudo -A umount -l "$chosen" && notify-send "$NHEADER" "$chosen Android device unmounted" && exit 0;
 }
 
 asktype() { \
-	case "$(printf "USB\\nAndroid" | rofi -dmenu -i -p "Unmount a USB drive or Android device?")" in
+	case "$(printf "USB\\nAndroid" | rofi -dmenu -i -p "$NHEADER" -mesg 'Unmount a USB drive or Android device?')" in
 		USB) unmountusb ;;
 		Android) unmountandroid ;;
 	esac;
@@ -26,15 +28,15 @@ asktype() { \
 drives=$(lsblk -nrpo "name,type,size,mountpoint" | awk '($2=="part"||$2=="crypt")&&$4!~/\/boot|\/home$|SWAP/&&length($4)>1{printf "%s (%s)\n",$4,$3}');
 
 if ! grep simple-mtpfs /etc/mtab; then
-	[ -z "$drives" ] && notify-send "Umount failed" "No Umountable drive found" && exit;
-	notify-send "💻 USB unmounting" "Umountable USB drive found."
+	[ -z "$drives" ] && notify-send "$NHEADER" "No umountable drive found" && exit 0;
+	notify-send "$NHEADER" "Umountable USB drive found"
 	unmountusb;
 else
 	if [ -z "$drives" ]; then
-		notify-send "🤖 Android unmounting" "Umountable Android device found."
+		notify-send "$NHEADER" "Umountable Android device found"
 		unmountandroid;
 	else
-		notify-send "💻 🤖 unmounting" "Umountable USB drive and Android device found."
+		notify-send "$NHEADER" "Umountable USB drive and Android device found"
 		asktype;
 	fi;
 fi;

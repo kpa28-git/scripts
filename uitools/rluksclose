@@ -1,24 +1,26 @@
 #!/bin/sh
 # Close/Lock a LUKS device with rofi prompt
 
-mappedluks="$(lsblk -rpo "name,type,size,fstype,mountpoint" | awk '$2=="crypt"&&$4!="LVM2_member"&&$5==""{printf "%s (%s)\n",$1,$3}')";
+NHEADER="🔒 rluksclose";
+mappedluks="$(lsblk -rpo 'name,type,size,fstype,mountpoint' | awk '$2=="crypt"&&$4!="LVM2_member"&&$5==""{printf "%s (%s)\n",$1,$3}')";
 
 closeluks() { \
-	chosen="$(echo "$mappedluks" | rofi -dmenu -i -p "Close which LUKS mapping?" | awk '{print $1}')";
+	chosen="$(echo "$mappedluks" | rofi -dmenu -i -p "$NHEADER" -mesg 'Close which LUKS mapping?' | awk '{print $1}')";
 	if [ -n "$chosen" ]; then
 		sudo -A cryptsetup luksClose "$chosen";
 		exit_code=$?;
 		if [ "$exit_code" -eq 0 ]; then
-			notify-send " LUKS closing" "$chosen closed.";
+			notify-send "$NHEADER" "$chosen closed" && exit 0;
 		else
-			notify-send " LUKS error ($exit_code)" "couldn't close $chosen."
-			exit "$exit_code";
+			notify-send "$NHEADER" "couldn\'t close $chosen ($exit_code)" && exit "$exit_code";
 		fi;
+	else
+		notify-send "$NHEADER" "luks close cancelled" && exit 0;
 	fi;
 }
 
 if [ -n "$mappedluks" ]; then
 	closeluks;
 else
-	notify-send ' LUKS close failed' 'no closeable luks device found';
+	notify-send "$NHEADER" "no closeable luks device found" && exit 0;
 fi;

@@ -1,25 +1,27 @@
 #!/bin/sh
 # Open/Unlock a hotplugged LUKS device with rofi prompt
 
-hotluks="$(lsblk -rpo "name,hotplug,fstype,size,mountpoint" | awk '$2==1&&$3=="crypto_LUKS"&&$5==""{printf "%s (%s)\n",$1,$4}')";
+NHEADER="🔒 rluksopen";
+hotluks="$(lsblk -rpo 'name,hotplug,fstype,size,mountpoint' | awk '$2==1&&$3=="crypto_LUKS"&&$5==""{printf "%s (%s)\n",$1,$4}')";
 
 openluks() { \
-	chosen="$(echo "$hotluks" | rofi -dmenu -i -p "Open which LUKS drive?" | awk '{print $1}')";
+	chosen="$(echo "$hotluks" | rofi -dmenu -i -p "$NHEADER" -mesg 'Open which LUKS drive?' | awk '{print $1}')";
 	if [ -n "$chosen" ]; then
 		mapped=$(echo "$chosen" | awk -F '/' '{print $NF 1}');
 		sudo -A cryptsetup luksOpen "$chosen" "$mapped";
 		exit_code=$?;
 		if [ "$exit_code" -eq 0 ]; then
-			notify-send " LUKS opening" "$chosen opened.";
+			notify-send "$NHEADER" "$chosen opened" && exit 0;
 		else
-			notify-send " LUKS error ($exit_code)" "couldn't open $chosen."
-			exit "$exit_code";
+			notify-send "$NHEADER" "couldn\'t open $chosen ($exit_code)" && exit "$exit_code";
 		fi;
+	else
+		notify-send "$NHEADER" "luks open cancelled" && exit 0;
 	fi;
 }
 
 if [ -n "$hotluks" ]; then
 	openluks;
 else
-	notify-send ' LUKS open failed' 'no openable luks device found';
+	notify-send "$NHEADER" "no openable luks device found" && exit 0;
 fi;

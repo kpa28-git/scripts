@@ -12,31 +12,31 @@
 # -s: opens bookmark select prompt (default)
 # -r: opens bookmark remove prompt
 # Presently rofi multi-select can't be combined with custom entries (https://github.com/davatorium/rofi/issues/807), so there are two tag prompts - one for existing and another for custom/new tags.
+NHEADER="🔖 rbuku";
 
 # ADD: Add a new entry to buku bookmarks db.
 rbkadd() {
-	URL=$1;
-	MESG="🔖 add: $URL";
-	ETAGS=$(buku --np -t | rofi -dmenu -lines 5 -i -mesg "$MESG" -p '🔖 tags (shift+enter to multi-select)' -multi-select | sed "s/[0-9]*\.//; s/([0-9]*)//; s/^[[:space:]]*//; s/[[:space:]]*$//;" | tr '\n' ',');
-	notify-send "🔖selected tags: $ETAGS";
-	CTAGS=$(rofi -dmenu -lines 5 -i -mesg "$MESG" -p '🔖 custom tags (comma separated)');
-	notify-send "🔖custom tags: $CTAGS";
-	TAGS=$ETAGS$CTAGS;
-	COMMENT=$(rofi -dmenu -i -lines 0 -mesg "$MESG" -p '🔖 comment');
-	#TITLE=$(rofi -dmenu -i -lines 0 -mesg "$MESG" -p 'title');
-	buku --np --tacit --add "$URL" --tag "$TAGS" --comment "$COMMENT";
-	notify-send "🔖 added $URL" "$TAGS $COMMENT";
+	url=$1;
+	etags=$(buku --np -t | rofi -dmenu -l 7 -i -p "$NHEADER" -mesg "select tags for $url (shift+enter to multi-select)" -multi-select | sed "s/[0-9]*\.//; s/([0-9]*)//; s/^[[:space:]]*//; s/[[:space:]]*$//;" | tr '\n' ',');
+	notify-send "$NHEADER" "selected tags: $etags";
+	tags=$(rofi -dmenu -l 7 -i -p "$NHEADER" -mesg "add custom tags for $url (comma separated)");
+	notify-send "$NHEADER" "custom tags: $tags";
+	comment=$(rofi -dmenu -i -l 0 -p "$NHEADER" -mesg "add comment for $url");
+	#title=$(rofi -dmenu -i -lines 0 -p "$NHEADER" -mesg "add title for $url");
+	buku --np --tacit --add "$url" --tag "$etags$ctags" --comment "$comment";
+	notify-send "$NHEADER" "added $url bookmark: $etags $ctags $comment";
 }
 
 # SELECT: Select a bookmark entry and send url to stdout.
 rbkselect() {
 	FMT=40;  # Buku format codes - 10: URL, 20: URL TAGS, 30: TITLE, 40: URL TITLE TAGS, 50: TITLE TAGS
-	SEL=$(buku --np -p --format="$FMT" | rofi -dmenu -lines 5 -i -p '🔖 select (shift+enter to multi-select)' -multi-select);
-	if [ -n "$SEL" ] ; then
-		echo "$SEL" | awk -F '\t' "{print \$1}";
-		notify-send '🔖 selecting' "$SEL";
+	sel=$(buku --np -p --format="$FMT" | rofi -dmenu -l 7 -i -p "$NHEADER" -mesg 'select bookmarks (shift+enter to multi-select)' -multi-select);
+	if [ -n "$sel" ] ; then
+		echo "$sel" | awk -F '\t' "{print \$1}";
+		notify-send "$NHEADER" "selected $sel";
+		exit 0;
 	else
-		notify-send '🔖 cancelled';
+		notify-send "$NHEADER" "select cancelled" && exit 1;
 	fi;
 }
 
@@ -44,12 +44,11 @@ rbkselect() {
 rbkremove() {
 	FMT=40;  # 10: URL, 20: URL TAGS, 30: TITLE, 40: URL TITLE TAGS, 50: TITLE TAGS
 	RFMT='d'; # Integer row of selected items
-	SEL_IDX_LIST=$(buku --np -p --format="$FMT" | rofi -dmenu -format "$RFMT" -lines 5 -i -mesg '🔖 remove (esc to cancel)' -p 'remove (shift+enter to multi-select)' -no-custom -multi-select | tac);
-	for i in $SEL_IDX_LIST
-	do
-		SEL=$(buku --np -p --format=10 | head -n "$i" | tail -n 1);
+	sel_idx_list=$(buku --np -p --format="$FMT" | rofi -dmenu -format "$RFMT" -l 7 -i -p "$NHEADER" -mesg 'remove bookmarks (shift+enter to multi-select)' -no-custom -multi-select | tac);
+	for i in $sel_idx_list; do
+		sel=$(buku --np -p --format=10 | head -n "$i" | tail -n 1);
 		buku --np --tacit -d "$i";
-		notify-send "🔖 removed" "$SEL";
+		notify-send "$NHEADER" "removed $sel";
 	done;
 }
 
@@ -58,7 +57,7 @@ while getopts "a:sr" arg; do
 		a) rbkadd "$OPTARG";;
 		s) rbkselect;;
 		r) rbkremove;;
-		*) notify-send "rbuku: invalid flag";;
+		*) notify-send "$NHEADER" "invalid flag" && exit 1;;
 	esac;
 done;
 

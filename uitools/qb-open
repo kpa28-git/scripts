@@ -1,27 +1,33 @@
 #!/bin/sh
 # Opens new tab in qutebrowser based on bookmark or search.
 
+qb_get_searcher() {
+	QB_CONFIG="$HOME/.config/qutebrowser/config.yml";
+	sed -n '/^url.searchengines: {$/, /^}$/p' "$QB_CONFIG" | tail -n +2 | head -n -1 | grep -Ev '^[[:space:]]*#|^[[:space:]]*$' | sed 's/,//g' | rofi -show -dmenu -l 7 -p "🔎 qb-open" -mesg 'choose searcher' | xargs;
+}
+
 while getopts "bs" arg; do
 	case $arg in
-		b) SID=$("$HOME"/.local/bin/uitools/rbuku -s);; # XXX Waiting for Input problem - https://github.com/jarun/buku/issues/447
-		s) SEARCHER=$("$HOME"/.local/bin/uitools/qb-get-searcher);
-			if [ -n "$SEARCHER" ] ; then
-				SID=$(echo "$SEARCHER" | awk -F ': ' '{print $1}');
-				SURL=$(echo "$SEARCHER" | awk -F ': ' '{print $2}');
-				STRING=$(rofi -show -dmenu -p "$SID" -mesg "🔎 $SURL");
-				if [ -n "$STRING" ] ; then
-					notify-send "🔎 $SID searching" "$STRING";
+		b) sid=$("$HOME"/.local/bin/uitools/rbuku -s);; # XXX Waiting for Input problem - https://github.com/jarun/buku/issues/447
+		s) searcher=$(qb_get_searcher);
+			if [ -n "$searcher" ] ; then
+				sid=$(echo "$searcher" | awk -F ': ' '{print $1}');
+				surl=$(echo "$searcher" | awk -F ': ' '{print $2}');
+				notify-send "🔎 qb-open" "$sid search selected";
+				string=$(rofi -show -dmenu -l 7 -p "🔎 qb-open" -mesg "search $sid ($surl)");
+				if [ -n "$string" ] ; then
+					notify-send "🔎 qb-open" "$sid search started: $string";
 				else
-					notify-send "🔎 $SID cancelled" && exit;
+					notify-send "🔎 qb-open" "$sid search cancelled" && exit 1;
 				fi;
 			else
-				notify-send "🔎 cancelled" && exit;
+				notify-send "🔎 qb-open" "search cancelled" && exit 1;
 			fi;;
-		*) notify-send "qb-open: invalid flag" && exit;;
+		*) notify-send "qb-open" "invalid flag" && exit 1;;
 	esac;
 done;
 
 
-if [ -n "$SID" ] || [ -n "$STRING" ] ; then
-	qutebrowser ":open -t $SID $STRING";
+if [ -n "$sid" ] || [ -n "$string" ] ; then
+	qutebrowser ":open -t $sid $string" && exit 0;
 fi;
