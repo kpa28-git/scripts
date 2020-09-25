@@ -1,0 +1,14 @@
+#!/bin/sh
+# Archive and compress a file or directory using tar and xz compression
+# Second arg is optional archive destination, if none is supplied dumps the
+# compressed archive to the current directory.
+
+LVL='9';	# xz compression level
+THREADS='4';	# xz threads ('0' uses all available cores)
+ARCHIVE_NAME="$(basename "$1").tar.xz";
+ARCHIVE_PATH=$([ -n "$2" ] && echo "$2/$ARCHIVE_NAME" || echo "$ARCHIVE_NAME");
+
+notify-send "compress-xz" "started compression: $1 -> $ARCHIVE_PATH";
+#tar -cvf - "$1" | xz -"$LVL" -T "$THREADS" -c - > "$ARCHIVE_PATH"; # using pipes
+tar -cvf "$ARCHIVE_PATH" --use-compress-program="xz -$LVL -T $THREADS" "$1";
+notify-send "compress-xz" "finished compression: $1 -> $ARCHIVE_PATH";
