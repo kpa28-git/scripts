@@ -6,6 +6,7 @@
 #  /_.___/_.___/\__,_/\___/_/|_|\__,_/ .___/
 #                                   /_/
 # backup (B) and backup-crossplatform (BC) drive backup script.
+# The contents of 'Backup' directory are append synced to the destination root
 
 BK_SRC="$HOME";
 BK_MOUNT='/mnt/usb/generic_a';
@@ -25,7 +26,7 @@ alias appsync='sudo rsync -avxP';
 alias mirsync='sudo rsync -avxP --delete';
 
 echo 'generic backup...';
-appsync "$BK_SRC"'/backup/' "$BK_DEST"'/';
+appsync "$BK_SRC"'/Backup/' "$BK_DEST"'/';
 
 echo 'update record...';
 date +'%Y-%m-%d_%r' | sed s/\ //g >> "$BK_DEST/$BK_TYPE.txt";

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+NHEADER="📖 $(basename "$0")"
+# BASEDIR=$READING/*book*/
+MESG="Which book?"
+
+sel=$(fd -I . "$READING"/*book* -e 'pdf' -e 'epub' | rofi -lines 10 -dmenu -i -p "$NHEADER" -mesg "$MESG");
+
+if [ -n "$sel" ] ; then
+	notify-send "$NHEADER" "$sel";
+	xdg-open "$sel";
+else
+	notify-send "$NHEADER" "cancelled";
+fi;
+

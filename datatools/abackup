@@ -6,6 +6,12 @@
 #  \__,_/_.___/\__,_/\___/_/|_|\__,_/ .___/
 #                                  /_/
 # archive-backup (AB) drive backup script.
+#
+# Conventions:
+# 	* lowercase directories (ex: 'crunch') are mirrored (exception: .local/share/)
+# 	* uppercase directories (ex: 'Templates') are appended to (no deletions at destination)
+# 	* the contents of 'Backup' directory are append synced to the destination root
+# 	* standalone files are synced as expected
 
 BK_SRC="$HOME";
 BK_MOUNT='/mnt/usb/archive_a';
@@ -26,7 +32,7 @@ alias mirsync='rsync -avxP --delete';
 
 echo 'local...';
 mirsync "$BK_SRC"'/.local/bin/' "$BK_DEST"'/.local/bin/';
-mirsync "$BK_SRC"'/.local/opt/' "$BK_DEST"'/.local/opt/';
+# mirsync "$BK_SRC"'/.local/opt/' "$BK_DEST"'/.local/opt/';
 mirsync "$BK_SRC"'/.local/src/' "$BK_DEST"'/.local/src/';
 appsync --exclude='Trash' "$BK_SRC"'/.local/share/' "$BK_DEST"'/.local/share/';
 
@@ -42,7 +48,6 @@ mirsync "$BK_SRC"'/.bashrc' "$BK_DEST"'/.bashrc';
 mirsync "$BK_SRC"'/.profile' "$BK_DEST"'/.profile';
 mirsync "$BK_SRC"'/.Xdefaults' "$BK_DEST"'/.Xdefaults';
 mirsync "$BK_SRC"'/.xinitrc' "$BK_DEST"'/.xinitrc';
-mirsync "$BK_SRC"'/.xonshrc' "$BK_DEST"'/.xonshrc';
 mirsync "$BK_SRC"'/.xprofile' "$BK_DEST"'/.xprofile';
 mirsync "$BK_SRC"'/.Xresources' "$BK_DEST"'/.Xresources';
 mirsync "$BK_SRC"'/.xsession' "$BK_DEST"'/.xsession';
@@ -53,16 +58,16 @@ mirsync "$BK_SRC"'/crunch/' "$BK_DEST"'/crunch/';
 mirsync "$BK_SRC"'/crunch-thesis/' "$BK_DEST"'/crunch-thesis/';
 
 echo 'data...';
+appsync "$BK_SRC"'/Audiobooks/' "$BK_DEST"'/Audiobooks/';
 appsync "$BK_SRC"'/Documents/' "$BK_DEST"'/Documents/';
+appsync "$BK_SRC"'/Music/' "$BK_DEST"'/Music/';
 appsync "$BK_SRC"'/Pictures/' "$BK_DEST"'/Pictures/';
 appsync "$BK_SRC"'/Projects/' "$BK_DEST"'/Projects/';
-appsync "$BK_SRC"'/audiobooks/' "$BK_DEST"'/audiobooks/';
-mirsync "$BK_SRC"'/Music/' "$BK_DEST"'/Music/';
-mirsync "$BK_SRC"'/vimwiki/' "$BK_DEST"'/vimwiki/';
-mirsync "$BK_SRC"'/Templates/' "$BK_DEST"'/Templates/';
+appsync "$BK_SRC"'/Templates/' "$BK_DEST"'/Templates/';
+appsync "$BK_SRC"'/Videos/' "$BK_DEST"'/Videos/';
 
-echo 'generic backup...';
-appsync "$BK_SRC"'/backup/' "$BK_DEST"'/';
+# echo 'generic backup...';
+# appsync "$BK_SRC"'/Backup/' "$BK_DEST"'/';
 
 echo 'update record...';
 date +'%Y-%m-%d_%r' | sed s/\ //g >> "$BK_DEST/$BK_TYPE.txt";

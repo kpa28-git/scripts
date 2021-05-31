@@ -3,6 +3,7 @@ General, useful, short GNU/Linux bash and POSIX scripts to add to PATH.
 
 # TODO
 * cleanup/remove the luke scripts I don't use
+* refactor graphics setting scripts (gfxtools/...)
 * ~~rofi/buku integration scripts~~
 * make API functions return a symbol when there is no network connection
 

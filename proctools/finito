@@ -5,11 +5,10 @@
 #   _/      _/  _/    _/  _/    _/      _/    _/
 #  _/      _/  _/    _/  _/      _/_/    _/_/
 
-DONEAT=$(date +"%I:%M %p");
-TITLE="finito $DONEAT";
-CNT=10;
+CURTIME=$(date +"%I:%M %p");
+CNT=1;
 
-while [ $CNT -ge 0 ]; do
-	notify-say "$TITLE" "$1";
+while [ $CNT -gt 0 ]; do
+	notify-say "$1" "$CURTIME";
 	CNT=$(( CNT - 1 )); sleep 0.2;
 done;

@@ -1,0 +1,41 @@
+#!/bin/sh
+#                __               __
+#     ____ ___  / /_  ____ ______/ /____  ______
+#    / __ `__ \/ __ \/ __ `/ ___/ //_/ / / / __ \
+#   / / / / / / /_/ / /_/ / /__/ ,< / /_/ / /_/ /
+#  /_/ /_/ /_/_.___/\__,_/\___/_/|_|\__,_/ .___/
+#                                       /_/
+# media (M) and media-crossplatform (MC) drive backup script.
+# This is for backing up public shared media.
+
+BK_SRC="$HOME";
+BK_MOUNT='/mnt/usb/generic_a';
+BK_DEST="$BK_MOUNT"'/media';
+BK_TYPE=$(basename "$0");
+
+echo 'starting backup from' "$BK_SRC" 'to' "$BK_DEST"'...';
+echo 'make sure backup drive is mounted at' "$BK_MOUNT";
+
+if [ "$(mount | grep -c $BK_MOUNT)" = 0 ] ; then
+	echo 'no drive found mounted at' "$BK_MOUNT";
+	echo 'exiting without backing up data';
+	exit 1;
+fi;
+
+alias appsync='rsync -avxP';
+alias mirsync='rsync -avxP --delete';
+
+echo 'data...';
+# appsync "$BK_SRC"'/Audiobooks/' "$BK_DEST"'/Audiobooks/';
+# appsync "$BK_SRC"'/Music/' "$BK_DEST"'/Music/';
+appsync "$BK_SRC"'/Videos/comedy/' "$BK_DEST"'/Videos/comedy/';
+appsync "$BK_SRC"'/Videos/courses/' "$BK_DEST"'/Videos/courses/';
+appsync "$BK_SRC"'/Videos/movies/' "$BK_DEST"'/Videos/movies/';
+appsync "$BK_SRC"'/Videos/tv/' "$BK_DEST"'/Videos/tv/';
+
+echo 'update record...';
+date +'%Y-%m-%d_%r' | sed s/\ //g >> "$BK_DEST/$BK_TYPE.txt";
+
+echo 'script complete';
+notify-say "$BK_TYPE" 'backup done';
+

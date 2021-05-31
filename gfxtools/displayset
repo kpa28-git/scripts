@@ -4,17 +4,15 @@
 # Good to call after X startup, a display is added/removed, or the graphics gpu changes.
 
 # shellcheck source=/dev/null
-[ -f "$HOME/.local/bin/gfxtools/display_profiles/sm.sh" ] && . "$HOME/.local/bin/gfxtools/display_profiles/sm.sh";
-# shellcheck source=/dev/null
-[ -f "$HOME/.local/bin/gfxtools/display_profiles/dm.sh" ] && . "$HOME/.local/bin/gfxtools/display_profiles/dm.sh";
+[ -f "$HOME/.local/bin/gfxtools/displayprofiles.sh" ] && . "$HOME/.local/bin/gfxtools/displayprofiles.sh";
 
 HDMI_ACTIVE=$(xrandr | grep ' connected' | grep 'HDMI-0' | awk '{print $1}' | xargs);
 DP_ACTIVE=$(xrandr | grep ' connected' | grep 'DP-0' | awk '{print $1}' | xargs);
 GPU_MODE=$(optimus-manager --print-mode | awk '{print $NF}' | xargs);
 
 if [ "$GPU_MODE" = 'nvidia' ] && [ -n "$DP_ACTIVE" ] || [ -n "$HDMI_ACTIVE" ] ; then
-	#dual_monitor; # Disabled because no solution to multi-monitor screen-tear prevention
-	single_monitor 'extern';
+	dual_monitor;
+	# single_monitor 'extern';
 else
 	single_monitor 'intern';
 fi;

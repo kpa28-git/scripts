@@ -16,7 +16,7 @@
 #	-h: print usage
 # Dependencies: glow
 
-HH_DIR="$HOME/Documents/help-house/";
+HH_DIR="$HOME/Projects/help-house/";
 VIEWER="/usr/bin/glow --pager";
 file="how.md";
 query="";

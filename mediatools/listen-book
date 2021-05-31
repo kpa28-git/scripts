@@ -1,0 +1,16 @@
+#!/bin/sh
+# TODO two menus book first, then chapter
+
+NHEADER="🗣 $(basename "$0")"
+BASEDIR="$HOME/Audiobooks/"
+MESG="Which audiobook?"
+
+sel=$(fd -I . --base-directory="$BASEDIR" -e 'm4b' -e 'mp3' | rofi -lines 10 -dmenu -i -p "$NHEADER" -mesg "$MESG");
+
+if [ -n "$sel" ] ; then
+	notify-send "$NHEADER" "$sel";
+	xdg-open "$BASEDIR/$sel";
+else
+	notify-send "$NHEADER" "cancelled";
+fi;
+
