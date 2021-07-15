@@ -16,6 +16,8 @@
 !/pkgtools/**
 !/polybar/**
 !/proctools/**
+!/sqlpgtools/**
+!/sqltools/**
 !/termtools/**
 !/themetools/**
 !/uitools/**

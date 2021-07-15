@@ -1,0 +1,21 @@
+#!/bin/sh
+
+NHEADER=" $(basename "$0")"
+BASEDIR="$HOME/Templates/"
+MESG1="Which template?"
+MESG2="What name?"
+DESTDIR="$(pwd)"
+
+sel=$(fd -I . --base-directory="$BASEDIR" -t 'f' | rofi -lines 10 -dmenu -i -p "$NHEADER" -mesg "$MESG1");
+
+if [ -n "$sel" ] ; then
+	inp=$(rofi -lines 10 -dmenu -i -p "$NHEADER" -mesg "$MESG2");
+	name=$([ -n "$inp" ] && echo "$inp.${sel##*.}" || echo "${sel##*/}");
+	dest="$DESTDIR/$name";
+	cp "$BASEDIR/$sel" "$dest";
+	notify-send "$NHEADER" "copied to $dest";
+else
+	notify-send "$NHEADER" "cancelled";
+fi;
+
+
