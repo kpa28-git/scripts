@@ -30,7 +30,7 @@ rbkadd() {
 # SELECT: Select a bookmark entry and send url to stdout.
 rbkselect() {
 	FMT=40;  # Buku format codes - 10: URL, 20: URL TAGS, 30: TITLE, 40: URL TITLE TAGS, 50: TITLE TAGS
-	sel=$(buku --np -p --format="$FMT" | rofi -dmenu -l 7 -i -p "$NHEADER" -mesg 'select bookmarks (shift+enter to multi-select)' -multi-select);
+	sel=$(buku --nostdin --np -p --format="$FMT" | rofi -dmenu -l 7 -i -p "$NHEADER" -mesg 'select bookmarks (shift+enter to multi-select)' -multi-select);
 	if [ -n "$sel" ] ; then
 		echo "$sel" | awk -F '\t' "{print \$1}";
 		notify-send "$NHEADER" "selected $sel";
