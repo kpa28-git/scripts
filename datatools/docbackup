@@ -1,0 +1,24 @@
+#!/bin/sh
+# Document backup script.
+# Syncs the relative files/paths in $BK_SRC/list.txt to the destination
+# based on rsync's --files-from option.
+
+BK_SRC="$READING";
+BK_MOUNT='/mnt/usb/generic_a';
+BK_DEST="$BK_MOUNT"'/documents/reading';
+BK_TYPE=$(basename "$0");
+
+printf "starting backup from $BK_SRC to $BK_DEST...\n";
+printf "make sure backup drive is mounted at $BK_MOUNT\n";
+
+if [ "$(mount | grep -c $BK_MOUNT)" = 0 ] ; then
+	printf 'no drive found mounted at' "$BK_MOUNT";
+	printf 'exiting without backing up data';
+	exit 1;
+fi;
+
+sudo rsync -av --files-from="$BK_SRC/list.txt" "$BK_SRC" "$BK_DEST";
+notify-say "$BK_TYPE" 'backup done';
+
+# printf 'update record...';
+# date +'%Y-%m-%d_%r' | sed s/\ //g >> "$BK_DEST/$BK_TYPE.txt";
