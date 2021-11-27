@@ -17,7 +17,7 @@ if [ "$(mount | grep -c $BK_MOUNT)" = 0 ] ; then
 	exit 1;
 fi;
 
-sudo rsync -av --files-from="$BK_SRC/list.txt" "$BK_SRC" "$BK_DEST";
+sudo rsync -av --ignore-existing --files-from="$BK_SRC/list.txt" "$BK_SRC" "$BK_DEST";
 notify-say "$BK_TYPE" 'backup done';
 
 # printf 'update record...';
