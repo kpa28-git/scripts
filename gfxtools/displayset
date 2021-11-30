@@ -1,20 +1,58 @@
 #!/bin/sh
+# Sets the display setup based on number of monitors and the active gpu
+# Good to call after X startup, a display is added/removed, or the gpu changes.
 
-# Sets the display setup based on number of monitors and the active graphics gpu
-# Good to call after X startup, a display is added/removed, or the graphics gpu changes.
+single_setup() {
+	MODE=$([ -n "$1" ] && echo "$1" || echo "intern");
 
-# shellcheck source=/dev/null
-[ -f "$HOME/.local/bin/gfxtools/displayprofiles.sh" ] && . "$HOME/.local/bin/gfxtools/displayprofiles.sh";
+	if [ "$MODE" = "extern" ] ; then
+		if [ -n "$DISPLAY_DP" ] ; then
+			xrandr  --output "$DISPLAY_EDP" --off \
+				--output "$DISPLAY_DP" --primary --auto --rotate 'normal' \
+				--output "$DISPLAY_HDMI" --off;
+		elif [ -n "$DISPLAY_HDMI" ] ; then
+			xrandr  --output "$DISPLAY_EDP" --off \
+				--output "$DISPLAY_DP" --off \
+				--output "$DISPLAY_HDMI" --primary --auto --rotate 'normal';
+		else
+			echo 'Warning - Trying to set external display but none are connected';
+		fi;
+	else
+		xrandr  --output "$DISPLAY_EDP" --primary --auto --rotate 'normal' \
+			--output "$DISPLAY_DP" --off \
+			--output "$DISPLAY_HDMI" --off;
+	fi;
+}
 
-HDMI_ACTIVE=$(xrandr | grep ' connected' | grep 'HDMI-0' | awk '{print $1}' | xargs);
-DP_ACTIVE=$(xrandr | grep ' connected' | grep 'DP-0' | awk '{print $1}' | xargs);
+dual_setup() {
+	OUT_RATE_DP=60;		# Max/default refresh rate for primary monitor
+	OUT_RATE_EDP=144;	# Max/default refresh rate for secondary monitor
+	OUT_RATE=$((OUT_RATE_DP < OUT_RATE_EDP ? OUT_RATE_DP : OUT_RATE_EDP)); # Set common refresh
+
+	if [ -n "$DISPLAY_DP" ] ; then
+		xrandr  --output "$DISPLAY_EDP" --noprimary --auto --rotate 'normal' \
+				--rate "$OUT_RATE" --right-of "$DISPLAY_DP" \
+			--output "$DISPLAY_DP" --primary --auto --rotate 'normal' \
+				--rate "$OUT_RATE" \
+			--output "$DISPLAY_HDMI" --off;
+	elif [ -n "$DISPLAY_HDMI" ] ; then
+		xrandr  --output "$DISPLAY_EDP" --noprimary --auto --rotate 'normal' \
+				--rate "$OUT_RATE" --left-of "$DISPLAY_HDMI" \
+			--output "$DISPLAY_DP" --off \
+			--output "$DISPLAY_HDMI" --primary --auto --rotate 'normal' \
+				--rate "$OUT_RATE";
+	else
+		echo 'Warning - Trying to set external display but none are connected';
+	fi;
+}
+
 GPU_MODE=$(optimus-manager --print-mode | awk '{print $NF}' | xargs);
 
-if [ "$GPU_MODE" = 'nvidia' ] && [ -n "$DP_ACTIVE" ] || [ -n "$HDMI_ACTIVE" ] ; then
-	dual_monitor;
-	# single_monitor 'extern';
+if [ "$GPU_MODE" = 'nvidia' ] && [ -n "$DISPLAY_DP" ] || [ -n "$DISPLAY_HDMI" ] ; then
+	dual_setup;
+	# single_setup 'extern';
 else
-	single_monitor 'intern';
+	single_setup 'intern';
 fi;
 
 setbg;
