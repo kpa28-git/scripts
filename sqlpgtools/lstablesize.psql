@@ -1,0 +1,6 @@
+-- List Table and Materialized View Sizes
+SELECT schemaname AS table_schema,
+	relname AS table_name,
+	pg_size_pretty(pg_relation_size(relid)) AS data_size
+FROM pg_catalog.pg_statio_user_tables
+ORDER BY pg_relation_size(relid) DESC;

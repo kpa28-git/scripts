@@ -5,7 +5,11 @@
 single_setup() {
 	MODE=$([ -n "$1" ] && echo "$1" || echo "intern");
 
-	if [ "$MODE" = "extern" ] ; then
+	if [ "$MODE" = "intern" ] ; then
+		xrandr  --output "$DISPLAY_EDP" --primary --auto --rotate 'normal' \
+			--output "$DISPLAY_DP" --off \
+			--output "$DISPLAY_HDMI" --off;
+	elif [ "$MODE" = "extern" ] ; then
 		if [ -n "$DISPLAY_DP" ] ; then
 			xrandr  --output "$DISPLAY_EDP" --off \
 				--output "$DISPLAY_DP" --primary --auto --rotate 'normal' \
@@ -18,25 +22,21 @@ single_setup() {
 			echo 'Warning - Trying to set external display but none are connected';
 		fi;
 	else
-		xrandr  --output "$DISPLAY_EDP" --primary --auto --rotate 'normal' \
-			--output "$DISPLAY_DP" --off \
-			--output "$DISPLAY_HDMI" --off;
+		echo 'Warning - mode must be intern or extern';
 	fi;
 }
 
 dual_setup() {
-	OUT_RATE_DP=60;		# Max/default refresh rate for primary monitor
-	OUT_RATE_EDP=144;	# Max/default refresh rate for secondary monitor
-	OUT_RATE=$((OUT_RATE_DP < OUT_RATE_EDP ? OUT_RATE_DP : OUT_RATE_EDP)); # Set common refresh
+	OUT_RATE=60; # Set common refresh
 
 	if [ -n "$DISPLAY_DP" ] ; then
-		xrandr  --output "$DISPLAY_EDP" --noprimary --auto --rotate 'normal' \
+		xrandr  --output "$DISPLAY_EDP" --auto --rotate 'normal' \
 				--rate "$OUT_RATE" --right-of "$DISPLAY_DP" \
 			--output "$DISPLAY_DP" --primary --auto --rotate 'normal' \
 				--rate "$OUT_RATE" \
 			--output "$DISPLAY_HDMI" --off;
 	elif [ -n "$DISPLAY_HDMI" ] ; then
-		xrandr  --output "$DISPLAY_EDP" --noprimary --auto --rotate 'normal' \
+		xrandr  --output "$DISPLAY_EDP" --auto --rotate 'normal' \
 				--rate "$OUT_RATE" --left-of "$DISPLAY_HDMI" \
 			--output "$DISPLAY_DP" --off \
 			--output "$DISPLAY_HDMI" --primary --auto --rotate 'normal' \
@@ -49,8 +49,8 @@ dual_setup() {
 GPU_MODE=$(optimus-manager --print-mode | awk '{print $NF}' | xargs);
 
 if [ "$GPU_MODE" = 'nvidia' ] && [ -n "$DISPLAY_DP" ] || [ -n "$DISPLAY_HDMI" ] ; then
-	dual_setup;
-	# single_setup 'extern';
+	# dual_setup;
+	single_setup 'extern';
 else
 	single_setup 'intern';
 fi;
