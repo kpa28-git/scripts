@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BASE16_DIR="$HOME/.local/share/themes/base16";
+BASE16_DIR="$XDG_DATA_HOME/themes/base16";
 
 for scheme in "$BASE16_DIR"/*
 do

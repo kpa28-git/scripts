@@ -1,9 +1,9 @@
 #!/bin/sh
 
-# This script gets the moonphase, echoes it, and places the report at "$HOME/.local/share/moonphase".
+# This script gets the moonphase, echoes it, and places the report at "$XDG_DATA_HOME/moonphase".
 # Dependencies: geoloc, ping, curl, printf, tr, sed, awk
 
-MOONFILE="$HOME/.local/share/moonphase";
+MOONFILE="$XDG_DATA_HOME/moonphase";
 
 getmoonphase() {
 	curl -s "wttr.in/$1?format=%m" > "$MOONFILE" || exit 1 ;

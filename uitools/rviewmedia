@@ -1,4 +1,4 @@
 #!/bin/sh
 
-$(/bin/ls "$HOME/.local/bin/mediatools" | rofi -auto-select -dmenu -l 6 -p "💽 $(basename "$0")" -mesg 'Which type of media to view?')
+$(/bin/ls "$XDG_SCRIPT_HOME/mediatools" | rofi -auto-select -dmenu -l 6 -p "💽 $(basename "$0")" -mesg 'Which type of media to view?')
 

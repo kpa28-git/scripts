@@ -2,13 +2,13 @@
 # Opens new tab in qutebrowser based on bookmark or search.
 
 qb_get_searcher() {
-	QB_CONFIG="$HOME/.config/qutebrowser/config.yml";
+	QB_CONFIG="$XDG_CONFIG_HOME/qutebrowser/config.yml";
 	sed -n '/^url.searchengines: {$/, /^}$/p' "$QB_CONFIG" | tail -n +2 | head -n -1 | grep -Ev '^[[:space:]]*#|^[[:space:]]*$' | sed 's/,//g' | rofi -show -dmenu -l 7 -p "🔎 qb-open" -mesg 'choose searcher' | xargs;
 }
 
 while getopts "bs" arg; do
 	case $arg in
-		b) sid=$("$HOME"/.local/bin/uitools/rbuku -s);; # XXX Waiting for Input problem - https://github.com/jarun/buku/issues/447
+		b) sid=$("$XDG_SCRIPT_HOME/uitools/rbuku" -s);;
 		s) searcher=$(qb_get_searcher);
 			if [ -n "$searcher" ] ; then
 				sid=$(echo "$searcher" | awk -F ': ' '{print $1}');
