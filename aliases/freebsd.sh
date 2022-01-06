@@ -10,7 +10,7 @@ alias fp="sudo pkg install" \
 	fps="pkg search" \
 	fpu="sudo pkg update && sudo pkg upgrade" \
 	fprm="sudo pkg delete" \
-	fpcl="sudo pkg clean -a";
+	fpcl="sudo pkg autoremove && sudo pkg clean -a";
 
 alias servls="service -e" \
 	servq="service -e" \
