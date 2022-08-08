@@ -28,3 +28,4 @@ alias ifck="informant check" \
 alias lsfont="fc-list" \
 	lsfontfam="lsfont : family";
 
+alias cleanib="rm -rf $HOME/.local/share/i4j_jres";

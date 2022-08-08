@@ -1,4 +1,5 @@
 #!/bin/sh
+# copy template
 
 NHEADER=" $(basename "$0")"
 BASEDIR="$HOME/Templates/"

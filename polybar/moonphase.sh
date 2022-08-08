@@ -9,7 +9,7 @@ getmoonphase() {
 	curl -s "wttr.in/$1?format=%m" > "$MOONFILE" || exit 1 ;
 }
 
-ping -q -c 1 9.9.9.9 > /dev/null || (printf '' && exit 1);
+ping -q -c 1 9.9.9.9 >/dev/null 2>&1 || (printf '' && exit 1)
 getmoonphase "$(geoloc "$1")";
 icon="$(cat "$MOONFILE")";
 
