@@ -31,7 +31,6 @@ alias f="\$FILE" \
 	xdgdefault="xdg-mime query default" \
 	xorgfocusinfo="xprop -id \`xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print \$NF}'\`" \
 	today="date '+%Y-%m-%d'" \
-	wget="curl -O" \
 	myports="sudo netstat -tulpn" \
 	watch2="watch -n 2 " \
 	lamp="ps -u \`whoami\`" \

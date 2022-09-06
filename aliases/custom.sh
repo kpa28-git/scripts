@@ -8,7 +8,8 @@ alias lspaths="fd -HI --ignore-file \"\$HOME\"/.config/fd/ignore_file" \
 	sd="moveto \"\$(s --header='Search Directory')\"" \
 	so="\$OPENER \"\$(s --header='Open File')\"" \
 	sr="\$READER \"\$(fd -I -t 'f' '.' \"\$READING\" | sed \"s|\$READING\/||\" | fzf --reverse --info=inline --preview=\"pistol \$READING/{}\" --header='Select Reading' | sed \"s|^|\$READING\/|\")\"" \
-	srl="\$READER \"\$(cat \"\$READING\"/list.txt | fzf --reverse --info=inline --preview=\"pistol \$READING/{}\" --header='Select from Reading List' | sed \"s|^|\$READING\/|\")\"";
+	srb="\$READER \"\$(cat \"\$READING\"/books/list.txt | fzf --reverse --info=inline --preview=\"pistol \$READING/{}\" --header='Select from Books Reading List' | sed \"s|^|\$READING\/books\/|\")\"" \
+	srp="\$READER \"\$(cat \"\$READING\"/papers/list.txt | fzf --reverse --info=inline --preview=\"pistol \$READING/{}\" --header='Select from Papers Reading List' | sed \"s|^|\$READING\/papers\/|\")\"";
 
 # history aliases
 alias h="history" \

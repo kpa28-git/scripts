@@ -17,12 +17,13 @@ alias mpv="mpv --input-ipc-server=/tmp/mpvsoc\$(date +%s)" \
 	tmr="peaclock --config-dir=\"\$XDG_CONFIG_HOME/peaclock\" --config=\"\$(fd '[^\.gitignore]' --regex -t 'f' -d 1 \"$XDG_CONFIG_HOME/peaclock\" | fzf --select-1)\"" \
 	viewdoc="fzf --sync | pandoc -f docx -t pdf | zathura -" \
 	vd="vidir" \
+	wget="curl -OL" \
 	pwi="sudo powertop" \
 	nv="nvidia-smi" \
 	nvw="watch2 nv" \
 	nvi="nvtop" \
 	jup="jupyter notebook --ip=127.0.0.1 --port=8888" \
-	nep="julia -e \"using Revise, Neptune; Neptune.run()\"";
+	plo="julia -e \"using Revise, Pluto; Pluto.run()\"";
 
 alias g="git" \
 	gst="g status" \
