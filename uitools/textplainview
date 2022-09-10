@@ -1,9 +1,0 @@
-#!/bin/sh
-# Display a given text/plain file for the terminal.
-# Needed for a program like pistol to distinguish between markdown and ordinary text files because both have the text/plain mimetype.
-# Theoretically can be extended for other text/plain files with custom syntax (ie config files).
-
-case "$1" in
-	*.md) glow -s dark "$1";;
-	*) highlight -O ansi "$1" || cat "$1";;
-esac

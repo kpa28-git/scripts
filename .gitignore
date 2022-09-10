@@ -9,6 +9,7 @@
 !/apitools/**
 !/androidtools/**
 !/datatools/**
+!/filetools/**
 !/gfxtools/**
 !/luke-tools/**
 !/mantools/**

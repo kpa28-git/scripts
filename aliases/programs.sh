@@ -10,7 +10,6 @@ alias mpv="mpv --input-ipc-server=/tmp/mpvsoc\$(date +%s)" \
 	dt="dust" \
 	dt3="dt -d 3" \
 	grex="grex -r" \
-	ccat="highlight --out-format=ansi" \
 	appsync="rsync -avxP" \
 	mirsync="rsync -avxP --delete" \
 	shck="shellcheck" \
@@ -36,7 +35,9 @@ alias g="git" \
 	gdh="gd HEAD" \
 	gdhs="gd HEAD \$(gss | awk '{print \$NF}' | fzf --reverse --info=inline --preview='git diff --color HEAD {}' --header 'git diff changes compared to HEAD')" \
 	gc="g clone" \
-	gls="g log" \
+	glsc="g log" \
+	glsb="g branch -a" \
+	glsf="g ls-tree --full-tree -r --name-only HEAD" \
 	gl="g pull" \
 	gp="g push" \
 	gulp="g submodule foreach git pull origin master" \
