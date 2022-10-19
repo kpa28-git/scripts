@@ -21,6 +21,7 @@ alias mpv="mpv --input-ipc-server=/tmp/mpvsoc\$(date +%s)" \
 	nv="nvidia-smi" \
 	nvw="watch2 nv" \
 	nvi="nvtop" \
+	sprintservice="sudo systemctl start cups.service" \
 	jup="jupyter notebook --ip=127.0.0.1 --port=8888" \
 	plo="julia -e \"using Revise, Pluto; Pluto.run()\"";
 

@@ -14,10 +14,8 @@
 #		* where.md
 #	-q: (optional) fzf query string to prefilter options
 #	-h: print usage
-# Dependencies: glow
 
-HH_DIR="$HOME/Projects/help-house/";
-VIEWER="/usr/bin/glow --pager";
+HH_DIR="$HOME/Projects/help-house";
 file="how.md";
 query="";
 
@@ -34,6 +32,6 @@ while getopts "f:q:h?" arg; do
 	esac;
 done;
 
-topic=$(find "$HH_DIR" -mindepth 1 -maxdepth 1 -type d -name "[!.]*" | xargs -n1 basename | sort -r | fzf --query="$query");
-notify-send "help-house" "$topic $file";
-$VIEWER "$HH_DIR$topic/$file";
+topic=$(fd "$file" --base-directory="$HH_DIR" | sort | fzf --query="$query")
+notify-send "help-house" "$topic";
+$PAGER "$HH_DIR/$topic";
