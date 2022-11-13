@@ -1,20 +1,20 @@
 #!/bin/sh
 # arch linux aliases
 
-alias y="yay" \
-	yg="y -Qs | grep" \
-	yq="y -Qi" \
-	yps="y -Ps" \
-	yys="y -Syu" \
-	yysp="y -Syu && poweroff" \
-	yysr="y -Syu && reboot" \
+alias yg="yay -Qs | grep" \
+	yq="yay -Qi" \
+	yps="yay -Ps" \
+	yys="yay -Syu" \
+	yysp="yay -Syu && poweroff" \
+	yysr="yay -Syu && reboot" \
 	pacs="sudo pacman -Syu" \
 	pacsp="sudo pacman -Syu && poweroff" \
 	pacsr="sudo pacman -Syu && reboot" \
-	yyf="y -Syyu" \
-	yrm="y -Rsn" \
-	yls="y -Ql" \
-	ycl="y -Yc && paccache -r" \
+	yyf="yay -Syyu" \
+	yrm="yay -Rsn" \
+	yls="yay -Ql" \
+	ylsaur="yay -Qm" \
+	ycl="yay -Yc && paccache -r" \
 	yrmlck="sudo rm '/var/lib/pacman/db.lck'" \
 	pacls="pacman -Qett --color=always" \
 	pacwhen="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort" \

@@ -34,4 +34,4 @@ done;
 
 topic=$(fd "$file" --base-directory="$HH_DIR" | sort | fzf --query="$query")
 notify-send "help-house" "$topic";
-$PAGER "$HH_DIR/$topic";
+$PAGER "$HH_DIR/$topic"

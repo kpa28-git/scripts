@@ -11,7 +11,7 @@ alias l="exa -lah --git --color=auto --group-directories-first" \
 # basic
 alias f="\$FILE" \
 	e="\$EDITOR" \
-	supe="sudo \$EDITOR" \
+	supe="sudo -E \$EDITOR" \
 	v="\$EDITOR" \
 	c="clear" \
 	i="htop -t" \
