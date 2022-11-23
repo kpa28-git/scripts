@@ -25,32 +25,31 @@ alias mpv="mpv --input-ipc-server=/tmp/mpvsoc\$(date +%s)" \
 	jup="jupyter notebook --ip=127.0.0.1 --port=8888" \
 	plo="julia -e \"using Revise, Pluto; Pluto.run()\"";
 
-alias g="git" \
-	gst="g status" \
-	gsb="gst -sb" \
-	gss="gst -s" \
-	gd="g diff --color" \
+alias gst="git status" \
+	gsb="git status -sb" \
+	gss="git status -s" \
+	gd="git diff --color" \
 	gds="gd \$(gss | awk '{print \$NF}' | fzf --reverse --info=inline --preview='git diff --color {}' --header 'git diff file')" \
 	gdc="gd --cached" \
 	gdcs="gd --cached \$(gss | awk '{print \$NF}' | fzf --reverse --info=inline --preview='git diff --color --cached {}' --header 'git diff cached (staged) file changes')" \
 	gdh="gd HEAD" \
 	gdhs="gd HEAD \$(gss | awk '{print \$NF}' | fzf --reverse --info=inline --preview='git diff --color HEAD {}' --header 'git diff changes compared to HEAD')" \
-	gc="g clone" \
-	glsc="g log" \
-	glsb="g branch -a" \
-	glsf="g ls-tree --full-tree -r --name-only HEAD" \
-	gl="g pull" \
-	gp="g push" \
-	gulp="g submodule foreach git pull origin master" \
-	ga="g add" \
+	gc="git clone" \
+	glsc="git log" \
+	glsb="git branch -a" \
+	glsf="git ls-tree --full-tree -r --name-only HEAD" \
+	gl="git pull" \
+	gp="git push" \
+	gulp="git submodule foreach git pull origin master" \
+	ga="git add" \
 	gas="ga \$(gss | awk '{print \$NF}' | fzf --multi --reverse --info=inline --preview='git diff --color {}' --header 'git add files, use shift+Tab to multiselect')" \
-	gr="g remote" \
-	grm="g rm" \
-	gcsmg="g commit -m" \
-	gcmsg="g commit -m" \
-	gcmsga="g commit --amend" \
+	gr="git remote" \
+	grm="git rm" \
+	gcsmg="git commit -m" \
+	gcmsg="git commit -m" \
+	gcmsga="git commit --amend" \
 	gua="gr | xargs -L1 git push --all" \
-	glp="gl && gp";
+	glp="git pull && git push";
 
 alias gpglspub="gpg --list-keys" \
 	gpglssec="gpg --list-secret-keys --keyid-format LONG" \
