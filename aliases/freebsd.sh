@@ -12,6 +12,11 @@ alias fp="sudo pkg install" \
 	fprm="sudo pkg delete" \
 	fpcl="sudo pkg autoremove && sudo pkg clean -a";
 
+alias fu="sudo freebsd-update" \
+	fuf="sudo freebsd-update fetch" \
+	fur="sudo freebsd-update updatesready" \
+	fui="sudo freebsd-update install";
+
 alias servls="service -e" \
 	servq="service -e" \
 	servg="service -e | grep" \
