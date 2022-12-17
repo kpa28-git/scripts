@@ -1,0 +1,2 @@
+-- List Partitions
+SELECT * FROM pg_catalog.pg_partitioned_table;
