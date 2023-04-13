@@ -1,0 +1,19 @@
+#!/bin/sh
+# Multiplexes extraction commands.
+# Tries to extract to a new dir if possible from the command.
+# Uses ouch for decompression if possible, uses others if necessary.
+
+archive="$1"
+[ "$archive" = "" ] && printf "Give archive to extract as argument.\\n" && exit
+
+if [ -f "$archive" ] ; then
+	case "$archive" in
+		*.rar) unrar x -ad "$archive" ;;
+		*.Z) uncompress "$archive" ;;
+		*.7z) 7z x -o"${archive%%.*}" "$archive" ;;
+		*.exe) cabextract -f "${archive%%.*}" "$archive" ;;
+		*) ouch decompress "$archive" ;;
+	esac
+else
+	printf "File \"%s\" not found.\\n" "$archive"
+fi

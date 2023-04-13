@@ -4,6 +4,7 @@
 # misc programs
 alias mpv="mpv --input-ipc-server=/tmp/mpvsoc\$(date +%s)" \
 	x="sxiv -ft *" \
+	xpng="sxiv -ft **/*.png" \
 	ytd="youtube-dl --add-metadata -i -o '\$HOME/Downloads/%(upload_date)s-%(title)s.%(ext)s'" \
 	ytda="youtube-dl --add-metadata -i -x -f 'bestaudio/best' -o '\$HOME/Music/%(upload_date)s-%(title)s.%(ext)s'" \
 	ffmpeg="ffmpeg -hide_banner" \
@@ -21,6 +22,10 @@ alias mpv="mpv --input-ipc-server=/tmp/mpvsoc\$(date +%s)" \
 	nv="nvidia-smi" \
 	nvw="watch2 nv" \
 	nvi="nvtop" \
+	arpall="arp-scan --localnet" \
+	renamer="fd --type f | vidir -" \
+	renamedr="fd --type d | vidir -" \
+	rmempty="rm -d $(fd --type empty --type d)" \
 	sprintservice="sudo systemctl start cups.service" \
 	jup="jupyter notebook --ip=127.0.0.1 --port=8888" \
 	plo="julia -e \"using Revise, Pluto; Pluto.run()\"";
@@ -42,13 +47,13 @@ alias gst="git status" \
 	gp="git push" \
 	gulp="git submodule foreach git pull origin master" \
 	ga="git add" \
-	gas="ga \$(gss | awk '{print \$NF}' | fzf --multi --reverse --info=inline --preview='git diff --color {}' --header 'git add files, use shift+Tab to multiselect')" \
+	gas="git add \$(gss | awk '{print \$NF}' | fzf --multi --reverse --info=inline --preview='git diff --color {}' --header 'git add files, use shift+Tab to multiselect')" \
 	gr="git remote" \
 	grm="git rm" \
 	gcsmg="git commit -m" \
 	gcmsg="git commit -m" \
 	gcmsga="git commit --amend" \
-	gua="gr | xargs -L1 git push --all" \
+	gua="git remote | xargs -L1 git push --all" \
 	glp="git pull && git push";
 
 alias gpglspub="gpg --list-keys" \
@@ -66,11 +71,11 @@ alias cg="conda list | grep" \
 	crm="conda remove" \
 	ccl="conda clean --yes --all";
 
-alias tdd="trash-put" \
-	tls="trash-list | \$PAGER" \
-	tre="trash-restore" \
-	trm="trash-rm \"\$(trash-list | fzf --reverse --info=inline --header='Delete File' | awk '{print \$NF}')\"" \
-	tem="trash-empty";
+alias tdd="trash put" \
+	tls="trash list" \
+	tre="trash list | fzf --reverse --header='Restore File(s)' --multi | awk '{\$1=\$1;print}' | rev | cut -d ' ' -f1 | rev | xargs trash restore --match=exact --force" \
+	trm="trash list | fzf --reverse --header='Delete File(s)' --multi | awk '{\$1=\$1;print}' | rev | cut -d ' ' -f1 | rev | xargs trash empty --match=exact --force" \
+	tem="trash empty --all";
 
 alias coins="curl -s rate.sx" \
 	ada1="curl -s rate.sx/ada@1w" \

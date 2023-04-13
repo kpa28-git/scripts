@@ -1,7 +1,7 @@
 #!/bin/sh
 # arch linux aliases
 
-alias yg="yay -Qs | grep" \
+alias yg="yay -Qs | grep -B1" \
 	yq="yay -Qi" \
 	yps="yay -Ps" \
 	yys="yay -Syu" \
