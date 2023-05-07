@@ -15,5 +15,5 @@ pb_gpu_color() {
 	exit 0;
 }
 
-GPU_TEMP=$(nvidia-smi -q -d temperature | awk '/GPU Current Temp/ {print $5$6}' | head -c -2);
+GPU_TEMP=$(nvidia-smi --id=0 --query-gpu=temperature.gpu --format=csv,noheader)
 printf "%s" "$(pb_gpu_color "$GPU_TEMP")$GPU_TEMP°C";
