@@ -14,7 +14,7 @@
 # 	* standalone files are synced as expected
 
 BK_SRC="$HOME";
-BK_MOUNT='/mnt/usb/archive_a';
+BK_MOUNT='/mnt/usb/archive/a';
 BK_DEST="$BK_MOUNT"'/archive';
 BK_TYPE=$(basename "$0");
 

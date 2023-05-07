@@ -9,7 +9,7 @@
 # The contents of 'Backup' directory are append synced to the destination root
 
 BK_SRC="$HOME";
-BK_MOUNT='/mnt/usb/generic_a';
+BK_MOUNT='/mnt/usb/generic/a';
 BK_DEST="$BK_MOUNT";
 BK_TYPE=$(basename "$0");
 

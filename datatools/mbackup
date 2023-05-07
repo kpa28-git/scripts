@@ -9,7 +9,7 @@
 # This is for backing up public shared media.
 
 BK_SRC="$HOME";
-BK_MOUNT='/mnt/usb/generic_a';
+BK_MOUNT='/mnt/usb/generic/a';
 BK_DEST="$BK_MOUNT"'/media';
 BK_TYPE=$(basename "$0");
 

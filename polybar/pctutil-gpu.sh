@@ -1,3 +1,3 @@
 #!/bin/sh
 
-printf "%i\n" "$(nvidia-smi -q -d utilization | awk '/Gpu/ {print $3}' | head -1)";
+nvidia-smi -q -d utilization | awk '/Gpu/ {printf "%02i", $3}';

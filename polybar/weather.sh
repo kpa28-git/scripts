@@ -10,8 +10,8 @@ getforecast() {
 }
 
 showweather() {
-	printf "%s" "$(sed '16q;d' "$XDG_DATA_HOME/weatherreport" | grep -wo "[0-9]*%" | sort -n | sed -e '$!d' | sed -e "s/^/ﭽ /g" | tr -d '\n')"
-	sed '13q;d' "$XDG_DATA_HOME/weatherreport" | grep -o "m\\(-\\)*[0-9]\\+" | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print " ﰕ",$1 "°","",$2 "°"}' ;
+	printf "%s" "$(sed '16q;d' "$XDG_DATA_HOME/weatherreport" | grep -wo "[0-9]*%" | sort -n | sed -e '$!d' | sed -e "s/^/ /g" | tr -d '\n')"
+	sed '13q;d' "$XDG_DATA_HOME/weatherreport" | grep -o "m\\(-\\)*[0-9]\\+" | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' | tr '\n|m' ' ' | awk '{print " ",$1 "°","",$2 "°"}' ;
 }
 
 ping -q -c 1 9.9.9.9 >/dev/null 2>&1 || (printf '' && exit 1)

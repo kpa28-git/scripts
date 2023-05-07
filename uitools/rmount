@@ -8,7 +8,7 @@ NHEADER="💾 rmount"
 
 getmount() { \
 	[ -z "$chosen" ] && exit 1;
-	mp="$(fd -IL -t 'd' --exact-depth 2 . "$HOME/mnt" | rofi -dmenu -i -p "$NHEADER" -mesg "Mount $chosen where?")";
+	mp="$(fd -IL -t 'd' --exact-depth 3 . "$HOME/mnt" | rofi -dmenu -i -p "$NHEADER" -mesg "Mount $chosen where?")";
 	[ "$mp" = "" ] && exit 1;
 	if [ ! -d "$mp" ]; then
 		mkdiryn=$(printf "No\\nYes" | rofi -dmenu -i -p "$NHEADER" -mesg "$mp does not exist. Create it?");
