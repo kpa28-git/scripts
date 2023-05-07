@@ -15,5 +15,5 @@ pb_cpu_color() {
 	exit 0;
 }
 
-CPU_TEMP=$(sensors | awk '/Package id 0/ {print $4}' | tail -c +2 | head -c -6);
+CPU_TEMP=$(sensors -u | grep -A 1 'Package id 0:' | tail -n 1 | cut -d ' ' -f 4 | cut -d '.' -f 1)
 printf "%s" "$(pb_cpu_color "$CPU_TEMP")$CPU_TEMP°C";
