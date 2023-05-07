@@ -1,3 +1,3 @@
 #!/bin/sh
 
-nvidia-smi -q -d utilization | awk '/Gpu/ {printf "%02i", $3}';
+printf "%02d" "$(nvidia-smi --id=0 --query-gpu=utilization.gpu --format=csv,noheader,nounits)"
