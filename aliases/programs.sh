@@ -87,3 +87,9 @@ alias coins="curl -s rate.sx" \
 	btc2="curl -s rate.sx/btc@2w" \
 	eth2="curl -s rate.sx/eth@2w";
 
+alias trls="transmission-remote -l" \
+	trad="transmission-remote -a";
+
+alias chstatus="clickhouse status" \
+	chstop="clickhouse stop" \
+	chrestart="clickhouse restart";
