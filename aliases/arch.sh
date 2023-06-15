@@ -1,24 +1,25 @@
 #!/bin/sh
 # arch linux aliases
 
-alias yg="yay -Qs | grep -B1" \
-	yq="yay -Qi" \
-	yps="yay -Ps" \
-	yys="yay -Syu" \
-	yysp="yay -Syu && poweroff" \
-	yysr="yay -Syu && reboot" \
-	pacs="sudo pacman -Syu" \
-	pacsp="sudo pacman -Syu && poweroff" \
-	pacsr="sudo pacman -Syu && reboot" \
-	yyf="yay -Syyu" \
-	yrm="yay -Rsn" \
-	yls="yay -Ql" \
-	ylsaur="yay -Qm" \
-	ycl="yay -Yc && paccache -r" \
-	yrmlck="sudo rm '/var/lib/pacman/db.lck'" \
-	pacls="pacman -Qett --color=always" \
-	pacwhen="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort" \
-	pacmirrup="sudo reflector --country 'United States' --latest 200 --age 24 --sort rate --save /etc/pacman.d/mirrorlist && rm -f /etc/pacman.d/mirrorlist.pacnew";
+# ap: arch packages (pacman)
+alias ap="sudo pacman -Syu" \
+	apsp="sudo pacman -Syu && poweroff" \
+	apsr="sudo pacman -Syu && reboot" \
+	aprmlck="sudo rm '/var/lib/pacman/db.lck'" \
+	apls="pacman -Qett --color=always" \
+	apwhen="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort" \
+	apmirru="sudo reflector --country 'United States' --latest 200 --age 24 --sort rate --save /etc/pacman.d/mirrorlist && rm -f /etc/pacman.d/mirrorlist.pacnew";
+
+# aur: arch user repo packages (paru)
+alias aurg="paru -Qs | grep -B1" \
+	aurq="paru -Qi" \
+	aurp="paru -Ps" \
+	aurn="paru -Pw" \
+	aur="paru -Syu" \
+	aurrm="paru -R" \
+	aurls="paru -Qm" \
+	aurlsl="paru -Ql" \
+	aurcl="paru -Sc && paccache -r";
 
 alias ifck="informant check" \
 	ifls="informant list" \
