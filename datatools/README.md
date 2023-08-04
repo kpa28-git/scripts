@@ -5,4 +5,4 @@ Scripts/functions for syncing data and dealing with data in general.
 * A (archive): standard home directory backup (~)
 * B (backup): generic backup (~/backup)
 * C (crossplatform): intended for use by both Linux and non-Linux OS
-
+* D (documents):

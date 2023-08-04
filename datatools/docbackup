@@ -8,12 +8,12 @@ BK_MOUNT='/mnt/usb/generic/a';
 BK_DEST="$BK_MOUNT"'/documents/reading/books';
 BK_TYPE=$(basename "$0");
 
-printf "starting backup from $BK_SRC to $BK_DEST...\n";
-printf "make sure backup drive is mounted at $BK_MOUNT\n";
+echo "starting backup from $BK_SRC to $BK_DEST...";
+echo "make sure backup drive is mounted at $BK_MOUNT";
 
 if [ "$(mount | grep -c $BK_MOUNT)" = 0 ] ; then
-	printf 'no drive found mounted at' "$BK_MOUNT";
-	printf 'exiting without backing up data';
+	echo 'no drive found mounted at' "$BK_MOUNT";
+	echo 'exiting without backing up data';
 	exit 1;
 fi;
 
