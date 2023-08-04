@@ -6,7 +6,7 @@
 # Android device mounting script.
 # Mounts the first android device found by simple-mtpfs
 
-MOUNT_LOC="$HOME"'/mnt/android/phone_a/';
+MOUNT_LOC="$HOME"'/mnt/and/phone/a/';
 anddrives=$(simple-mtpfs -l 2>/dev/null);
 
 [ -z "$anddrives" ] && echo "No Android device detected" && exit 1;

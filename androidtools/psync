@@ -7,7 +7,7 @@
 # android phone backup script.
 
 BK_SRC="$HOME";
-BK_DEST="$HOME"'/mnt/android/phone_a';
+BK_DEST="$HOME"'/mnt/and/phone/a';
 
 echo 'starting backup from' "$BK_SRC" 'to' "$BK_DEST"'...';
 echo 'make sure backup drive is mounted at' "$BK_DEST";

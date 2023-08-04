@@ -3,9 +3,9 @@
 # Syncs the relative files/paths in $BK_SRC/list.txt to the destination
 # based on rsync's --files-from option.
 
-BK_SRC="$READING";
-BK_MOUNT='/mnt/usb/generic_a';
-BK_DEST="$BK_MOUNT"'/documents/reading';
+BK_SRC="$READING/books";
+BK_MOUNT='/mnt/usb/generic/a';
+BK_DEST="$BK_MOUNT"'/documents/reading/books';
 BK_TYPE=$(basename "$0");
 
 printf "starting backup from $BK_SRC to $BK_DEST...\n";
