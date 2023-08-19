@@ -22,7 +22,7 @@ single_setup() {
 			echo 'Warning - Trying to set external display but none are connected';
 		fi;
 	else
-		echo 'Warning - mode must be intern or extern';
+		echo 'Warning - Mode must be intern or extern';
 	fi;
 }
 
@@ -46,9 +46,7 @@ dual_setup() {
 	fi;
 }
 
-GPU_MODE=$(optimus-manager --print-mode | awk '{print $NF}' | xargs);
-
-if [ "$GPU_MODE" = 'nvidia' ] && [ -n "$DISPLAY_DP" ] || [ -n "$DISPLAY_HDMI" ] ; then
+if [ -n "$DISPLAY_DP" ] || [ -n "$DISPLAY_HDMI" ] ; then
 	# dual_setup;
 	single_setup 'extern';
 else

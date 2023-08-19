@@ -4,7 +4,7 @@
 # Useful if using intel for graphics to be able to use the nvidia card for cuda.
 
 BB_STATE='/proc/acpi/bbswitch';
-GPU_MODE=$(optimus-manager --print-mode | awk '{print $NF}' | xargs);
+GPU_MODE=$(gfxmode);
 NV_STATE=$(awk '{print $NF}' < "$BB_STATE" | xargs);
 
 if [ ! "$GPU_MODE" = 'nvidia' ] ; then
