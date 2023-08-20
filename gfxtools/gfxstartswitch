@@ -1,13 +1,10 @@
 #!/bin/sh
-# Switches the gpu used for graphics on startup
+# Switches the gpu used for graphics on startup between nvidia<->hybrid
 
-notify-send '🎮 switch startup gpu';
-
-if [ "$(gfxmode)" = 'nvidia' ]
-then
-	sudo envycontrol -s 'hybrid' --rtd3;
+if [ "$(gfxmode)" = 'nvidia' ]; then
+	gfxstarthyb;
 else
-	sudo envycontrol -s 'nvidia' --force-comp;
+	gfxstartnvi;
 fi
 
 prompt 'Reboot computer?' 'sudo -A reboot';

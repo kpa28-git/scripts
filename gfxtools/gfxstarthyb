@@ -1,0 +1,5 @@
+#!/bin/sh
+# Change graphics mode on startup to hybrid
+
+notify-send '🎮 change startup graphics mode' 'hybrid';
+sudo envycontrol -s 'hybrid' --rtd3;

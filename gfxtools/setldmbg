@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# Sets the ldm-gtk-greeter background. If given an argument, will set file as ldm background.
-[ -n "$1" ] && sudo cp "$1" /usr/share/pixmaps/ldm.png && notify-send -i "$HOME/.config/ldm.png" 'Lightdm bg changed.';

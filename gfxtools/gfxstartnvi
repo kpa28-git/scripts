@@ -1,0 +1,5 @@
+#!/bin/sh
+# Change the graphics mode on startup to nvidia
+
+notify-send '🎮 change startup graphics mode' 'nvidia';
+sudo envycontrol -s 'nvidia' --force-comp;
