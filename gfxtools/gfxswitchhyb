@@ -1,0 +1,6 @@
+#!/bin/sh
+# Change graphics mode to hybrid
+# Requires xorg restart to take into effect
+
+notify-send '🎮 change graphics mode' 'hybrid';
+sudo envycontrol -s 'hybrid' --rtd3;

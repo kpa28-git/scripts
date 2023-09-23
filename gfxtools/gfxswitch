@@ -1,0 +1,11 @@
+#!/bin/sh
+# Switches the gpu used for graphics between nvidia<->hybrid
+# Requires xorg restart to take into effect
+
+if [ "$(gfxmode)" = 'nvidia' ]; then
+	gfxstarthyb;
+else
+	gfxstartnvi;
+fi
+
+prompt 'Logout computer?' 'bspc quit';

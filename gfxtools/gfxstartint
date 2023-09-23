@@ -1,5 +1,0 @@
-#!/bin/sh
-# Change the graphics mode on startup to integrated
-
-notify-send '🎮 change startup graphics mode' 'integrated';
-sudo envycontrol -s 'integrated';

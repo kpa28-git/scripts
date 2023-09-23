@@ -1,0 +1,6 @@
+#!/bin/sh
+# Change the graphics mode to nvidia
+# Requires xorg restart to take into effect
+
+notify-send '🎮 change graphics mode' 'nvidia';
+sudo envycontrol -s 'nvidia' --force-comp;
