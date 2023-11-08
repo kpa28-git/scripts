@@ -27,8 +27,9 @@ alias mpv="mpv --input-ipc-server=/tmp/mpvsoc\$(date +%s)" \
 	renamedr="fd --type d | vidir -" \
 	rmempty="rm -d $(fd --type empty --type d)" \
 	sprintservice="sudo systemctl start cups.service" \
-	jup="jupyter notebook --ip=127.0.0.1 --port=8888" \
-	plo="julia -e \"using Revise, Pluto; Pluto.run()\"";
+	jp="julia --project" \
+	jpl="julia -e \"using Revise, Pluto; Pluto.run()\"";
+	# jup="jupyter notebook --ip=127.0.0.1 --port=8888" \
 
 alias gst="git status" \
 	gsb="git status -sb" \
@@ -54,7 +55,9 @@ alias gst="git status" \
 	gcmsg="git commit -m" \
 	gcmsga="git commit --amend" \
 	gua="git remote | xargs -L1 git push --all" \
-	glp="git pull && git push";
+	glp="git pull && git push" \
+	ghtest="ssh -T git@github.com" \
+	gltest="ssh -T git@gitlab.com";
 
 alias gpglspub="gpg --list-keys" \
 	gpglssec="gpg --list-secret-keys --keyid-format LONG" \

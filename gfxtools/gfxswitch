@@ -3,9 +3,9 @@
 # Requires xorg restart to take into effect
 
 if [ "$(gfxmode)" = 'nvidia' ]; then
-	gfxstarthyb;
+	gfxswitchhyb;
 else
-	gfxstartnvi;
+	gfxswitchnvi;
 fi
 
 prompt 'Logout computer?' 'bspc quit';

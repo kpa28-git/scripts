@@ -8,6 +8,13 @@ alias jlog="journalctl" \
 alias xlog="$PAGER /var/log/Xorg.0.log" \
 	xlogold="$PAGER /var/log/Xorg.0.log";
 
+alias sustart="systemctl --user start" \
+	sustop="systemctl --user stop" \
+	suenable="systemctl --user enable" \
+	sudisable="systemctl --user disable" \
+	surestart="systemctl --user restart" \
+	sustatus="systemctl --user status";
+
 alias sstart="sudo systemctl start" \
 	sstop="sudo systemctl stop" \
 	senable="sudo systemctl enable" \
