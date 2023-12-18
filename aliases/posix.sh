@@ -2,10 +2,10 @@
 # basic aliases and utilities for linux, bsd, and posix systems
 
 # replace utils with rust alternatives
-alias l="exa -lah --git --color=auto --group-directories-first" \
-	ls="exa -h --color=auto --group-directories-first" \
+alias l="eza -lah --git --icons=always --color=auto --group-directories-first" \
+	ls="eza -h --icons=always --color=auto --group-directories-first" \
 	grep="rg" \
-	cat="bat --theme=zenburn" \
+	cat="bat" \
 	find="fd -HI --ignore-file \"\$HOME\"/.config/fd/ignore_file";
 
 # basic
@@ -36,6 +36,7 @@ alias f="\$FILE" \
 	today="date '+%Y-%m-%d'" \
 	myports="sudo netstat -tulpn" \
 	watch2="watch -n 2 " \
+	nowpage="$VISUAL \$(date +\"%Y_%m_%d-.md\")" \
 	lamp="ps -u \`whoami\`" \
 	kamp="kap -u \`whoami\`";
 
