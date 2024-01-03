@@ -56,6 +56,8 @@ alias gst="git status" \
 	gcmsga="git commit --amend" \
 	gua="git remote | xargs -L1 git push --all" \
 	glp="git pull && git push" \
+	gsave="git stash" \
+	gload="git stash pop" \
 	ghtest="ssh -T git@github.com" \
 	gltest="ssh -T git@gitlab.com";
 
