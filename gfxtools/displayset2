@@ -1,0 +1,32 @@
+#!/bin/sh
+# Sets the display setup based on number of monitors and the active gpu
+# Good to call after X startup, a display is added/removed, or the gpu changes.
+# Dual display version
+
+. displayvars
+
+dual_setup() {
+	OUT_RATE=60; # Set common refresh
+
+	if [ -n "$DISPLAY_DP" ] ; then
+		xrandr  --output "$DISPLAY_EDP" --auto --rotate 'normal' \
+				--rate "$OUT_RATE" --left-of "$DISPLAY_DP" \
+			--output "$DISPLAY_DP" --primary --auto --rotate 'normal' \
+				--rate "$OUT_RATE" \
+			--output "$DISPLAY_HDMI" --off;
+	elif [ -n "$DISPLAY_HDMI" ] ; then
+		xrandr  --output "$DISPLAY_EDP" --auto --rotate 'normal' \
+				--rate "$OUT_RATE" --left-of "$DISPLAY_HDMI" \
+			--output "$DISPLAY_DP" --off \
+			--output "$DISPLAY_HDMI" --primary --auto --rotate 'normal' \
+				--rate "$OUT_RATE";
+	else
+		echo 'Warning - Trying to set external display but none are connected';
+	fi;
+}
+
+if [ -n "$DISPLAY_DP" ] || [ -n "$DISPLAY_HDMI" ] ; then
+	dual_setup;
+else
+	notify-send "displayset2" "error: external display not found"
+fi;

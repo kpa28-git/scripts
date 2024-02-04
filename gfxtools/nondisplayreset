@@ -1,0 +1,6 @@
+#!/bin/sh
+# reset non-display parts of the desktop UI: background, status bar, and window manager
+
+setbg
+polybar-msg cmd restart
+bspc wm -r

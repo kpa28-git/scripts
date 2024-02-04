@@ -1,0 +1,4 @@
+#!/bin/sh
+# reset to single monitor
+
+displayset1 && nondisplayreset

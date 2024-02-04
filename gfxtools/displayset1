@@ -1,0 +1,36 @@
+#!/bin/sh
+# Sets the display setup based on number of monitors and the active gpu
+# Good to call after X startup, a display is added/removed, or the gpu changes.
+# Single display version
+
+. displayvars
+
+single_setup() {
+	MODE=$([ -n "$1" ] && echo "$1" || echo "intern");
+
+	if [ "$MODE" = "intern" ] ; then
+		xrandr  --output "$DISPLAY_EDP" --primary --auto --rotate 'normal' \
+			--output "$DISPLAY_DP" --off \
+			--output "$DISPLAY_HDMI" --off;
+	elif [ "$MODE" = "extern" ] ; then
+		if [ -n "$DISPLAY_DP" ] ; then
+			xrandr  --output "$DISPLAY_EDP" --off \
+				--output "$DISPLAY_DP" --primary --auto --rotate 'normal' \
+				--output "$DISPLAY_HDMI" --off;
+		elif [ -n "$DISPLAY_HDMI" ] ; then
+			xrandr  --output "$DISPLAY_EDP" --off \
+				--output "$DISPLAY_DP" --off \
+				--output "$DISPLAY_HDMI" --primary --auto --rotate 'normal';
+		else
+			echo 'Warning - Trying to set external display but none are connected';
+		fi;
+	else
+		echo 'Warning - Mode must be intern or extern';
+	fi;
+}
+
+if [ -n "$DISPLAY_DP" ] || [ -n "$DISPLAY_HDMI" ] ; then
+	single_setup 'extern';
+else
+	single_setup 'intern';
+fi;
