@@ -5,7 +5,7 @@
 alias l="eza -lah --git --icons=always --color=auto --group-directories-first" \
 	ls="eza -h --icons=always --color=auto --group-directories-first" \
 	grep="rg" \
-	cat="bat" \
+	# cat="bat" \
 	find="fd -HI --ignore-file \"\$HOME\"/.config/fd/ignore_file";
 
 # basic
@@ -36,7 +36,7 @@ alias f="\$FILE" \
 	today="date '+%Y-%m-%d'" \
 	myports="sudo netstat -tulpn" \
 	watch2="watch -n 2 " \
-	nowpage="$VISUAL \$(date +\"%Y_%m_%d-.md\")" \
+	nowpage="__newp__=\$(date +\"%Y_%m_%d-.md\"); touch \$__newp__; chmod 700 \$__newp__; \$VISUAL \$__newp__" \
 	lamp="ps -u \`whoami\`" \
 	kamp="kap -u \`whoami\`";
 

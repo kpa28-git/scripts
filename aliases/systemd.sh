@@ -8,17 +8,25 @@ alias jlog="journalctl" \
 alias xlog="$PAGER /var/log/Xorg.0.log" \
 	xlogold="$PAGER /var/log/Xorg.0.log";
 
-alias sustart="systemctl --user start" \
+alias suls="systemctl list-units --user --type=service --state=running" \
+	sulsa="systemctl list-units --user --type=service --state=active" \
+	sutls="systemctl --user list-timers" \
+	sudepls="systemctl --user list-dependencies" \
+	sustat="systemctl --user status" \
+	sustart="systemctl --user start" \
 	sustop="systemctl --user stop" \
 	suenable="systemctl --user enable" \
 	sudisable="systemctl --user disable" \
-	surestart="systemctl --user restart" \
-	sustatus="systemctl --user status";
+	surestart="systemctl --user restart";
 
-alias sstart="sudo systemctl start" \
+alias sls="systemctl list-units --type=service --state=running" \
+	slsa="systemctl list-units --type=service --state=active" \
+	stls="systemctl list-timers" \
+	sdepls="systemctl list-dependencies" \
+	sstat="systemctl status" \
+	sstart="sudo systemctl start" \
 	sstop="sudo systemctl stop" \
 	senable="sudo systemctl enable" \
 	sdisable="sudo systemctl disable" \
-	srestart="sudo systemctl restart" \
-	sstatus="systemctl status";
+	srestart="sudo systemctl restart";
 
