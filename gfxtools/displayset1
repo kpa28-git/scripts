@@ -3,22 +3,25 @@
 # Good to call after X startup, a display is added/removed, or the gpu changes.
 # Single display version
 
-. displayvars
+. displayvars # populates $DISPLAY_X variables
 
 single_setup() {
 	MODE=$([ -n "$1" ] && echo "$1" || echo "intern");
 
 	if [ "$MODE" = "intern" ] ; then
-		xrandr  --output "$DISPLAY_EDP" --primary --auto --rotate 'normal' \
+		xrandr \
+			--output "$DISPLAY_EDP" --primary --auto --rotate 'normal' \
 			--output "$DISPLAY_DP" --off \
 			--output "$DISPLAY_HDMI" --off;
 	elif [ "$MODE" = "extern" ] ; then
 		if [ -n "$DISPLAY_DP" ] ; then
-			xrandr  --output "$DISPLAY_EDP" --off \
+			xrandr \
+				--output "$DISPLAY_EDP" --off \
 				--output "$DISPLAY_DP" --primary --auto --rotate 'normal' \
 				--output "$DISPLAY_HDMI" --off;
 		elif [ -n "$DISPLAY_HDMI" ] ; then
-			xrandr  --output "$DISPLAY_EDP" --off \
+			xrandr \
+				--output "$DISPLAY_EDP" --off \
 				--output "$DISPLAY_DP" --off \
 				--output "$DISPLAY_HDMI" --primary --auto --rotate 'normal';
 		else
