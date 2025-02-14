@@ -2,19 +2,16 @@
 # program and web api aliases
 
 # misc programs
-alias mpv="mpv --input-ipc-server=/tmp/mpvsoc\$(date +%s)" \
-	x="sxiv -ft *" \
-	xpng="sxiv -ft **/*.png" \
+alias i="btop" \
+	mpv="mpv --input-ipc-server=/tmp/mpvsoc\$(date +%s)" \
 	ytd="youtube-dl --add-metadata -i -o '\$HOME/Downloads/%(upload_date)s-%(title)s.%(ext)s'" \
 	ytda="youtube-dl --add-metadata -i -x -f 'bestaudio/best' -o '\$HOME/Music/%(upload_date)s-%(title)s.%(ext)s'" \
 	ffmpeg="ffmpeg -hide_banner" \
 	dt="dust" \
 	dt3="dt -d 3" \
-	grex="grex -r" \
 	appsync="rsync -avxP" \
 	mirsync="rsync -avxP --delete" \
 	shck="shellcheck" \
-	tmr="peaclock --config-dir=\"\$XDG_CONFIG_HOME/peaclock\" --config=\"\$(fd '[^\.gitignore]' --regex -t 'f' -d 1 \"$XDG_CONFIG_HOME/peaclock\" | fzf --select-1)\"" \
 	viewdoc="fzf --sync | pandoc -f docx -t pdf | zathura -" \
 	vd="vidir" \
 	wget="curl -OL" \
@@ -28,7 +25,12 @@ alias mpv="mpv --input-ipc-server=/tmp/mpvsoc\$(date +%s)" \
 	rmempty="rm -d $(fd --type empty --type d)" \
 	sprintservice="sudo systemctl start cups.service" \
 	jp="julia --project" \
-	jpl="julia -e \"using Revise, Pluto; Pluto.run()\"";
+	jpo="julia --project --optimize=3" \
+	jpt="julia --project --threads=auto" \
+	jpto="julia --project --threads=auto --optimize=3" \
+	jn="julia -e \"using Revise, Pluto; Pluto.run()\"" \
+	jnt="julia --threads=auto -e \"using Revise, Pluto; Pluto.run(threads=Threads.nthreads())\"" \
+	jnt2="julia --threads=auto -e \"using Revise, Pluto; Pluto.run(threads=2*Threads.nthreads())\"";
 	# jup="jupyter notebook --ip=127.0.0.1 --port=8888" \
 
 alias gst="git status" \
@@ -82,19 +84,16 @@ alias tdd="trash put" \
 	trm="trash list | fzf --reverse --header='Delete File(s)' --multi | awk '{\$1=\$1;print}' | rev | cut -d ' ' -f1 | rev | xargs trash empty --match=exact --force" \
 	tem="trash empty --all";
 
-alias coins="curl -s rate.sx" \
-	ada1="curl -s rate.sx/ada@1w" \
-	ada2="curl -s rate.sx/ada@2w" \
-	ada4="curl -s rate.sx/ada@4w" \
-	ada8="curl -s rate.sx/ada@8w" \
-	ada24="curl -s rate.sx/ada@24w" \
-	ada52="curl -s rate.sx/ada@52w" \
-	btc2="curl -s rate.sx/btc@2w" \
-	eth2="curl -s rate.sx/eth@2w";
+alias coinp="curl -s rate.sx" \
+	adap="curl -s rate.sx/ada" \
+	btcp="curl -s rate.sx/btc" \
+	ethp="curl -s rate.sx/eth";
 
 alias trls="transmission-remote -l" \
 	trad="transmission-remote -a";
 
-alias chstatus="clickhouse status" \
+alias chstat="clickhouse status" \
 	chstop="clickhouse stop" \
 	chrestart="clickhouse restart";
+
+alias aid="aider --env $XDG_CONFIG_HOME/api-keys/llm.env";

@@ -6,9 +6,12 @@ alias pac="sudo pacman -Syu" \
 	pacsp="sudo pacman -Syu && poweroff" \
 	pacsr="sudo pacman -Syu && reboot" \
 	pacrmlck="sudo rm '/var/lib/pacman/db.lck'" \
-	pacls="pacman -Qett --color=always" \
+	pacls="pacman -Qet --color=always" \
+	paclsnative="pacman -Qnq" \
+	pacwarn="pacman -Qkk | grep warning" \
 	pacwhen="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort" \
-	pacmirru="sudo reflector --country 'United States' --latest 200 --age 24 --sort rate --save /etc/pacman.d/mirrorlist && rm -f /etc/pacman.d/mirrorlist.pacnew";
+	pacwhencache="/bin/ls -lrt /var/cache/pacman/pkg" \ 
+	pacmirru="sudo reflector --country US --latest 200 --age 24 --sort rate --save /etc/pacman.d/mirrorlist && rm -f /etc/pacman.d/mirrorlist.pacnew";
 
 # aur: arch user repo packages (paru)
 alias aurg="paru -Qs | grep -B1" \

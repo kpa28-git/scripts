@@ -9,10 +9,9 @@ single_setup() {
 	MODE=$([ -n "$1" ] && echo "$1" || echo "intern");
 
 	if [ "$MODE" = "intern" ] ; then
-		xrandr \
-			--output "$DISPLAY_EDP" --primary --auto --rotate 'normal' \
-			--output "$DISPLAY_DP" --off \
-			--output "$DISPLAY_HDMI" --off;
+		xrandr --output "$DISPLAY_EDP" --primary --auto; #\
+			# --output "$DISPLAY_DP" --off \
+			# --output "$DISPLAY_HDMI" --off;
 	elif [ "$MODE" = "extern" ] ; then
 		if [ -n "$DISPLAY_DP" ] ; then
 			xrandr \

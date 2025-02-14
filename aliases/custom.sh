@@ -1,7 +1,7 @@
 #!/bin/sh
 # custom aliases and functions go here
 
-# search aliases
+# search aliases (TODO: replace with zoxide)
 alias lspaths="fd -HI --ignore-file \"\$HOME\"/.config/fd/ignore_file" \
 	s="lspaths | fzf --reverse --info=inline --preview='pistol {}'" \
 	se="\$EDITOR \"\$(s --header='Edit File')\"" \

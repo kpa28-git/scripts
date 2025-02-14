@@ -15,7 +15,6 @@ alias f="\$FILE" \
 	v="\$VISUAL" \
 	supv="sudo -E \$VISUAL" \
 	c="clear" \
-	i="htop -t" \
 	diff="diff --color=auto" \
 	lg="l | grep" \
 	mkd="mkdir -pv" \
