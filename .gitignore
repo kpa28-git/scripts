@@ -24,6 +24,7 @@
 !/termtools/**
 !/themetools/**
 !/uitools/**
+!/wltools/**
 !LICENSE
 !README.md
 !.gitignore

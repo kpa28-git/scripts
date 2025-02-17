@@ -12,6 +12,7 @@ alias suls="systemctl list-units --user --type=service --state=running" \
 	sulsa="systemctl list-units --user --type=service --state=active" \
 	sutls="systemctl --user list-timers" \
 	sudepls="systemctl --user list-dependencies" \
+	suenv="systemctl --user show-environment" \
 	sustat="systemctl --user status" \
 	sustart="systemctl --user start" \
 	sustop="systemctl --user stop" \

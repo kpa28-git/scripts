@@ -1,0 +1,7 @@
+#!/bin/sh
+# A tofi binary prompt script.
+# If yes is selected, perform command $2.
+# For example:
+# `./tprompty "Do you want to shutdown?" "shutdown -h now"`
+
+[ "$(printf "Yes\nNo" | tofi --prompt-text "$1" --horizontal=false)" = "Yes" ] && $2
