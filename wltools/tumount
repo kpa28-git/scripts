@@ -7,7 +7,7 @@ NHEADER="💾 tumount"
 
 unmountusb() {
 	[ -z "$drives" ] && exit 0;
-	chosen="$(echo "$drives" | tofi --prompt-text "$NHEADER: unmount which usb drive?' | awk '{print $1}')";
+	chosen="$(echo "$drives" | tofi --prompt-text "$NHEADER: unmount which usb drive?" | awk '{print $1}')";
 	[ -z "$chosen" ] && exit 1;
 	sudo -A umount "$chosen" && notify-send "$NHEADER" "$chosen usb drive unmounted" && exit 0;
 }
