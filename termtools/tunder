@@ -1,0 +1,6 @@
+#!/bin/sh
+# snake cases all files in current directory
+
+tunder() {
+	for i in *' '*; do   mv "$i" `echo $i | sed -e 's/ /_/g'`; done
+}

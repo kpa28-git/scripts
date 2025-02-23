@@ -18,18 +18,15 @@ alias h="history" \
 	hs="h | fzf --tac --info=inline --header='Search Command' | sed 's/^[0-9]*\s*//g'" \
 	hi="xdotool type --delay 0 \"\$(hs)\" && clear";
 
-moveto() {
-	FILEPATH=$([ -d "$1" ] && echo "$1" || dirname "$1");
-	cd "$FILEPATH" || return;
-}
 sg() {
 	RES="$(s --header='Grep File')";
 	grep "$1" "$RES";
 }
-tunder() {
-	for i in *' '*; do   mv "$i" `echo $i | sed -e 's/ /_/g'`; done
-}
 
+# moveto() {
+# 	FILEPATH=$([ -d "$1" ] && echo "$1" || dirname "$1");
+# 	cd "$FILEPATH" || return;
+# }
 #command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d" # Alias neovim as vim if present.
 #vf() {
 #	fzf | xargs -r -I % $VISUAL % ;

@@ -1,7 +1,7 @@
 #!/bin/sh
 # Multiplexes extraction commands.
 # Tries to extract to a new dir if possible from the command.
-# Uses ouch for decompression if possible, uses others if necessary.
+# Uses ouch for decompression as fallback, uses others if necessary.
 
 archive="$1"
 [ "$archive" = "" ] && printf "Give archive to extract as argument.\\n" && exit

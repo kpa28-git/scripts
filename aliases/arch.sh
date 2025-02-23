@@ -10,8 +10,7 @@ alias pac="sudo pacman -Syu" \
 	paclsnative="pacman -Qnq" \
 	pacwarn="pacman -Qkk | grep warning" \
 	pacwhen="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort" \
-	pacwhencache="/bin/ls -lrt /var/cache/pacman/pkg" \ 
-	pacmirru="sudo reflector --country US --latest 200 --age 24 --sort rate --save /etc/pacman.d/mirrorlist && rm -f /etc/pacman.d/mirrorlist.pacnew";
+	pacwhencache="/bin/ls -lrt /var/cache/pacman/pkg"; 
 
 # aur: arch user repo packages (paru)
 alias aurg="paru -Qs | grep -B1" \

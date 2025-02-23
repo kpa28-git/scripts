@@ -5,9 +5,6 @@ alias jlog="journalctl" \
 	jlogboot="journalctl -b" \
 	jlogx="journalctl -xe";
 
-alias xlog="$PAGER /var/log/Xorg.0.log" \
-	xlogold="$PAGER /var/log/Xorg.0.log";
-
 alias suls="systemctl list-units --user --type=service --state=running" \
 	sulsa="systemctl list-units --user --type=service --state=active" \
 	sutls="systemctl --user list-timers" \

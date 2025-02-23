@@ -1,0 +1,6 @@
+#!/bin/sh
+# use reflector to update the mirrorlist
+
+sudo reflector --country=US --latest=200 --age=24 --sort=rate --save=/etc/pacman.d/mirrorlist
+sudo rm -f /etc/pacman.d/mirrorlist.pacnew;
+

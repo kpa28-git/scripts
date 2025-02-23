@@ -1,14 +1,7 @@
 # Scripts
-General, useful, short GNU/Linux bash and POSIX scripts to add to PATH.
+Generally useful short nushell, bash, and POSIX scripts to add to PATH.
 
-# TODO
-* cleanup/remove the luke scripts I don't use
-* refactor graphics setting scripts (gfxtools/...)
-* ~~rofi/buku integration scripts~~
-* make API functions return a symbol when there is no network connection
-
-# Details
-If a directory starts with _luke_ it contains scripts originally written by [Luke Smith](https://lukesmith.xyz/) as part of his [archi3 rice](https://github.com/LukeSmithxyz/voidrice/tree/archi3), but which could have been modified by me. Over time most of the Luke scripts will be removed.
+Note: I'm moving from X11 to wayland so X11 scripts may be removed from the latest version of these scripts.
 
 Required by [my rice](https://github.com/kpatel28/KAR).
 

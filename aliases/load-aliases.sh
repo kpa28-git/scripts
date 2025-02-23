@@ -1,7 +1,8 @@
 #!/bin/sh
-# load posix shell aliases based on OS and/or distro
+# load shell aliases based on OS and/or distro
 
-[ -f "$ALIASDIR/posix.sh" ] && . "$ALIASDIR/posix.sh" # must be run first
+[ -f "$ALIASDIR/util_posix.sh" ] && . "$ALIASDIR/util_posix.sh" # must be run first
+[ -f "$ALIASDIR/programs_posix.sh" ] && . "$ALIASDIR/programs_posix.sh"
 
 if posix_str_isin "systemd" "$(ps --no-headers -o comm 1)"; then
 	[ -f "$ALIASDIR/systemd.sh" ] && . "$ALIASDIR/systemd.sh"
