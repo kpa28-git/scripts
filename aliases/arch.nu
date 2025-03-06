@@ -8,6 +8,7 @@ alias pacsr = sudo pacman -Syu and reboot;
 alias pacrmlck = sudo rm '/var/lib/pacman/db.lck';
 alias pacls = pacman -Qet --color=always;
 alias paclsnative = pacman -Qnq;
+alias paclsorphan = pacman -Qdt;
 def pacwarn [] { pacman -Qkk | grep warning; }
 def pacwhen [] { expac --timefmt='%Y-%m-%dT%T' '%l\t%n' | parse "{dt}\t{name}" | sort-by dt; }
 def pacwhencache [] { ls /var/cache/pacman/pkg | sort-by modified | select modified name; }
@@ -17,7 +18,7 @@ alias aurq = paru -Qi;
 alias aurp = paru -Ps;
 alias aurn = paru -Pw;
 alias aur = paru -Syu;
-alias aurrm = paru -R;
+alias aurrm = sudo pacman -Rsn;
 alias aurls = paru -Qm;
 alias aurlsl = paru -Ql;
 def aurcl [] { paru -Sc; paccache -r; }

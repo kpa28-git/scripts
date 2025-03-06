@@ -2,17 +2,13 @@
 # basic aliases and utilities for linux, bsd, and posix systems
 
 # replace utils with rust alternatives
-alias l="eza -lah --git --icons=always --color=auto --group-directories-first" \
-	ls="eza -h --icons=always --color=auto --group-directories-first" \
-	grep="rg" \
+alias l="ls -lah --color=auto --group-directories-first" \
 	find="fd -HI --ignore-file \"\$HOME\"/.config/fd/ignore_file";
 
 # basic
 alias f="\$FILE" \
 	e="\$EDITOR" \
 	supe="sudo -E \$EDITOR" \
-	v="\$VISUAL" \
-	supv="sudo -E \$VISUAL" \
 	c="clear" \
 	diff="diff --color=auto" \
 	lg="l | grep" \

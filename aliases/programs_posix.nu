@@ -2,15 +2,16 @@
 # basic aliases and utilities for linux, bsd, and posix systems
 
 # replace utils with rust alternatives
-alias l = ls -la;
 alias find = fd -HI --ignore-file "\$XDG_CONFIG_HOME/fd/ignore_file";
 
+# file editing
+def lsfilenames [] { (ls | where type == file | get name) }
+def e [ file: string@lsfilenames ] { ^$env.EDITOR $file }
+def supe [ file: string@lsfilenames ] { sudo -E $env.EDITOR $file }
+
 # basic
+alias l = ls -la;
 alias f = ^$env.FILE;
-alias e = ^$env.EDITOR;
-alias supe = sudo -E $env.EDITOR;
-alias v = ^$env.VISUAL;
-alias supv = sudo -E $env.VISUAL;
 alias c = clear;
 alias diff = diff --color=auto;
 alias lg = l | grep;
@@ -32,7 +33,7 @@ alias laup = ^ps -u (whoami);
 alias kap = ^killall;
 alias kamp = ^killall -u (whoami);
 def duse [] { du | sort-by physical; }
-def nowpage [] { let __newp__ = ^date '+%Y_%m_%d-.md'; touch $__newp__; chmod 700 $__newp__; ^$env.VISUAL $__newp__; }
+def nowpage [] { let __newp__ = ^date '+%Y_%m_%d-.md'; touch $__newp__; chmod 700 $__newp__; ^$env.EDITOR $__newp__; }
 
 # # networking
 # alias myports = sudo netstat -tulpn;

@@ -21,6 +21,7 @@ const NU_GRAPHICAL = if true {
 	"programs_x11.nu"
 }
 
+source util.nu
 source programs_posix.nu
 source programs.nu
 source $NU_INIT

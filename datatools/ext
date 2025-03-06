@@ -8,7 +8,7 @@ archive="$1"
 
 if [ -f "$archive" ] ; then
 	case "$archive" in
-		*.rar) unrar x -ad "$archive" ;;
+		# *.rar) unrar x -ad "$archive" ;;
 		*.Z) uncompress "$archive" ;;
 		*.7z) 7z x -o"${archive%%.*}" "$archive" ;;
 		*.exe) cabextract -f "${archive%%.*}" "$archive" ;;
