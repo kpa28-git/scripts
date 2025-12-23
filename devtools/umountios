@@ -1,0 +1,12 @@
+#!/bin/sh
+# A tofi prompt to unmount ios devices.
+# (untested)
+
+NHEADER="󰀷 tumountios"
+
+mpoint="$HOME/mnt/ios"
+
+umount "$mpoint" && notify-send "✔️$NHEADER" "unmounted from $mpoint" && exit 0;
+
+ec=$?;
+notify-send "❌($ec)$NHEADER" "failed to unmount from $mpoint" && exit "$ec";

@@ -93,16 +93,11 @@ alias uvpipls = uv pip list;
 alias uvpiptree = uv pip tree;
 
 # trashy
-alias tdd = trash put;
-alias tls = trash list;
-alias tem = trash empty --all;
+alias tdd = trashy put;
+alias tls = trashy list;
+alias tem = trashy empty --all;
 # def tre [] { trash list | fzf --reverse --header='Restore File(s)' --multi | awk '{\$1=\$1;print}' | rev | cut -d ' ' -f1 | rev | xargs trash restore --match=exact --force; }
 # def trm [] { trash list | fzf --reverse --header='Delete File(s)' --multi | awk '{\$1=\$1;print}' | rev | cut -d ' ' -f1 | rev | xargs trash empty --match=exact --force; }
-
-# clickhouse
-alias chstat = clickhouse status;
-alias chstop = clickhouse stop;
-alias chrestart = clickhouse restart;
 
 # rate.sx
 alias coinp = curl -s rate.sx;

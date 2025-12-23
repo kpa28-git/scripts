@@ -1,26 +1,17 @@
 #!/bin/sh
-# Close/Lock a LUKS device with tofi prompt
+# Close/Lock a LUKS mapping with tofi prompt
 
 NHEADER="🔒 tluksclose";
-mappedluks="$(lsblk -rpo 'name,type,size,fstype,mountpoint' | awk '$2=="crypt"&&$4!="LVM2_member"&&$5==""{printf "%s (%s)\n",$1,$3}')";
 
-closeluks() { \
-	chosen="$(echo "$mappedluks" | tofi --prompt-text "$NHEADER: Close which LUKS mapping?" | awk '{print $1}')";
-	if [ -n "$chosen" ]; then
-		sudo -A cryptsetup luksClose "$chosen";
-		exit_code=$?;
-		if [ "$exit_code" -eq 0 ]; then
-			notify-send "$NHEADER" "$chosen closed" && exit 0;
-		else
-			notify-send "$NHEADER" "couldn\'t close $chosen ($exit_code)" && exit "$exit_code";
-		fi;
-	else
-		notify-send "$NHEADER" "luks close cancelled" && exit 0;
-	fi;
-}
+luksmaps="$(lsblk -rpo 'name,type,size,fstype,mountpoint' | awk '$2=="crypt"&&$4!="LVM2_member"&&$5==""{printf "%s (%s)\n",$1,$3}')";
 
-if [ -n "$mappedluks" ]; then
-	closeluks;
-else
-	notify-send "$NHEADER" "no closeable luks device found" && exit 0;
-fi;
+[ -z "$luksmaps" ] && notify-send "⚠️$NHEADER" "no closeable luks device found" && exit 0;
+
+chosen="$(echo "$luksmaps" | tofi --prompt-text "$NHEADER: Close which LUKS mapping?" | awk '{print $1}')";
+[ -z "$chosen" ] && exit 0; # exit with 0 for chain-ability
+
+cryptsetup luksClose "$chosen";
+ec=$?;
+[ "$ec" -eq 0 ] && notify-send "✔️$NHEADER" "$chosen closed" && exit 0;
+
+notify-send "❌($ec)$NHEADER" "failed to close $chosen" && exit "$ec";

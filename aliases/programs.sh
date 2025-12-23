@@ -92,8 +92,4 @@ alias coinp="curl -s rate.sx" \
 alias trls="transmission-remote -l" \
 	trad="transmission-remote -a";
 
-alias chstat="clickhouse status" \
-	chstop="clickhouse stop" \
-	chrestart="clickhouse restart";
-
 alias aid="aider --env $XDG_CONFIG_HOME/api-keys/llm.env";

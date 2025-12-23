@@ -1,0 +1,12 @@
+#!/bin/sh
+# A tofi prompt to mount ios devices.
+# (untested)
+
+NHEADER="󰀷 tmountios"
+
+mpoint="$HOME/mnt/ios"
+
+ifuse "$mpoint" && notify-send "✔️$NHEADER" "mounted at $mpoint" && exit 0;
+
+ec=$?;
+notify-send "❌($ec)$NHEADER" "failed to mount at $mpoint" && exit "$ec";

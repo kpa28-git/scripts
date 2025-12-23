@@ -1,0 +1,37 @@
+#!/bin/sh
+# A tofi prompt to mount generic partitions (eg USB drives).
+# If the chosen partition is in /etc/fstab, it will be mounted to the fstab specified location.
+# Otherwise, you'll be prompted to give a mountpoint from already existsing directories.
+# If you input a novel directory, it will prompt you to create that directory.
+
+NHEADER="💾 tmountpart"
+
+uparts="$(lsblk -rpo 'name,type,size,mountpoint' | awk '$2=="part"&&$4==""{printf "%s (%s)\n",$1,$3}')"; # unmounted partitions
+
+[ -z "$uparts" ] && notify-send "⚠️$NHEADER" "no mountable partition found" && exit 0;
+
+chosen="$(echo "$uparts" | tofi --prompt-text "$NHEADER: Mount which partition?" | awk '{print $1}')";
+[ -z "$chosen" ] && exit 0; # exited before selecting partition to mount
+mount "$chosen" && notify-send "✔️$NHEADER" "automounted $chosen" && exit 0
+# [ $? -eq 32 ] && notify-send "⚠️$NHEADER" "lacking permissions"
+
+# if partition not automountable (eg not in /etc/fstab), continue:
+mpoint="$(fd -IL -t 'd' --exact-depth 1 . "$HOME/mnt" | tofi --prompt-text "$NHEADER: Mount $chosen where?")";
+[ -z "$mpoint" ] && exit 0; # exited before choosing mointpoint
+
+if [ ! -d "$mpoint" ]; then
+	mkdiryn=$(printf "No\\nYes" | tofi --prompt-text "$NHEADER: $mpoint does not exist. Create it?");
+	[ "$mkdiryn" = "Yes" ] && mkdir -p "$mpoint";
+fi
+
+fstype="$(lsblk -no fstype "$chosen")";
+[ -z "$fstype" ] && notify-send "❌$NHEADER" "empty fstype" && exit 1;
+
+case "$fstype" in
+	"vfat") pkexec mount -t vfat "$chosen" "$mpoint" -o rw,umask=0000;;
+	*) pkexec mount "$chosen" "$mpoint";;
+esac;
+ec=$?;
+[ "$ec" -eq 0 ] && notify-send "✔️$NHEADER" "mounted $chosen at $mpoint" && exit 0;
+
+notify-send "❌($ec)$NHEADER" "failed to mount $chosen at $mpoint" && exit "$ec";

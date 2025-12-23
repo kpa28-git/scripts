@@ -1,0 +1,18 @@
+#!/bin/sh
+# A tofi prompt to unmount android devices.
+# (untested)
+
+NHEADER=" tumountand"
+
+mpoint="$HOME/mnt/and"
+
+[ ! grep simple-mtpfs /etc/mtab ] && notify-send "⚠️$NHEADER" "No umountable Android device found" && exit 0;
+
+# mpoint=$(awk '/simple-mtpfs/ {print $2}' /etc/mtab | tofi --prompt-text "$NHEADER: unmount Android device from where?");
+# [ -z "$mpoint" ] && exit 0;
+
+umount -l "$mpoint" && notify-send "$NHEADER" "unmounted from $mpoint" && exit 0;
+
+ec=$?;
+notify-send "❌($ec)$NHEADER" "failed to unmount from $mpoint" && exit "$ec";
+

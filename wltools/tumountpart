@@ -1,0 +1,18 @@
+#!/bin/sh
+# A tofi prompt to unmount generic partitions.
+# Provides you with mounted partitions, select one to unmount.
+# Drives mounted at /, /boot and /home shall not be options to unmount.
+
+NHEADER="💾 tumountpart"
+
+mparts=$(lsblk -nrpo "name,type,size,mountpoint" | awk '$2=="part"&&$4!~/\/boot|\/home$|SWAP/&&length($4)>1{printf "%s (%s)\n",$4,$3}');
+
+[ -z "$mparts" ] && notify-send "⚠️$NHEADER" "no umountable partitions found" && exit 0;
+
+mpoint="$(echo "$mparts" | tofi --prompt-text "$NHEADER: unmount from where?" | awk '{print $1}')";
+[ -z "$mpoint" ] && exit 0; # exited before selecting mointpoint
+
+(umount "$mpoint" || pkexec umount "$mpoint") && notify-send "✔️$NHEADER" "unmounted from $mpoint" && exit 0;
+
+ec=$?;
+notify-send "❌($ec)$NHEADER" "failed to unmount from $mpoint" && exit "$ec";

@@ -1,0 +1,27 @@
+#!/bin/sh
+# A tofi prompt to mount unmounted android devices.
+# (untested)
+
+NHEADER=" tmountand"
+
+mpoint="$HOME/mnt/and";
+
+anddrives=$(simple-mtpfs -l 2>/dev/null);
+
+[ -z "$anddrives" ] && notify-send "⚠️$NHEADER" "no mountable Android device found" && exit 0;
+
+chosen=$(echo "$anddrives" | tofi --prompt-text "$NHEADER: Mount which Android device?" | cut -d : -f 1);
+[ -z "$chosen" ] && exit 0;
+
+# mpoint="$(fd -IL -t 'd' --exact-depth 1 . "$HOME/mnt" | tofi --prompt-text "$NHEADER: Mount $chosen where?")";
+# [ "$mpoint" = "" ] && exit 0;
+
+# if [ ! -d "$mpoint" ]; then
+# 	mkdiryn=$(printf "No\\nYes" | tofi --prompt-text "$NHEADER: $mpoint does not exist. Create it?");
+# 	[ "$mkdiryn" = "Yes" ] && mkdir -p "$mpoint";
+# fi
+
+simple-mtpfs --device "$chosen" "$mpoint" && notify-send "✔️$NHEADER" "mounted $chosen at $mpoint" && exit 0;
+
+ec=$?;
+notify-send "❌($ec)$NHEADER" "failed to mount $chosen at $mpoint" && exit "$ec";
