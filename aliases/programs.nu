@@ -56,7 +56,6 @@ alias gl = git pull;
 alias gp = git push;
 alias gulp = git submodule foreach git pull origin master;
 alias ga = git add;
-# alias gas = ;
 alias gr = git remote;
 alias grm = git rm;
 alias gcsmg = git commit -m;
@@ -66,7 +65,22 @@ alias gsave = git stash;
 alias gload = git stash pop;
 alias ghtest = ssh -T git@github.com;
 alias gltest = ssh -T git@gitlab.com;
-def gas [] { git add (gss | awk '{print $NF}' | fzf --multi --reverse --info=inline --preview='git diff --color {}' --header='git add files, use shift+Tab to multiselect'); } # TODO Fix for multiselect
+
+def gas [] {
+	let files = (
+		git status -s
+			| awk '{print $NF}'
+			# | detect columns --no-headers | get column1 | to text # breaks fzf file preview
+			# | input list -fm # no file previews unfortunately
+			| fzf --multi --reverse --info=inline
+				--preview='git diff --color {}'
+				--header='git add files, use shift+tab to multiselect'
+			| lines
+	)
+	if ($files | is-empty) { return }
+	git add ...$files
+}
+
 def gua [] { git remote | xargs -L1 git push --all; }
 def glp [] { git pull; git push; }
 
