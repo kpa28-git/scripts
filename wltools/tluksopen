@@ -11,7 +11,7 @@ chosen="$(echo "$luksmaps" | tofi --prompt-text "$NHEADER: Open which luks devic
 [ -z "$chosen" ] && exit 0; # exit with 0 for chain-ability
 
 mapped=$(echo "$chosen" | awk -F '/' '{print $NF 1}');
-cryptsetup luksOpen "$chosen" "$mapped";
+sudo -E cryptsetup luksOpen "$chosen" "$mapped";
 ec=$?;
 [ "$ec" -eq 0 ] && notify-send "✔️$NHEADER" "$chosen opened" && exit 0;
 

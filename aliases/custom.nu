@@ -9,8 +9,10 @@ alias lspaths = fd -HI --ignore-file ~/.config/fd/ignore_file;
 # alias sd = cd "(s --header='Search Directory')";
 # alias so = ^$env.OPENER (s --header='Open File');
 # alias sr = ^$env.READER (fd -I -t 'f' '.' $env.READING | sed 's|READING\/||' | fzf --reverse --info=inline --preview='pdftotext READING/{}' --header='Select Reading' | sed 's|^|READING\/|');
+alias srb = bat ($env.READING | path join 'books/list.txt')
 # alias srb = $env.READER \"(cat \"$env.READING\"/books/list.txt | fzf --reverse --info=inline --preview=\"pdftotext READING/{}\" --header='Select from Books Reading List' | sed \"s|^|READING\/books\/|\")\";
 # alias srp = READER \"(cat \"READING\"/papers/list.txt | fzf --reverse --info=inline --header='Select from Papers Reading List' | sed \"s|^|READING\/papers\/|\")\";
+alias srp = bat ($env.READING | path join 'papers/list.txt')
 
 # history aliases
 alias h = history;

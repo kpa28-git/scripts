@@ -10,7 +10,7 @@ alias pacls = pacman -Qet --color=always;
 alias paclsnative = pacman -Qnq;
 alias paclsorphan = pacman -Qdt;
 def pacwarn [] { pacman -Qkk | grep warning; }
-def pacwhen [] { expac --timefmt='%Y-%m-%dT%T' '%l\t%n' | parse "{dt}\t{name}" | sort-by dt; }
+def pacwhen [] { expac --timefmt='%Y-%m-%dT%T' '%l|%n' | lines | split column '|' dt package | sort-by dt; }
 def pacwhencache [] { ls /var/cache/pacman/pkg | sort-by modified | select modified name; }
 
 # aur: arch user repo packages (paru)

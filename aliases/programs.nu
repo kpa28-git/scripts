@@ -113,6 +113,10 @@ alias tem = trashy empty --all;
 # def tre [] { trash list | fzf --reverse --header='Restore File(s)' --multi | awk '{\$1=\$1;print}' | rev | cut -d ' ' -f1 | rev | xargs trash restore --match=exact --force; }
 # def trm [] { trash list | fzf --reverse --header='Delete File(s)' --multi | awk '{\$1=\$1;print}' | rev | cut -d ' ' -f1 | rev | xargs trash empty --match=exact --force; }
 
+# bmm
+alias bmls = bmm list;
+alias bmadd = bmm save -e -f;
+
 # rate.sx
 alias coinp = curl -s rate.sx;
 alias adap = curl -s rate.sx/ada;

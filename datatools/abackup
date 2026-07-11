@@ -14,7 +14,7 @@
 # 	* standalone files are synced as expected
 
 BK_SRC="$HOME";
-BK_MOUNT='/mnt/usb/archive/a';
+BK_MOUNT="$BACKUP_HOME";
 BK_DEST="$BK_MOUNT"'/archive';
 BK_TYPE=$(basename "$0");
 
@@ -35,24 +35,18 @@ mirsync "$BK_SRC"'/.local/bin/' "$BK_DEST"'/.local/bin/';
 # mirsync "$BK_SRC"'/.local/opt/' "$BK_DEST"'/.local/opt/';
 mirsync "$BK_SRC"'/.local/src/' "$BK_DEST"'/.local/src/';
 mirsync "$BK_SRC"'/.local/share/applications' "$BK_DEST"'/.local/share/applications';
-mirsync "$BK_SRC"'/.local/share/buku' "$BK_DEST"'/.local/share/buku';
+mirsync "$BK_SRC"'/.local/share/bmm' "$BK_DEST"'/.local/share/bmm';
 
 echo 'config...';
 mirsync --exclude="discord" --exclude="BraveSoftware" "$BK_SRC"'/.config/' "$BK_DEST"'/.config/';
-mirsync "$BK_SRC"'/.gitconfig' "$BK_DEST"'/.gitconfig';
-mirsync "$BK_SRC"'/.tmux.conf' "$BK_DEST"'/.tmux.conf';
+# mirsync "$BK_SRC"'/.gitconfig' "$BK_DEST"'/.gitconfig';
+# mirsync "$BK_SRC"'/.tmux.conf' "$BK_DEST"'/.tmux.conf';
 
 echo 'dotfiles...'
 mirsync "$BK_SRC"'/.bash_logout' "$BK_DEST"'/.bash_logout';
 mirsync "$BK_SRC"'/.bash_profile' "$BK_DEST"'/.bash_profile';
 mirsync "$BK_SRC"'/.bashrc' "$BK_DEST"'/.bashrc';
 mirsync "$BK_SRC"'/.profile' "$BK_DEST"'/.profile';
-mirsync "$BK_SRC"'/.Xdefaults' "$BK_DEST"'/.Xdefaults';
-mirsync "$BK_SRC"'/.xinitrc' "$BK_DEST"'/.xinitrc';
-mirsync "$BK_SRC"'/.xprofile' "$BK_DEST"'/.xprofile';
-mirsync "$BK_SRC"'/.Xresources' "$BK_DEST"'/.Xresources';
-mirsync "$BK_SRC"'/.xsession' "$BK_DEST"'/.xsession';
-mirsync "$BK_SRC"'/.zprofile' "$BK_DEST"'/.zprofile';
 
 echo 'data...';
 appsync "$BK_SRC"'/Audiobooks/' "$BK_DEST"'/Audiobooks/';

@@ -10,7 +10,7 @@ luksmaps="$(lsblk -rpo 'name,type,size,fstype,mountpoint' | awk '$2=="crypt"&&$4
 chosen="$(echo "$luksmaps" | tofi --prompt-text "$NHEADER: Close which LUKS mapping?" | awk '{print $1}')";
 [ -z "$chosen" ] && exit 0; # exit with 0 for chain-ability
 
-cryptsetup luksClose "$chosen";
+sudo -E cryptsetup luksClose "$chosen";
 ec=$?;
 [ "$ec" -eq 0 ] && notify-send "✔️$NHEADER" "$chosen closed" && exit 0;
 
