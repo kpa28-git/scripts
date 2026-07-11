@@ -3,22 +3,14 @@
 # Syncs the relative files/paths in $BK_SRC/list.txt to the destination
 # based on rsync's --files-from option.
 
+[ -z "${BACKUP_HOME}" ] && echo 'required environment variable (BACKUP_HOME) is undefined, exiting...' && exit 4;
+
+[ "$(mount | grep -c "$BACKUP_HOME")" = 0 ] && echo "no drive mounted at $BACKUP_HOME, exiting..." && exit 5;
+
 BK_SRC="$READING/books";
-BK_MOUNT='/mnt/usb/generic/a';
-BK_DEST="$BK_MOUNT"'/documents/reading/books';
+BK_DEST="$BACKUP_HOME/documents/reading/books";
 BK_TYPE=$(basename "$0");
-
-echo "starting backup from $BK_SRC to $BK_DEST...";
-echo "make sure backup drive is mounted at $BK_MOUNT";
-
-if [ "$(mount | grep -c $BK_MOUNT)" = 0 ] ; then
-	echo 'no drive found mounted at' "$BK_MOUNT";
-	echo 'exiting without backing up data';
-	exit 1;
-fi;
+echo "starting $BK_TYPE: $BK_SRC -> $BK_DEST...";
 
 sudo rsync -av --ignore-existing --files-from="$BK_SRC/list.txt" "$BK_SRC" "$BK_DEST";
 notify-say "$BK_TYPE" 'backup done';
-
-# printf 'update record...';
-# date +'%Y-%m-%d_%r' | sed s/\ //g >> "$BK_DEST/$BK_TYPE.txt";

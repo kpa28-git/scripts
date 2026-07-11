@@ -5,28 +5,21 @@
 #   / /_/ / /_/ / /_/ / /__/ ,< / /_/ / /_/ /
 #  /_.___/_.___/\__,_/\___/_/|_|\__,_/ .___/
 #                                   /_/
-# backup (B) and backup-crossplatform (BC) drive backup script.
-# The contents of 'Backup' directory are append synced to the destination root
+# backup (B) drive backup script.
+# requires environment varialbe BACKUP_HOME set to the backup home directory,
+# append syncing occurs from $HOME/Backup to $BACKUP_HOME
 
-BK_SRC="$HOME";
-BK_MOUNT="$BACKUP_HOME";
-BK_DEST="$BK_MOUNT";
+[ -z "${BACKUP_HOME}" ] && echo 'required environment variable (BACKUP_HOME) is undefined, exiting...' && exit 4;
+
+[ "$(mount | grep -c "$BACKUP_HOME")" = 0 ] && echo "no drive mounted at $BACKUP_HOME, exiting..." && exit 5;
+
+BK_SRC="$HOME/Backup";
+BK_DEST="$BACKUP_HOME";
 BK_TYPE=$(basename "$0");
-
-echo 'starting backup from' "$BK_SRC" 'to' "$BK_DEST"'...';
-echo 'make sure backup drive is mounted at' "$BK_MOUNT";
-
-if [ "$(mount | grep -c $BK_MOUNT)" = 0 ] ; then
-	echo 'no drive found mounted at' "$BK_MOUNT";
-	echo 'exiting without backing up data';
-	exit 1;
-fi;
-
-alias appsync='sudo rsync -avxP';
-alias mirsync='sudo rsync -avxP --delete';
+echo "starting $BK_TYPE: $BK_SRC -> $BK_DEST...";
 
 echo 'generic backup...';
-appsync "$BK_SRC"'/Backup/' "$BK_DEST"'/';
+sudo rsync -avxP "$BK_SRC" "$BK_DEST"; # appends, no deletions / mirroring
 
 echo 'update record...';
 date +'%Y-%m-%d_%r' | sed s/\ //g >> "$BK_DEST/$BK_TYPE.txt";
