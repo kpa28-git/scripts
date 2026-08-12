@@ -7,6 +7,7 @@ alias jlogx = journalctl -xe;
 
 alias suls = systemctl list-units --user --type=service --state=running;
 alias sulsa = systemctl list-units --user --type=service --state=active;
+alias sulsf = systemctl list-units --user --type=service --state=failed;
 alias sutls = systemctl --user list-timers;
 alias sudepls = systemctl --user list-dependencies;
 alias suenv = systemctl --user show-environment;
@@ -19,6 +20,7 @@ alias surestart = systemctl --user restart;
 
 alias sls = systemctl list-units --type=service --state=running;
 alias slsa = systemctl list-units --type=service --state=active;
+alias slsf = systemctl list-units --type=service --state=failed;
 alias stls = systemctl list-timers;
 alias sdepls = systemctl list-dependencies;
 alias sstat = systemctl status;

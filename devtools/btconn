@@ -1,0 +1,14 @@
+#!/bin/sh
+
+NHEADER=" btconn";
+chosen=$(bluetoothctl devices | tofi);
+
+if [ -n "$chosen" ]; then
+	mac=$(printf "%s" "$chosen" | awk '{print $2}');
+	if bluetoothctl connect "$mac"; then
+		name=$(printf "%s" "$chosen" | grep "$mac" | sed s/".*$mac "//);
+		notify-send "$NHEADER" "connected to $name";
+	fi;
+else
+	notify-send "$NHEADER" "no device selected";
+fi;
